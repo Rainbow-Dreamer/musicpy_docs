@@ -50,17 +50,21 @@ Contents
 
 ### Basic syntax
 
-* [Basic syntax of note type](https://github.com/Rainbow-Dreamer/musicpy/wiki/Basic-syntax-of-note-type)
-* [Basic syntax of chord type](https://github.com/Rainbow-Dreamer/musicpy/wiki/Basic-syntax-of-chord-type)
-* [Basic syntax of scale type](https://github.com/Rainbow-Dreamer/musicpy/wiki/Basic-syntax-of-scale-type)
-* [Basic syntax of piece type](https://github.com/Rainbow-Dreamer/musicpy/wiki/Basic-syntax-of-piece-type)
-* [Basic syntax of track type](https://github.com/Rainbow-Dreamer/musicpy/wiki/Basic-syntax-of-track-type)
-* [Basic syntax of tempo type](https://github.com/Rainbow-Dreamer/musicpy/wiki/Basic-syntax-of-tempo-type)
-* [Basic syntax of pitch_bend type](https://github.com/Rainbow-Dreamer/musicpy/wiki/Basic-syntax-of-pitch_bend-type)
-* [Basic syntax of pan type](https://github.com/Rainbow-Dreamer/musicpy/wiki/Basic-syntax-of-pan-type)
-* [Basic syntax of volume type](https://github.com/Rainbow-Dreamer/musicpy/wiki/Basic-syntax-of-volume-type)
-* [Basic syntax of drum type](https://github.com/Rainbow-Dreamer/musicpy/wiki/Basic-syntax-of-drum-type)
-* [Useful functionality](https://github.com/Rainbow-Dreamer/musicpy/wiki/Useful-functionality)
+* [Basic syntax of note type](https://musicpy.readthedocs.io/en/latest/Basic%20syntax%20of%20note%20type/)
+* [Basic syntax of chord type](https://musicpy.readthedocs.io/en/latest/Basic%20syntax%20of%20chord%20type/)
+* [Basic syntax of scale type](https://musicpy.readthedocs.io/en/latest/Basic%20syntax%20of%20scale%20type/)
+* [Basic syntax of piece type](https://musicpy.readthedocs.io/en/latest/Basic%20syntax%20of%20piece%20type/)
+* [Basic syntax of track type](https://musicpy.readthedocs.io/en/latest/Basic%20syntax%20of%20track%20type/)
+* [Basic syntax of tempo type](https://musicpy.readthedocs.io/en/latest/Basic%20syntax%20of%20tempo%20type/)
+* [Basic syntax of pitch_bend type](https://musicpy.readthedocs.io/en/latest/Basic%20syntax%20of%20pitch_bend%20type/)
+* [Basic syntax of pan type](https://musicpy.readthedocs.io/en/latest/Basic%20syntax%20of%20pan%20type/)
+* [Basic syntax of volume type](https://musicpy.readthedocs.io/en/latest/Basic%20syntax%20of%20volume%20type/)
+* [Basic syntax of drum type](https://musicpy.readthedocs.io/en/latest/Basic%20syntax%20of%20drum%20type/)
+
+
+### Useful functionality
+
+* [Useful functionality](https://musicpy.readthedocs.io/en/latest/Useful%20functionality/)
 
 ### Musicpy composition code examples
 
