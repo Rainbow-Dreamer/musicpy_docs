@@ -1,4 +1,4 @@
-# Other useful functionality
+# Useful functionality
 
 
 
