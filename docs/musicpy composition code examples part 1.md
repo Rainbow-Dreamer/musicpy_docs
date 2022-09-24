@@ -5,7 +5,7 @@
 play((getchord_by_interval('D#4', [5,7,10,7,5], 1/2, 1/8)*3 + getchord_by_interval('F4', [1,0,-4], 1/2, 1/8)) * 3, 150)
 ```
 ## 2. Play the A minor seventh chord followed by a rest half beat 4 times, then the B minor seventh chord followed by a rest half beat 4 times, then the C major seventh chord breaking up the chord 1 time.
-### (Both of these examples are written without using progressions, using progressions makes the musicpy language look more compact and shorter)
+(Both of these examples are written without using progressions, using progressions makes the musicpy language look more compact and shorter)
 ```python
 a = C('Am7') % (1/8,0)
 play(a%4 | a.up(2)%4 | chd(a[0].up(3), 'maj7').set(interval=1/8), bpm=80)
@@ -63,8 +63,7 @@ part2.setvolume(80)
 play(P([part1, part2], [26,49], 100, [0,0]))
 ```
 
-### 9.
-### very nice 6451 chord configuration, electric piano sound
+## 9. very nice 6451 chord configuration, electric piano sound
 ```python
 q = scale('C4', 'major')
 r = q%(64516458, 1/2, 0.3/4, 5)
@@ -72,8 +71,7 @@ r = [i.omit(7).inversion_highest(2) for i in r]
 play(r*2, bpm=80, instrument=5)
 ```
 
-### 10.
-### 80s hard rock or pop metal style, instruments used: piano, synthesizer tone, electric bass
+## 10. 80s hard rock or pop metal style, instruments used: piano, synthesizer tone, electric bass
 ``` python
 a = chord('C2, G1, C2, Ab1, Bb1, G1', [15/8,1/8,2,2,1.5,3/4], [15/8,1/8,2,2,1.5,3/4])
 b = C('Cm', 5, 1/8) | 1/4 | C('Bb', 4, 1/8) | 1/4 | C('Ab', 4, 1/8) | 1/4 | C('Bb', 4, 1/2) | 3/8
@@ -83,8 +81,7 @@ a2 = chord('C2',1/8,1/8)*32 + chord('Ab1',1/8,1/8)*16 + chord('Bb1',1/8,1/8)*12 
 play(piece([a, c, a2%2, c%2], [1, 81, 34, 81], 130, [0, 1/4, 8, 33/4]))
 ```
 
-### 11.
-### horror ambient music, orchestral tones
+## 11. horror ambient music, orchestral tones
 ```python
 a = chd('B4','maj9').sort([2,3,4,1,5])
 b = chd('B4','maj9').sort([2,3,4,1,5,2])
