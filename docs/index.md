@@ -42,11 +42,11 @@ Contents
 
 ### Introduction
 
-* [Home](https://github.com/Rainbow-Dreamer/musicpy/wiki)
+* [Introduction](https://musicpy.readthedocs.io/en/latest/Introduction/)
 
 ### Data structures
 
-* [Data structures of musicpy](https://github.com/Rainbow-Dreamer/musicpy/wiki/Data-structures-of-musicpy)
+* [Data structures of musicpy](https://musicpy.readthedocs.io/en/latest/Data%20Structures%20of%20musicpy/)
 
 ### Basic syntax
 
@@ -68,18 +68,18 @@ Contents
 
 ### Musicpy composition code examples
 
-* [musicpy composition code examples Part 1](https://github.com/Rainbow-Dreamer/musicpy/wiki/musicpy-composition-code-examples-part-1)
-* [musicpy composition code examples Part 2](https://github.com/Rainbow-Dreamer/musicpy/wiki/musicpy-composition-code-examples-part-2)
-* [musicpy composition code examples Part 3](https://github.com/Rainbow-Dreamer/musicpy/wiki/musicpy-composition-code-examples-part-3)
+* [musicpy composition code examples Part 1](https://musicpy.readthedocs.io/en/latest/musicpy%20composition%20code%20examples%20part%201/)
+* [musicpy composition code examples Part 2](https://musicpy.readthedocs.io/en/latest/musicpy%20composition%20code%20examples%20part%202/)
+* [musicpy composition code examples Part 3](https://musicpy.readthedocs.io/en/latest/musicpy%20composition%20code%20examples%20part%203/)
 
 ### Musicpy sampler module
 
-* [musicpy sampler module](https://github.com/Rainbow-Dreamer/musicpy/wiki/musicpy-sampler-module)
-* [musicpy sampler module composition code examples](https://github.com/Rainbow-Dreamer/musicpy/wiki/musicpy-sampler-module-composition-code-examples)
+* [musicpy sampler module](https://musicpy.readthedocs.io/en/latest/musicpy%20sampler%20module/)
+* [musicpy sampler module composition code examples](https://musicpy.readthedocs.io/en/latest/musicpy%20sampler%20module%20composition%20code%20examples/)
 
 ### Algorithms
 
-* [Introduction of musicpy algorithms module](https://github.com/Rainbow-Dreamer/musicpy/wiki/Introduction-of-musicpy-algorithms-module)
-* [the algorithm to split the main melody and chords from a piece of music](https://github.com/Rainbow-Dreamer/musicpy/wiki/the-algorithm-to-split-the-main-melody-and-chords-from-a-piece-of-music)
-* [the algorithm to determine the chord type of any group of notes according to the logic of music theory](https://github.com/Rainbow-Dreamer/musicpy/wiki/the-algorithm-to-determine-the-chord-type-of-any-group-of-notes-according-to-the-logic-of-music-theory)
+* [Introduction of musicpy algorithms module](https://musicpy.readthedocs.io/en/latest/Introduction%20of%20musicpy%20algorithms%20module/)
+* [the algorithm to split the main melody and chords from a piece of music](https://musicpy.readthedocs.io/en/latest/the%20algorithm%20to%20split%20the%20main%20melody%20and%20chords%20from%20a%20piece%20of%20music/)
+* [the algorithm to determine the chord type of any group of notes according to the logic of music theory](https://musicpy.readthedocs.io/en/latest/the%20algorithm%20to%20determine%20the%20chord%20type%20of%20any%20group%20of%20notes%20according%20to%20the%20logic%20of%20music%20theory/)
 
