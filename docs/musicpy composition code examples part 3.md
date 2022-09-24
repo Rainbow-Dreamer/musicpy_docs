@@ -1,7 +1,6 @@
 # musicpy composition code examples part 3
 
-### 1.
-### Rolling Star - Yui in musicpy
+## 1. Rolling Star - Yui in musicpy
 ```python
 bass11 = translate('B1(8)[.8;.],D2(8)[.8;.],A1(8)[.8;.],G1(8)[.8;.]')
 bass12 = translate('G1(6)[.8;.], A1(2)[.8;.]')
@@ -29,8 +28,7 @@ result = P([bass1, guitar1, drum1, synth1],
 play(result)
 ```
 
-### 2.
-### Ethereal piano soundtrack
+## 2. Ethereal piano soundtrack
 ```python
 a = (C('G/C',3) @ [1,2,3,2,1.1,2,3,2]) % (2,1/8) | (2, 1)
 result = (a | 1 | a - 2) + octave
@@ -42,16 +40,14 @@ controller_event(controller_number=10, parameter=64, time=4),
 play(result, 165)
 ```
 
-### 3.
-### background strings with some JRPG feels
+## 3. background strings with some JRPG feels
 ```python
 w = chord_progression([C('A',3)^2, C('A/G',3)^2, C('A/F#',3)^2, C('Fmaj7',3)^2, C('F/E'), C('Fm/Eb')^2, C('Asus/D').on('A1')], durations=1)
 w2 = chord('A2,G2,F#2,F2,E2,Eb2,A1') % (1, 1)
 play(w & w2, 150, i=49)
 ```
 
-### 4.
-### Piano arpeggios with melancholy emotions
+## 4. Piano arpeggios with melancholy emotions
 ```python
 w = (C('Cmadd9,add11',5)@[1,3,1.1,4,2.1,5,2.1,4]%(1/2,1/8)%2 |
 C('A#add9,add11',4)@[1,3,1.1,4,2.1,5,2.1,4]%(1/2,1/8)%2 |
@@ -62,8 +58,7 @@ w2 = translate('C2;C3[2], [2], A#1;A#2[2], [2], G#1;G#2[2], [2], A#1;A#2[2]')
 play(w | (w&w2), 265)
 ```
 
-### 5.
-### The opening part of Piano Nocturne
+## 5. The opening part of Piano Nocturne
 ```python
 w1 = ((C('Cmadd2') + 'C5')%(1/2,1/8) | 3/8 |
 (C('Cmadd2') + 'C5')%(1/2,1/8) | 3/8 |
@@ -74,8 +69,7 @@ C('A#add9',3)@[1,3,1.1,4,2.1]%(1/2,1/8) | 3/8 |
 play((w1 & (w2,1/2)) | (2,-7/8), 90)
 ```
 
-### 6.
-### music with a little suspenseful atmosphere
+## 6. music with a little suspenseful atmosphere
 ```python
 a = chd('bb3', 'm11')%(1/2,1/8)@[1,3,5,4.1,2.2,6.1,5.1,4.1]
 b = chd('g3', 'M9#11')%(1/2,1/8)@[1,3,5,4.1,2.2,6.1,5.1,4.1]
@@ -86,8 +80,7 @@ play(a%4 | (a-2)%2 | b | c, 135, i=5)
 play((a%4 | (a-2)%2 | b | c)%2, 100, i=49)
 ```
 
-### 7.
-### another version of J-rock intro
+## 7. another version of J-rock intro
 ```python
 guitar = ((C('Cmaj7')@1)@[1,2,3,4,1,2,3,2] |
 (C('Fmaj7',3)^2)@[1,2,3,4,1,2,3,2] |
@@ -125,8 +118,7 @@ result = piece([guitar%2 | guitar2, bass, string1, rhythm_guitar,drum1%4 + 2],
 play(result-2)
 ```
 
-### 8.
-### Relaxing light music, ambient music
+## 8. Relaxing light music, ambient music
 ```python
 result = P([arp('C', second_half=True, intervals=1/8).cut(0, 2)|
             arp('D/F#', second_half=True, intervals=1/8).cut(0, 2),
@@ -136,8 +128,7 @@ result = P([arp('C', second_half=True, intervals=1/8).cut(0, 2)|
 play(result)
 ```
 
-### 9.
-### The Trooper - Iron Maiden in musicpy
+## 9. The Trooper - Iron Maiden in musicpy
 ```python
 a11 = translate('D,G,D,{!1/8;.},E[1/4;.],G[1/8;.],{},F#,G,F#,G,{!1/16;.|$1},\
 B[1/8;.],G[1/8;.],$1,G[1/8;.],E[1/8;.],E[1/4;.]') % 2
@@ -172,8 +163,7 @@ result = P([a1, a2, a3, a4], [31, 34, 1, 31], channels=[0, 1, 9, 2], bpm=165, st
 play(result)
 ```
 
-### 10.
-### A set of drums with dotted notes
+## 10. A set of drums with dotted notes
 ```python
 result = drum('0[.8.;.], 1, 2[.8.;.], 1, 0(3)[.16.;.], 2[.8.;.], 1, {2}')
 play(result, 165)
