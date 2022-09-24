@@ -37,7 +37,7 @@ play(piece([guitar%3, bass, string1], [28, 34, 49], 135, [0, 4-3/8, 12]))
 If you think this is too simple, musicpy could also produce music like [this](https://drive.google.com/file/d/1j66Ux0KYMiOW6yHGBidIhwF9zcbDG5W0/view?usp=sharing) within 30 lines of code (could be even shorter if you don't care about readability). Anyway, this is just an example of a very short piece of electronic dance music, and not for complexity.
 
 
-Contents
+## Contents
 -------------
 
 ### Introduction
