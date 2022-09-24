@@ -16,6 +16,7 @@ nav:
       - Basic syntax of pan type: Basic syntax of pan type.md
       - Basic syntax of volume type: Basic syntax of volume type.md
       - Basic syntax of drum type: Basic syntax of drum type.md
+    - Useful functionality:
       - Useful functionality: Useful functionality.md
     - Composition Examples:
       - composition code examples Part 1: musicpy composition code examples part 1.md
