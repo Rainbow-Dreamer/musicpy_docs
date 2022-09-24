@@ -2,8 +2,8 @@
 
 ## Contents
 
-- [The introduction of track type](#The-introduction-of-track-type)
-- [Some new syntax for track type](#Some-new-syntax-for-track-type)
+- [The introduction of track type](#the-introduction-of-track-type)
+- [Some new syntax for track type](#some-new-syntax-for-track-type)
 
 
 

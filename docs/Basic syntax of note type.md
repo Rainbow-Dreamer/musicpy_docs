@@ -4,17 +4,17 @@
 
 ## Contents
 
-- [Construct a note using its name and octave number](#Construct-a-note-using-its-name-and-octave-number)
-- [Construct a note by entering the note name directly (note name + number of octaves)](#Construct-a-note-by-entering-the-note-name-directly-note-name--number-of-octaves)
-- [Set the note length and volume for existing notes](#Set-the-note-length-and-volume-for-existing-notes)
-- [Converting pitch numbers of notes to note types and getting pitch numbers from note types](#Converting-pitch-numbers-of-notes-to-note-types-and-getting-pitch-numbers-from-note-types)
-- [To raise or lower a note](#To-raise-or-lower-a-note)
-- [The sharp and flat signs of notes are converted into each other](#The-sharp-and-flat-signs-of-notes-are-converted-into-each-other)
-- [Combining multiple notes to form a chord](#Combining-multiple-notes-to-form-a-chord)
-- [Note types have a new music theory function that allows you to add chord names to get chord types](#Note-types-have-a-new-music-theory-function-that-allows-you-to-add-chord-names-to-get-chord-types)
-- [Note type adds the function of generating chords according to the interval relationship](#Note-type-adds-the-function-of-generating-chords-according-to-the-interval-relationship)
-- [Usage of dotted notes](#Usage-of-dotted-notes)
-- [Reset note pitch](#Reset-note-pitch)
+- [Construct a note using its name and octave number](#construct-a-note-using-its-name-and-octave-number)
+- [Construct a note by entering the note name directly (note name + number of octaves)](#construct-a-note-by-entering-the-note-name-directly-note-name--number-of-octaves)
+- [Set the note length and volume for existing notes](#set-the-note-length-and-volume-for-existing-notes)
+- [Converting pitch numbers of notes to note types and getting pitch numbers from note types](#converting-pitch-numbers-of-notes-to-note-types-and-getting-pitch-numbers-from-note-types)
+- [To raise or lower a note](#to-raise-or-lower-a-note)
+- [The sharp and flat signs of notes are converted into each other](#the-sharp-and-flat-signs-of-notes-are-converted-into-each-other)
+- [Combining multiple notes to form a chord](#combining-multiple-notes-to-form-a-chord)
+- [Note types have a new music theory function that allows you to add chord names to get chord types](#note-types-have-a-new-music-theory-function-that-allows-you-to-add-chord-names-to-get-chord-types)
+- [Note type adds the function of generating chords according to the interval relationship](#note-type-adds-the-function-of-generating-chords-according-to-the-interval-relationship)
+- [Usage of dotted notes](#usage-of-dotted-notes)
+- [Reset note pitch](#reset-note-pitch)
 
 
 

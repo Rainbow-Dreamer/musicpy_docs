@@ -4,21 +4,21 @@
 
 ## Contents
 
-- [Construct scales according to interval relationships or key names](#Construct-scales-according-to-interval-relationships-or-key-names)
-- [A concrete example of modulation](#A-concrete-example-of-modulation)
-- [Selecting the chords according to the number of steps in the scale](#Selecting-the-chords-according-to-the-number-of-steps-in-the-scale)
+- [Construct scales according to interval relationships or key names](#construct-scales-according-to-interval-relationships-or-key-names)
+- [A concrete example of modulation](#a-concrete-example-of-modulation)
+- [Selecting the chords according to the number of steps in the scale](#selecting-the-chords-according-to-the-number-of-steps-in-the-scale)
 - [modulation according to the circle of fifths](#modulation-according-to-the-circle-of-fifths)
-- [Selecting chords of a scale according to the harmony function](#Selecting-chords-of-a-scale-according-to-the-harmony-function)
-- [Get the relative and parallel keys of a mode](#Get-the-relative-and-parallel-keys-of-a-mode)
-- [The up/down transposition of a scale (overall up/down or up/down of individual notes)](#The-updown-transposition-of-a-scale-overall-updown-or-updown-of-individual-notes)
-- [Parsing of a scale (mode) name](#Parsing-of-a-scale-mode-name)
-- [Extract chord progressions by scale degrees](#Extract-chord-progressions-by-scale-degrees)
-- [Get a list of all the notes of a scale according to the standard notation](#Get-a-list-of-all-the-notes-of-a-scale-according-to-the-standard-notation)
-- [Get the negative harmony of a piece of music about a key](#Get-the-negative-harmony-of-a-piece-of-music-about-a-key)
-- [Get the retrograde and inversion of a piece of music](#Get-the-retrograde-and-inversion-of-a-piece-of-music)
-- [Detecting whether a note or chord exists within a scale](#Detecting-whether-a-note-or-chord-exists-within-a-scale)
-- [Scale type extracts chords according to scale degrees expressed using Roman numerals](#Scale-type-extracts-chords-according-to-scale-degrees-expressed-using-Roman-numerals)
-- [Generate chord progressions from scale types](#Generate-chord-progressions-from-scale-types)
+- [Selecting chords of a scale according to the harmony function](#selecting-chords-of-a-scale-according-to-the-harmony-function)
+- [Get the relative and parallel keys of a mode](#get-the-relative-and-parallel-keys-of-a-mode)
+- [The up/down transposition of a scale (overall up/down or up/down of individual notes)](#the-updown-transposition-of-a-scale-overall-updown-or-updown-of-individual-notes)
+- [Parsing of a scale (mode) name](#parsing-of-a-scale-mode-name)
+- [Extract chord progressions by scale degrees](#extract-chord-progressions-by-scale-degrees)
+- [Get a list of all the notes of a scale according to the standard notation](#get-a-list-of-all-the-notes-of-a-scale-according-to-the-standard-notation)
+- [Get the negative harmony of a piece of music about a key](#get-the-negative-harmony-of-a-piece-of-music-about-a-key)
+- [Get the retrograde and inversion of a piece of music](#get-the-retrograde-and-inversion-of-a-piece-of-music)
+- [Detecting whether a note or chord exists within a scale](#detecting-whether-a-note-or-chord-exists-within-a-scale)
+- [Scale type extracts chords according to scale degrees expressed using Roman numerals](#scale-type-extracts-chords-according-to-scale-degrees-expressed-using-Roman-numerals)
+- [Generate chord progressions from scale types](#generate-chord-progressions-from-scale-types)
 
 
 

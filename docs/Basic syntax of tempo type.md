@@ -3,7 +3,7 @@
 
 
 ## Contents
-- [Inserting real-time tempo changes into a piece](#Inserting-real-time-tempo-changes-into-a-piece)
+- [Inserting real-time tempo changes into a piece](#inserting-real-time-tempo-changes-into-a-piece)
 
 
 

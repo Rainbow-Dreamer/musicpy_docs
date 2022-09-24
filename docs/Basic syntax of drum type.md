@@ -4,8 +4,8 @@
 
 ## Contents
 
-- [Added support for drum types, and a new set of syntax for writing drums](#Added-support-for-drum-types-and-a-new-set-of-syntax-for-writing-drums)
-- [Introduction to the construction and usage of drum types](#Introduction-to-the-construction-and-usage-of-drum-types)
+- [Added support for drum types, and a new set of syntax for writing drums](#added-support-for-drum-types-and-a-new-set-of-syntax-for-writing-drums)
+- [Introduction to the construction and usage of drum types](#introduction-to-the-construction-and-usage-of-drum-types)
 
 
 

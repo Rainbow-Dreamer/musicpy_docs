@@ -10,18 +10,18 @@ Making new timbres using these basic waveforms with musicpy sampler will probabl
 
 ## Contents
 
-- [Preparation before importing](#Preparation-before-importing)
-- [Initialize a sampler object](#Initialize-a-sampler-object)
-- [Supported sound modules](#Supported-sound-modules)
-- [Load sound modules](#Load-sound-modules)
-- [Play and export audio files](#Play-and-export-audio-files)
-- [Modify sampler's attributes](#Modify-samplers-attributes)
+- [Preparation before importing](#preparation-before-importing)
+- [Initialize a sampler object](#initialize-a-sampler-object)
+- [Supported sound modules](#supported-sound-modules)
+- [Load sound modules](#load-sound-modules)
+- [Play and export audio files](#play-and-export-audio-files)
+- [Modify sampler's attributes](#modify-samplers-attributes)
 - [Adding, deleting and clearing channels](#adding-deleting-and-clearing-channels)
 - [Audio mixing and editing](#audio-mixing-and-editing)
 - [Generating and playing with waveforms](#generating-and-playing-with-waveforms)
 - [Pitch shifter (make a whole sound module using only one recording audio file)](#pitch-shifter-make-a-whole-sound-module-using-only-one-recording-audio-file)
 - [More about ESI sound module format](#more-about-esi-sound-module-format)
-- [Some other reminders and thoughts](#Some-other-reminders-and-thoughts)
+- [Some other reminders and thoughts](#some-other-reminders-and-thoughts)
 
 ## Preparation before importing
 

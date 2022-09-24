@@ -4,7 +4,7 @@
 
 ## Contents
 
-- [Adjusting the left and right mix position of a track](#Adjusting-the-left-and-right-mix-position-of-a-track)
+- [Adjusting the left and right mix position of a track](#adjusting-the-left-and-right-mix-position-of-a-track)
 
 
 

@@ -4,7 +4,7 @@
 
 ## Contents
 
-- [Adjusting the overall volume of a track](#Adjusting-the-overall-volume-of-a-track)
+- [Adjusting the overall volume of a track](#adjusting-the-overall-volume-of-a-track)
 
 
 

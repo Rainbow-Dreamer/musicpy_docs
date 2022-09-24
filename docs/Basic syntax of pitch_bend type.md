@@ -4,7 +4,7 @@
 
 ## Contents
 
-- [Inserting real time pitch bends, glissandos, and vibrato changes into a piece](#Inserting-real-time-pitch-bends-glissandos-and-vibrato-changes-into-a-piece)
+- [Inserting real time pitch bends, glissandos, and vibrato changes into a piece](#inserting-real-time-pitch-bends-glissandos-and-vibrato-changes-into-a-piece)
 
 
 
