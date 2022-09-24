@@ -83,3 +83,6 @@ Contents
 * [the algorithm to split the main melody and chords from a piece of music](https://musicpy.readthedocs.io/en/latest/the%20algorithm%20to%20split%20the%20main%20melody%20and%20chords%20from%20a%20piece%20of%20music/)
 * [the algorithm to determine the chord type of any group of notes according to the logic of music theory](https://musicpy.readthedocs.io/en/latest/the%20algorithm%20to%20determine%20the%20chord%20type%20of%20any%20group%20of%20notes%20according%20to%20the%20logic%20of%20music%20theory/)
 
+### Frequently Asked Questions
+
+* [Frequently Asked Questions](https://musicpy.readthedocs.io/en/latest/Frequently%20Asked%20Questions%/)

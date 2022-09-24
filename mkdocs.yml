@@ -30,7 +30,7 @@ nav:
       - the algorithm to split the main melody and chords from a piece of music: the algorithm to split the main melody and chords from a piece of music.md
       - the algorithm to determine the chord type of any group of notes according to the logic of music theory: the algorithm to determine the chord type of any group of notes according to the logic of music theory.md
     - Frequently Asked Questions:
-      - Frequently Asked Questions: Some issues you may encounter when using musicpy with solutions.md
+      - Frequently Asked Questions: Frequently Asked Questions.md
 theme:
   name: mkdocs
   highlightjs: true

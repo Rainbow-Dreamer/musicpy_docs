@@ -23,7 +23,7 @@ To learn how to use this module, please refer to the musicpy sampler module sect
 
 If you want to explore more on the music analysis algorithms side with musicpy, you can see the algorithms section, this section contains the analyzing algorithms based on music theory I designed using musicpy.
 
-**Note: If you encounter any issue when using musicpy, you can firstly look at this chapter [Some issues you may encounter when using musicpy with solutions](https://github.com/Rainbow-Dreamer/musicpy/wiki/Some-issues-you-may-encounter-when-using-musicpy-with-solutions) to see if your issue is one of them and find the solutions here.**
+**Note: If you encounter any issue when using musicpy, you can firstly look at the chapter `Frequently Asked Questions` to see if your issue is one of them and find the solutions here.**
 
 Installation
 -------------
