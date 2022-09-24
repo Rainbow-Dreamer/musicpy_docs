@@ -85,4 +85,4 @@ Contents
 
 ### Frequently Asked Questions
 
-* [Frequently Asked Questions](https://musicpy.readthedocs.io/en/latest/Frequently%20Asked%20Questions%/)
+* [Frequently Asked Questions](https://musicpy.readthedocs.io/en/latest/Frequently%20Asked%20Questions/)
