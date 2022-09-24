@@ -1,4 +1,4 @@
-# Some issues you may encounter when using musicpy with solutions
+# Frequently Asked Questions
 
 Here are some issues you may encounter when using musicpy with solutions, some of them are existing bugs of the python libraries that musicpy has dependencies with, or just not giving you the desired result when the function parameters are set as default.
 
