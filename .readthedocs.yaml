@@ -32,6 +32,4 @@ nav:
     - Frequently Asked Questions:
       - Frequently Asked Questions: Frequently Asked Questions.md
 theme:
-  name: mkdocs
-  highlightjs: true
-  hljs_style: stackoverflow-light
+  name: readthedocs
