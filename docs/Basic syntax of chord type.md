@@ -1007,33 +1007,30 @@ The return is a new chord with the notes of chord A sorted from lowest to highes
 
 ## Get the negative harmony of a chord according to the set scale
 
-For example, if chord A is a C major 7th chord and you want to get the negative harmony of chord A with respect to the C major scale, then you can write.
+For example, if chord A is a Cmaj7 chord and you want to get the negative harmony of chord A with respect to the C major scale, then you can write:
 
 ```python
-negative_harmony(scale('C', 'major'), A)
+A = C('Cmaj7')
+>>> alg.negative_harmony(scale('C', 'major'), A)
+[G3, D#4, C5, G#4] with interval [0, 0, 0, 0]
 ```
 
 What you get is a new chord composed of the notes of chord A about the negative harmony of the C major scale after the transformation.
 
-Other parameters of the negative_harmony function.
+Other parameters of negative_harmony function:
 
-get_map_dict, when True, returns a dictionary of the notes of the first parameter scale mapped to the negative harmony.
+`get_map_dict`: when True, returns a dictionary of the notes of the first parameter scale mapped to the negative harmony.
 
 When False, if no chord type is passed in, then the negative harmonic scale type is returned for the passed in scale type, e.g.
 
 ```python
-negative_harmony(scale('C', 'major'))
-```
-
-gets
-
-```python
+>>> alg.negative_harmony(scale('C', 'major'))
 scale name: C5 minor scale
 scale intervals: [2, 1, 2, 2, 1, 2, 2]
 scale notes: [C5, D5, D#5, F5, G5, G#5, A#5, C6]
 ```
 
-There is also a parameter sort, which, when True, will sort the notes by pitch from lowest to highest after converting the chord a to a negative harmonic version. The default value is True.
+There is also a parameter `sort`, which, when True, will sort the notes by pitch from lowest to highest after converting the chord a to a negative harmonic version. The default value is True.
 
 ## Extracting the notes within a chord by index value, including the higher and lower octaves of the note shift
 
@@ -1374,7 +1371,7 @@ a = a.only_notes()
 
 ## Get the chord type according to the guitar's fret count and guitar tuning standard
 
-You can use the `guitar_chord` function to get the chord type by the number of frets of the guitar's 6 strings and the guitar's string standard (which can be left unset, the default is the standard 6 string guitar tuning)
+You can use the `guitar_chord` function from algorithm module to get the chord type by the number of frets of the guitar's 6 strings and the guitar's string standard (which can be left unset, the default is the standard 6 string guitar tuning)
 
 ```python
 guitar_chord(frets,
@@ -1391,9 +1388,9 @@ guitar_chord(frets,
 # detect_args: parameters to determine the specific type of chord, i.e. parameters of the detect function, set by keyword parameters
 
 # For example, if a standard guitar C major triad in the first three frets is 3 frets on the 5th string, 2 frets on the 4th string, 3 frets on the 3rd string, 1 frets on the 2nd string, and 1 frets on the 1st string, then you can write
->>> guitar_chord([None, 3, 2, 0, 1, 0])
+>>> alg.guitar_chord([None, 3, 2, 0, 1, 0])
 [C3, E3, G3, C4, E4] with interval [0, 0, 0, 0, 0, 0]
->>> guitar_chord([None, 3, 2, 0, 1, 0], return_chord=True)
+>>> alg.guitar_chord([None, 3, 2, 0, 1, 0], return_chord=True)
 'Cmajor'
 ```
 
