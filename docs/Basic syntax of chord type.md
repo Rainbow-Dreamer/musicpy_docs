@@ -132,7 +132,7 @@ Dmaj7 = chd('D6', 'maj7')
 In addition, the chd function has a very large number of parameters that can be used to set the chord's omission, altered notes, added notes, as well as the exact length of each note of the chord, the interval of the notes, etc. You can even enter the intervals of the notes to build the chords (you can also set the value of cummulative to determine whether you want to enter the interval of each note to the root note or the interval between each two notes). In musicpy, the name of each interval is already defined and can be used directly, for example, the value of major_third is 4, which is the number of semitones in the major third. For example, to construct a C major seventh chord according to the intervals, you can write it like this
 
 ```python
-chd('C', interval=[major_third, perfect_fifth, major_seventh])
+chd('C', interval=[database.major_third, database.perfect_fifth, database.major_seventh])
 ```
 
 The result is
@@ -300,7 +300,7 @@ chd('C','maj').intervalof()
 You will get [4,7], which means that there are four semitones between the second note and the root note inside the C major triad (C,E,G) (major third), and seven semitones between the third note and the root note (perfect fifth). If you want to see the names of the intervals in music theory, then you can set the parameter translate to True, then you can see the names of the corresponding intervals. For example.
 
 ```python
-chd('C','maj').intervalof(translate = True)
+chd('C','maj').intervalof(translate=True)
 ```
 
 will get ['major third', 'perfect fifth'], which means major third and perfect fifth.
@@ -308,7 +308,7 @@ will get ['major third', 'perfect fifth'], which means major third and perfect f
 When cummulative is set to False returns the interval between every two notes of the chord from low to high, e.g.
 
 ```python
-chd('C','maj').intervalof(translate = True, cummulative=False)
+chd('C','maj').intervalof(translate=True, cummulative=False)
 ```
 
 will get ['major third', 'minor third'], which means that a C major third chord is composed of a major third and a minor third.
@@ -746,16 +746,18 @@ Regarding the current definition of rest in musicpy, rest itself is a data struc
 
 The trans function can be used to parse the full chord name and return the corresponding chord. It supports root position chord representation, inverted chord representation, polychord representation, etc.
 The first parameter of the trans function is the chord name, the second parameter is the pitch of the root note of the chord (the default value is 4), and the third parameter is the duration.
-The third parameter is duration (the length of the note, default is 0.25), and the fourth parameter is interval (the interval of the note, default is None, the returned chord interval is 0).
+The third parameter is duration (the length of the note, default is 0.25), and the fourth parameter is interval (the interval of the note, default is None, the returned chord interval is 0), or you can write `note:chord_type` to indicate the specific note octave.
 For example
 
 ```python
 trans('Dmaj7')
+trans('D5:maj7')
 ```
 
-You can get the Dmaj7 chord
+You can get Dmaj7 chord and Dmaj7 chord with D5 as the root note
 
 ```python
+[D4, F#4, A4, C#5] with interval [0, 0, 0, 0]
 [D5, F#5, A5, C#6] with interval [0, 0, 0, 0]
 ```
 
@@ -796,7 +798,7 @@ trans('C')
 You can get a C major triad
 
 ```python
-[C5, E5, G5] with interval [0, 0, 0]
+[C4, E4, G4] with interval [0, 0, 0]
 ```
 
 ```python
@@ -806,7 +808,7 @@ trans('Am/Gm')
 You can get a polychord with the A minor triad over the G minor triad
 
 ```python
-[G5, A#5, D6, A6, C7, E7] with interval [0, 0, 0, 0, 0, 0, 0]
+[G4, A#4, D5, A5, C6, E6] with interval [0, 0, 0, 0, 0, 0]
 ```
 
 ```python
@@ -878,7 +880,7 @@ C('Amaj7') / 'D'
 The result is
 
 ```python
-[D5, A5, C#6, E6, G#6] with interval [0, 0, 0, 0, 0]
+[D4, A4, C#5, E5, G#5] with interval [0, 0, 0, 0, 0]
 ```
 
 That is, the Amaj7 chord with D as the lowest note underneath.
@@ -891,7 +893,7 @@ C('A') / C('G')
 yields
 
 ```python
-[G5, B5, D6, A5, C#6, E6] with interval [0, 0, 0, 0, 0, 0, 0]
+[G4, B4, D5, A4, C#5, E5] with interval [0, 0, 0, 0, 0, 0]
 ```
 
 This is a polychord of G major triad superimposed under A major triad.
@@ -1565,13 +1567,26 @@ chord_progression(chords,
                   intervals=0,
                   volumes=None,
                   chords_interval=None,
-                  merge=True)
+                  merge=True,
+                  scale=None,
+                  separator=',')
+'''
 chords: string of chord names or a list of chord types, where chord names can also be meta-tuples of C function arguments
+
 durations: the length of each chord, either as a value or as a list
+
 intervals: the interval of each chord, either as a value or as a list
+
 volumes: default volume of each chord, can be a value or a list, if None, no setting
+
 chord_interval: the interval between each chord, can be a value or a list
+
 merge: if True, returns the chord type after merging all chords in the chord progression, if False, returns a list of chord types in the chord progression
+
+scale: you can set a scale type for scale degrees extractions, please refer to chord_progreession function of scale type
+
+separator: when chords is a string, separate each chord with the separator string
+'''
 
 chord_progression_example = chord_progression(['F', 'G', 'Am', 'Em'])
 chord_progression_example = chord_progression([('F',4), ('G',4), ('C',5), ('Am',4)])
@@ -1750,16 +1765,16 @@ getchord_by_interval(start,
 # interval: The note interval of the generated chord type
 # cummulative: If True, the interval relationship is the interval relationship with the initial note. If False, the interval relationship is the interval relationship between every two adjacent sounds. The default value is True
 
->>> getchord_by_interval('C5', [major_third, perfect_fifth, major_seventh])
+>>> getchord_by_interval('C5', [database.major_third, database.perfect_fifth, database.major_seventh])
 # Obtain the chord type composed of the initial note C5, and C5 in turn to form the major third, the complete fifth and the major seventh
 [C5, E5, G5, B5] with interval [0, 0, 0, 0] # Get the C major seventh chord
 
->>> getchord_by_interval('C5', [major_third, minor_third, major_third], cummulative=False)
+>>> getchord_by_interval('C5', [database.major_third, database.minor_third, database.major_third], cummulative=False)
 # Get the chord type composed of the initial note C5 and the adjacent intervals as the major third, minor third, and major third.
 [C5, E5, G5, B5] with interval [0, 0, 0, 0] # Get the C major seventh chord
 
 a = N('C5')
->>> a.getchord_by_interval([major_third, perfect_fifth, major_seventh]) #The note type calls this function
+>>> a.getchord_by_interval([database.major_third, database.perfect_fifth, database.major_seventh]) #The note type calls this function
 [C5, E5, G5, B5] with interval [0, 0, 0, 0]
 ```
 
@@ -2032,19 +2047,13 @@ b = distribute('C[.2;.] , D[.4;.] , {2}', 1/2)
 As mentioned in the previous section on drumming syntax, you can use the `translate` function to apply drumming syntax to notes, enabling you to write chord types in drumming syntax. Here's a more detailed explanation. One of the differences between the `translate` function and the drum type construction is that the default note spacing for the `translate` function is 0, while the default note spacing for the drum type is 1/8, and the default note length for both the `translate` function and the drum type is 1/8. The default note duration, interval and volume could be set using the same parameters when initializing the drum type. Here I will give a few examples of using the `translate` function to write chord types.
 
 ```python
-a = translate('A2[1](2),[1],D3[1](2)')
+>>> translate('A2[l:1; i:1; r:2], i:1, D3[l:1; i:1; r:2]')
+[A2, A2, D3, D3] with interval [1, 2, 1, 1]
 
->>> a
-[A2, A2, D3, D3] with interval [1, 1, 1, 0]
+>>> translate('C5[l:.8; i:.; r:3], D5[l:.16; i:.; r:2], E5[l:.8; i:.], r:2')
+[C5, C5, C5, D5, D5, E5, C5, C5, C5, D5, D5, E5] with interval [0.125, 0.125, 0.125, 0.0625, 0.0625, 0.125, 0.125, 0.125, 0.125, 0.0625, 0.0625, 0.125]
 
-b = translate('C5[.8;.] (3), D5[.16;.] (2), E5[.8;.] , {2}')
-
->>> b
-[C5, C5, C5, D5, D5, E5, C5, C5, C5, D5, D5, D5, E5] with interval [0.125, 0.125, 0.125, 0.0625, 0.0625, 0.125, 0.125, 0.125, 0.125, 0.125, 0.0625, 0.0625, 0.125]
-
-c = translate('C5, E5, G5')
-
->>> c
+>>> translate('C5, E5, G5')
 [C5, E5, G5] with interval [0, 0, 0]
 ```
 

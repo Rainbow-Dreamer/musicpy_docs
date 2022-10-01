@@ -607,9 +607,9 @@ stopall() # Stop the currently playing sound
 
 ## Use of interval names
 
-There is a complete global definition of interval names in musicpy, which can be used directly. For example, the value of `major_third` (major third) is 4 (semitones), and the value of `perfect_eleventh` (complete elevenths) is 17 (semitones) ).
-In addition, the global definition of abbreviated interval names has recently been added. For example, you can use `M3` instead of `major_third` (major third), `m3` instead of `minor_third` (small third),
-`M7` instead of `major_seventh` (major_seventh) and so on. Here I will show the complete global definition of interval names in musicpy, where all interval names can be used as global constants.
+There is a complete definition of interval names from database module in musicpy. For example, the value of `major_third` (major third) is 4 (semitones), and the value of `perfect_eleventh` (complete elevenths) is 17 (semitones) ).
+In addition, the definition of abbreviated interval names has recently been added. For example, you can use `M3` instead of `major_third` (major third), `m3` instead of `minor_third` (small third),
+`M7` instead of `major_seventh` (major_seventh) and so on. Here I will show the complete definition of interval names in musicpy, where all interval names can be used like `database.major_third`.
 
 ```python
 perfect_unison = diminished_second = P1 = d2 = 0

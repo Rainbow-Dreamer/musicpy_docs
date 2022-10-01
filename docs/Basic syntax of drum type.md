@@ -18,162 +18,129 @@ I have designed a new syntax for writing drum beats, and have successfully writt
 First of all, you can define your own dictionary of numbers or letters or special characters to map to different MIDI drum notes, I have defined a default drum mapping dictionary in the database.
 
 Here the length of numbers, letters and special characters can be greater than 1, which means you can write multiple digits, words and multiple special characters as a whole for mapping.
-This is the current default drum mapping dictionary.
+
+This is the current default drum mapping dictionary, there are two sets of templates you can choose to use, or you can customize the drum mapping dictionary.
 
 ```python
 drum_mapping = {
-    '0': 36, # Electric Bass Drum
-    '1': 42, # Closed Hi-hat
-    '2': 40, # Electric Snare
-    '3': 38, # Acoustic Snare
-    '4': 46, # Open Hi-hat
-    '5': 44, # Pedal Hi-hat
-    '6': 39, # Hand Clap
-    '7': 35, # Acoustic Bass Drum
-    '8': 57, # Crash Cymbal 2
-    '9': 49  # Crash Cymbal 1
+    'K': 36, # Electric Bass Drum
+    'H': 42, # Closed Hi-hat
+    'S': 40, # Electric Snare
+    'S2': 38, # Acoustic Snare
+    'OH': 46, # Open Hi-hat
+    'PH': 44, # Pedal Hi-hat
+    'HC': 39, # Hand Clap
+    'K2': 35, # Acoustic Bass Drum
+    'C': 57, # Crash Cymbal 2
+    'C2': 49, # Crash Cymbal 1
+    '0': -1, # rest
+    '-': -2 # the continuation of last note
+}
+
+drum_mapping2 = {
+    '0': 36,
+    '1': 42,
+    '2': 40,
+    '3': 38,
+    '4': 46,
+    '5': 44,
+    '6': 39,
+    '7': 35,
+    '8': 57,
+    '9': 49,
+    'x': -1,
+    '-': -2
 }
 ```
 
-Here different strings of numbers map to values that are MIDI's drum note values, different values represent different pitches, and in the case of drums it means different kinds of drums.
+Here the different strings of numbers map to values that are MIDI drum notes. The different values represent different pitches, and in the case of drums represent different kinds of drums. Now we can write a music theory type drum, whose 1st argument is a string, and in this string you can write drums according to the drum syntax I designed, which can represent complex drums relatively concisely.  
 
-For example, 0 maps to 36 which corresponds to Electric Bass Drum for MIDI, 1 maps to Closed Hi-hat, and 2 maps to Electric Snare.
-
-I have also written the names of the drums mapped to different values in the database, you can see the dictionary drum_types.
-
-In short, 0,1,2 now corresponds to bass drum, pedal cymbal and snare drum respectively, now we can write a music theory type drum, its 1st parameter is a string, in this string you can write drums according to the drum syntax I designed, it's very simple and powerful, you can play a lot of macro's minimal operation.
-
-The syntax I designed for writing drums has a total of 12 rules, plus some special cases.
-
-## Rule 1
-
-Monophonic mode, played sequentially with `,` (e.g. bass drum, hihat, snare, hihat, bass drum, hihat, snare, hihat)
+Single drums, spaced by `,`, indicate sequential playing (e.g. big drum, hihat, snare drum, hihat, big drum, hihat, snare drum, hihat).
 
 ```python
-'0,1,2,1,0,1,2,1'  
+'K, H, S, H, K, H, S, H'  
 ```
 
-## Rule 2
-
-A pattern with several different drums playing at the same time, with `;` indicating simultaneous playing, using comma-separated notes or successive playing
+Multiple different drums played at the same time, spaced by `;`, indicating simultaneous playing, using comma-separated notes or sequential playing.
 
 ```python
-'0,0;1,2,1,0,0;1;5,1;2,1'
+'K, K;H, S, H, K, K;H;PH H;S, H'
 ```
 
-## Rule 3
-
-If there is an interval between two drums (drums can be monophonic or polyphonic), it is expressed as `[n]`, and n can be any integer, float or fraction in bars.
+If there is an interval between two drums (drums can be monophonic or polyphonic), it is expressed in the form `i:n`, with n indicating the interval and n being any integer, decimal or fraction in bars.
 
 ```python
-'0,[1],2,1,[1],0,2,1'
+'K, i:1, S, H, i:1, K, S, H'
 ```
 
-## Rule 4
-
-Set the duration, interval and volume for each drum beat, each drum beat can be followed by a `[length;interval;volume level]` setting block, and also drums played at the same time (drums that are joined with `;`). If the 2nd parameter is the same as the 1st, then it can also be omitted by writing `.` as in the advanced syntax for chords, the default volume is 100, or you can pass the length list, the interval list, and the volume list into the build function of the drum type.
+Set the length, interval and volume for each drum beat, each drum beat can be followed by a settings block like `[l:length;i:interval;v:volume]`, also including drums played at the same time (drums concatenated with `;`), if the second argument is the same as the first, then it can also be omitted by writing `. ` to omit it, the default volume is 100.
 
 ```python
-'0[1/4],1[1/4],2[1/4],1[1/4],0[1/4],1[1/4],2[1/4],1[1/4]'
+'K[l:1/4]'
 ```
 
-In the setting block, if there are parameters that you don't want to set, you can write `n` to indicate that you don't want to set them, and use it to set them if there is a batch setting statement afterwards. Please note that the batch setting statement will overwrite the settings of each drum block, unless `n` is written to indicate that it is not set.
+In the setting block, if there are parameters you don't want to set, you can write ``n`` to indicate that you don't want to set them, and use them to set to the batch setting statement if there is one later. Please note that the bulk setting statement will overwrite the setting of each drum block, unless `n` is written to indicate no setting.
 
 ```python
-'0[1/4;n;80],1[1/4;1/2],2[1/4;1/8],1[1/4];2[1/8]'
+'K[l:1/4;i:n;v:80]'
 ```
 
-Please note that if drums are played at the same time (drums that are joined with `;`) for setting blocks, please put them after the last note.
+Note that if drums that are played simultaneously (drums that are joined with ;) are set for the setup block, put it after the last note.
 
 ```python
- '0[1/4;.],1[1/4;1/2],2[1/4;1/8],1;2[1/4;1/8],0[1/4],1[1/4;1/8;80],2[1/4],1[1/4]'
+'H;S[l:1/4;i:1/8]'
 ```
 
-## Rule 5
+Keyword headers can perform a variety of different functions on the drums within their range of action. The drums are segmented by keyword headers or bar lines `|`, and each keyword headers acts on the drums between the previous keyword headers or bar lines and it.
 
-Batch set the length, interval and volume level of all drums, after the `!` can be followed by 1 to 3 arguments, also similar to the syntax for drums played simultaneously, which uses the `;` to link together.  
+Some of the keyword header can be placed in the settings block, separated by `;`.
 
-If only 1 parameter is written, then only the length of all drums is set in bulk, if 2 are written, then the length and interval of all drums is set, and the 3rd parameter is the volume level of all drums.  
-
-Please note that the interval of the part where multiple drums are played at the same time will not be set, that is, the part where multiple drums were written to be played at the same time will still be played at the same time (interval of 0).  
-
-Only the set length and volume level will be set, and only the interval of the last note in the drums played at the same time will be set, because it is the interval between the next drum beat.  
-
-This batch setting can only be set at the beginning or at the end, i.e. at the position of the first drum beat or at the position of the last drum beat.  
-
-If there are parameters that you don't want to set (you want to follow the default or you want to follow each one individually), you can write `n` to indicate that you don't want to set them, write `.` to set the same value as the previous parameter. Also, the 3 arguments can be lists, in addition to numbers.
+Here is a description of the function of each keyword header:
 
 ```python
-'0,0;1,2,1,0,0;1;5,1;2,1,!1/4;1/4;1/4'
-'!1/4;1/4;1/4,0,0;1,2,1,0,0;1;5,1;2,1'
-```
+r:n repeats the drumbeat n times, and can also be placed in a set block
 
-## Rule 6
+d:l;i;v sets the default length l, interval i, volume v, or you can use dl, di, dv respectively
 
-If no settings are made, the default drum duration is 1/8, the drum interval is 1/8 (the intervals in the syntax played at the same time are all 0), and the volume level of the drums is 100. The default duration, interval and volume could be set when initializing the drum instance, or be specified in the block like `{de:duration;interval;volume}`, which will set the default duration, interval and volume for each drum beat between the last block and current block. The following example set the drum beat with default duration at 1/16 bar and default interval at 1/16 bar.
+a:l;i;v set all uniform lengths l, interval i, volume v, or use al, ai, av respectively
 
-```python
-'0,[.16],1,1,2,[.16],0,[.16],0,1,0,0,2,[.16],0,[.16],{de:.16;.}'
-```
+t:n sets the total length of the interval to n. The length of each note in the interval is the total length divided by the number of notes in the block, and can be occupied using empty notes (characters with a value of -1 in the drum mapping) and continuation notes (characters with a value of -2 in the drum mapping), for example
+K, H, S, H, 0, K, S, H, K, -, S, H, K, K, S, H, t:2
+This is a section where each note takes up 1/8 of a measure, the 0 is the empty beat, and the - is the continuation of the previous note
 
-## Rule 7
+i:n insert interval n bars in the middle of the note, in the setting block is to set the interval of the note to n bars
 
-If you want to repeat the same drum beat n times, you can add `(n)` after a drum beat, or you can add it after a drum beat with a set block.
-Or it can be followed by a set block as well, in either case, the drum beat will be set first according to the set block, and then repeated n times
-For syntax where multiple drums are played at the same time, you only need to add `(n)` at the end to repeat n times, regardless of whether there is a set block or a batch set
+l:n set the note length to n bars in the setup block
 
-```python
-'0,1(3),2,1(3)'
-'0,1(3)[1/4;1/4],2,1(3)[1/4;1/4]'
-'0,1[1/4;1/4](3),2,1[1/4;1/4](3)'
-'0,1;2(3),2,1;2[1/4;1/8](3),1;2[1/4;1/4;80](3)'
-```
+v:n sets the note volume to n in the set block
 
-## Rule 8
+n:name sets the name of the drum beat in the block to name
 
-If you want to batch one of the drum beats or repeat it n times, you can use `{!1/4;1/4}` and `{n}` and just write it as if it were a normal drum beat after a drum beat, it will follow the beginning to this truncated statement or the previous truncated statement as the drum passage to be batch processed, and the the batch processing statement can be written inside `{}`.
+u:name Use the interval drums according to the name name
 
-If you only write a number, it means repeat the drum passage n times, if you want to use a combination of the two, you can use the `|` connection, for example, `{!1/4;1/4|2}` means batch set the specified drum passage and repeat 2 times, the order of the two settings can be arbitrary.
+s:T to; whether the connected drums are played simultaneously (T/F), if no, the drums will be divided equally by the length of one drum when the total length is fixed, use
 
-```python
-'0,1[1/4;1/4](3),2,1[1/4;1/4](3),{2},0,1[1/4;1/4](2),3,2,1[1/4;1/4](2),3,{2}'
-```
-
-## Rule 9
-
-If you want to number, or name, a section of drums, then you can write `$n` in the truncated statement, where `n` is the number, either a number or a letter, and can be greater than 1 in length.
-This can also be used in combination with the other two settings, so that if you want to use the numbered drum beat later on, you can write `$n` as if it were a normal drum beat.
-
-```python
-'0,1[1/4;1/4](3),2,1[1/4;1/4](3),{$1},0,1[1/4;1/4](2),3,2,1[1/4;1/4](2),3,{$2},$1,$2'
-```
-
-The numbered statement can be used as a general drumbeat when called after it is defined, and the same can be done with set blocks, repeating statements like
-
-```python
-'$1[1/4;1/4]' # The set block in this case indicates a bulk setting of `$1`, with parameters referable to case 5
-'$1(2)' # repeat the numbered 1 drum passage 2 times
+! in combination with the keyword header means to set all the current notes in batch,
+for example: K, H, S, H | K, K, S, H, !r:2
 ```
 
 ## Caution
 
-1. Note that when the parameters are lists, `|` must be used as the interval when setting multiple drums that are played simultaneously (or when setting all drums in a batch), and `` ` `` as the interval, in both cases the interval between the three parameters can be `;`  
-2. Please note that in syntax where multiple drums are played at the same time, it is ungrammatical to use a set block for each drum, e.g. `'1[1/4;1/4];2[1/8;1/8]'` is ungrammatical  
-3. If you want to set the length of each drum beat for multiple drums playing at the same time, put the setting block after the last drum beat, you can use a list as a parameter, in which case you must omit the brackets (`[]`). If you are batch processing in a truncated statement or if you are batch setting all drums using a list as a parameter, you can use `[]`  
-4. You can place any numbers of spaces and newline characters, they do not affect the contents that the interpreter function converts to, so you can write the drum codes prettier and more organized.  
-5. The durations and intervals of notes could also use the syntactic sugar, use `.n` to represent `1/n`, which is the nth note.
+1. Please note that in the setup block, when the parameter is a list, you need to set a separate setup block, use `;` to separate the elements of the list, you can put multiple setup blocks together.
+2. you can place any spaces and newlines, they will not affect the content after parser conversion, so you can write the drum code more beautiful and hierarchical.  
+3. Note length and spacing can also be set using syntactic sugar, using `.n` for `1/n`, which is an nth note.
 
 ## Introduction to the construction and usage of drum types
 
-Drum types are similar to chord types in that they have a list of notes, can be repeated n times, merged, set overall note parameters, etc., and can also be played directly. Note that when you play a drum type using the play function (either using the built-in drum type function or the global function), the drum type is automatically coded into a track type and the MIDI channel number is set to 9 (starting from 0 as the first, i.e. the 10th MIDI channel, specifically for drum tracks).  
+Drum types are similar to chord types in that they have a list of notes and can be repeated n times, merged, set overall note parameters, etc. They can also be played directly, but please note that when you play a drum type using the play function (either using the built-in function of the drum type or using the global function), the drum type is automatically coded into a music type and sets the number of MIDI channels to 9 (counting from 0 as the first, i.e. the 10th channel of MIDI, dedicated to the drum track).  
 
-Note that the drum type itself does not contain tempo, or tempo, or bpm, because the drum type is designed to be viewed on the same level as the chord type. Neither the drum type (drum) nor the chord type (chord) contain parameters for tempo; the piece type (piece) and track type (track) do.  
+Note that the drum type itself does not contain velocity, or tempo, or bpm, because the drum type is designed to be viewed on the same level as the chord type, and neither the drum type (drum) nor the chord type (chord) contains the velocity parameter.  
 
-The drum type can be constructed by passing a string or a chord type, where the default position of the 1st parameter is a string, or can be specified with the pattern keyword parameter, or with the notes keyword parameter if you want to pass a chord type. If a string is passed in, the incoming string is parsed for drum syntax and converted to a chord type for storage in the drum type when the drum type is constructed. You can use the name keyword argument to name the drums you write, and you can use the mapping keyword argument to specify a dictionary of characters mapped to drum values, where drum values means the numbers corresponding to the different drums in the general MIDI, and I have written which numbers correspond to the different drums in the drum_types in the database.  
+The drum type can be constructed by passing a string or a chord type, where the default position of the 1st parameter is a string, or can be specified with the pattern keywordword parameter, or with the notes keywordword parameter if you want to pass a chord type. If a string is passed in, the incoming string is parsed for drum syntax and converted to a chord type for storage in the drum type when the drum type is constructed. You can use the name keywordword argument to name the drums you write, and you can use the mapping keywordword argument to specify a dictionary of characters mapped to drum values, where drum values means the numbers corresponding to the different drums in general MIDI, and I have written which numbers correspond to the different drums in the drum_types in the database.  
 
-You can use `i` keyword parameter to set the timbre of the drum kit, see the numbers corresponding to the timbre of the drum kit in the general MIDI.  
+You can use the `i` keywordword parameter to set the timbre of the drum kit, see the numbers corresponding to the timbre of the drum kit in general MIDI.  
 
-Also, for chord types you can use the translate function, which uses the same set of syntax as writing drums to write chord types or a piece, just replace the custom characters with note names.
+Also, for chord types you can use the translate function, which uses the same set of syntax as writing drums to write chord types or a tune, just replace the custom characters with note names.
 
 ### The composition of drum type
 
@@ -200,9 +167,9 @@ drum(pattern='',
 - default_volume: default volume of drum beat
 
 ```python
-drum_example = drum('0,1,2,1,0;1,0;1,2,1,{2}')
-# This is an example of a drum section with 4 monophonic drums in front, then 2 diatonic drums, then 2 monophonic drums, and finally the whole section repeated 2 times,
-# where 0,1,2 means bass drum, pedal and snare respectively, so 0;1 means bass drum and pedal playing at the same time
+drum_example = drum('K, H, S, H, K;H, K;H, S, H, r:2')
+# This is an example of a drum section with kick, hi-hat, snare, hi-hat at the beginning, then 2 simultaneous kick and hi-hat, then 1 single snare and 1 single hi-hat, and finally the whole section repeats 2 times,
+# where K,H,S means kick, hi-hat and snare respectively, so K;H means kick and hi-hat playing at the same time
 play(drum_example, 150) # Play the drums at 150bpm
 >>> print(drum_example)
 [drum] 

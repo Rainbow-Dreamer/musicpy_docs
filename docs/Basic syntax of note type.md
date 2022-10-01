@@ -163,7 +163,7 @@ You can use the `with_interval` function of the note type to specify an interval
 
 ```python
 a = N('C5')
->>> a.with_interval(major_seventh) # form a chord representing the major seventh interval of C5
+>>> a.with_interval(database.major_seventh) # form a chord representing the major seventh interval of C5
 [C5, B5] with interval [0, 0]
 ```
 

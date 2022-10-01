@@ -209,10 +209,9 @@ b = a % n
 BPM: 150
 channel 0 piano | instrument: Acoustic Grand Piano | start time: 0 | [C4, E4, G4, B4] with interval [0, 0, 0, 0]
 
-# Use the syntax of a(n) to get a list with the chord type, instrument, BPM, start time,
-# channel number, track name, channel pan, channel volume of the nth MIDI channel
+# Use the syntax of a(n) to get the chord type of the nth track
 >>> a(0)
-[[C4, E4, G4, B4] with interval [0, 0, 0, 0], 'Acoustic Grand Piano', 150, 0, 0, 'piano', [], []]
+[C4, E4, G4, B4] with interval [0, 0, 0, 0]
 
 # Raise/lower the whole piece by n semitones, again with the same syntax as the note type, chord type, either using the up/down function or the +/- progression syntax
 b = a.up()
