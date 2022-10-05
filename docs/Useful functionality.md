@@ -96,22 +96,17 @@ Using the read function you can read a MIDI file and convert the contents of the
 read(name,
      is_file=False,
      get_off_drums=False,
-     split_channels=False,
      clear_empty_notes=False,
-     clear_other_channel_msg=False)
+     clear_other_channel_msg=False,
+     split_channels=None)
 ```
 
 * name: the name of the MIDI file (including the .mid filename extension)
-
 * is_file: is used to handle the case when the first parameter name is passed in as a MIDI file stream. If the first parameter name is a MIDI file stream, is_file needs to be set to True for normal reading. The default value is False, which is not used when the first parameter is a MIDI file name.
-
 * get_off_drums: When set to True, filter out the drum track. The default value of get_off_drums is False.
-
-* split_channels: When reading a MIDI file that puts all the notes of all the different instruments in one MIDI channel, set this parameter to True to convert to the correct piece type.
-
 * clear_empty_notes: set to True to remove all note types with duration <= 0 when converting each track to a chord type.
-
 * clear_other_channel_msg: When it is set to True, it will clear the MIDI messages that do not belong to the channel number of current track of each track returned.
+* split_channels: When reading a MIDI file that puts all the notes of all the different instruments in one MIDI track, set this parameter to True to convert to the correct piece type.
 
 ### Example of read function usage:
 

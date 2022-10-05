@@ -2,13 +2,6 @@
 
 Here are some issues you may encounter when using musicpy with solutions, some of them are existing bugs of the python libraries that musicpy has dependencies with, or just not giving you the desired result when the function parameters are set as default.
 
-* ## I read a MIDI file using the read function of musicpy, but all of the messages of tracks are read into one track
-Normally, a MIDI file is made with multiple individual tracks that is actually separated when read by python MIDI libraries such as mido, midiutil (which are the MIDI libraries that are used in musicpy), but some producers or the software that exports the MIDI files put them into a single track.
-
-You may encounter this issue when you try to read some MIDI files that are back in the past, when the producers made the MIDI files with only one track but still with multiple individual tracks that each has its own instruments, this is actually possible since each note on/off messages (and other MIDI messages) could has its own channel number, so when you playback the MIDI files like this, you can still hear all of the individual tracks. 
-
-Solution: You can separate the tracks by setting the parameter `split_channels` of the `read` function to True, musicpy will separate the messages in the single track to multiple individual tracks which stores in a piece instance as the return value by algorithms.
-
 * ## I tries to play or write the piece instance I read from a MIDI file to a new MIDI file, but when I see the new MIDI file in DAW, some notes become extremely long, which has totally different lengths from the original MIDI file
 
 This is because some MIDI files has duplicate notes in some tracks, here duplicate notes means these notes has the exact same pitch, start at the same time or has some part overlapped, in this case, some python MIDI libraries might consider these duplicate notes as a whole note, which makes the issue happen.
