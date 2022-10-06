@@ -45,10 +45,10 @@ Next I will describe how to do this.
 First we prepare the piece, which can be any MIDI file, and then use the `read` function to read the track you want to separate. for example
 
 ```python
-bpm, a, start_time = read('example.mid').merge()
+a, bpm, start_time = read('example.mid').merge()
 ```
 
-The `read` function returns a piece type, using the `merge` function you can get a tuple with 3 elements, respectively the tempo of the piece (BPM), the chord type of the piece, and the start time of the piece (in bars)
+The `read` function returns a piece type, using the `merge` function you can get a tuple with 3 elements, respectively the chord type of the piece, the tempo of the piece (BPM), and the start time of the piece (in bars)
 
 Then we can use
 
@@ -72,10 +72,10 @@ Then the MIDI file of the main melody of the example will be generated in the mu
 
 You can use the `split_chord` function to extract the chord notes of a piece, which actually does the same thing as `split_melody`, similar to the above, except that the output MIDI file becomes the chord notes of a piece, for example, called `example_chords`.
 
-Using the `split_all` function, you can get both the main melody and the chord notes of a piece in 2 chord types, and everyone can output them separately as new MIDI files in the same way. But the `split_all` function, when `mode='chord'`, returns not only the two chord types of the main melody and the chord note, but also a third return value, shift, which indicates how many bars further back the chord note starts than the main melody (if the chord note starts before the main melody, the shift value is a negative number). The shift return value is useful when you want to merge a new piece in musicpy after making changes to the main melody or chord notes, and you want to start it in the same position as the beginning of the previous piece.
+Using the `split_all` function, you can get both the main melody and the chord notes of a piece in 2 chord types, and everyone can output them separately as new MIDI files in the same way. The start times of melody and chord notes are stored in the results, so when you want to merge the melody and chord notes into a new piece after making changes, you can write
 
 ```python
-example_melody & (example_chords, shift)
+example_melody & example_chords
 ```
 
 to get a new piece that starts at the same position as the previous piece.
@@ -83,18 +83,18 @@ to get a new piece that starts at the same position as the previous piece.
 Note that the 2 chord types which are the main melody and chords returned by `split_all` function both contain the same pitch_bend and tempo types as the piece before the separation in their notes list, because the non-note types are not involved in the separation algorithm, but are retained in the separation result. So when you merge the main melody with the chord notes, please clear the pitch_bend and tempo types of one of the chord types before merging, to avoid duplication of the pitch_bend and tempo types, and it is recommended to use the `only_notes` function that comes with the chord type to get a chord type containing only the note types. For example:
 
 ```python
-example_melody & (example_chords.only_notes(), shift)
+example_melody & example_chords.only_notes()
 ```
 
-The start times of the pitch_bend and tempo types reserved for the main melody and chord notes are relative to the original piece, so in case where the main melody or chord notes do not appear from the very beginning of the original piece, the start times of the pitch_bend and tempo types may be off when the main melody or chord notes are played individually, if you want to get the precise start times of pitch_bend and tempo types relative to the main melody or chord notes, you can use the third returned value of the `split_all` function, `shift`, to shift the start times of the pitch_bend and tempo types (you don't need to change the start times if you want to merge them into the original piece), and use the chord types' own `apply_ start_time_to_changes` function with the argument `start_time`, which is a numeric value that adds `start_time` to the start times of the non-note types in the chord type. If shift is positive, then it means that the main melody starts from the beginning and the chords starts some time after the main melody starts, so the main melody does not need to modify the start times of the non-note types, and the start times of the non-note types of the chord notes are all subtracted from the value of `shift` to synchronize with the start times of the pitch bends and tempo changes of the original piece when the chord notes are played individually. If shift is negative, then the chord notes is not modified and the start times of the non-note types of the main melody is subtracted by the value of `-shift`. For example:
+The start times of the pitch_bend and tempo types reserved for the main melody and chord notes are relative to the original piece, so in case where the main melody or chord notes do not appear from the very beginning of the original piece, the start times of the pitch_bend and tempo types may be off when the main melody or chord notes are played individually.
+
+If you want to get the precise start times of pitch_bend and tempo types relative to the main melody or chord notes, you can apply the start times of melody and chord notes to the pitch_bend and tempo types inside them by using `apply_ start_time_to_changes` function of the chord type (you don't need to apply the start times if you want to merge them into the original piece). For example:
 
 ```python
 example_melody_individual = copy(example_melody)
 example_chords_individual = copy(example_chords)
-if shift >= 0:
-    example_chords_individual.apply_start_time_to_changes(-shift)
-else:
-    example_melody_individual.apply_start_time_to_changes(shift)
+example_chords_individual.apply_start_time_to_changes(example_chords.start_time)
+example_melody_individual.apply_start_time_to_changes(example_melody.start_time)
 ```
 
 For different pieces, setting different 3 tolerance thresholds may give better results. The default 3 tolerance thresholds will work for most pop or jazz piano pieces.
