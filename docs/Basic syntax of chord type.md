@@ -1945,11 +1945,11 @@ Generally, you can pass in the `other_messages` attribute to add other MIDI mess
 ```python
 a = C('Cmaj7')
 
-b = a.with_other_messages([controller_event(controller_number=1, parameter=50)])
+b = a.with_other_messages([event('control_change', control=1, value=50)])
 
 >>> b.other_messages
 
-[controller_event(track=0, channel=0, time=0, controller_number=1, parameter=50)]
+[event(type=control_change, track=0, start_time=0, control=1, value=50)]
 ```
 
 ## Write chord types by polyphony

@@ -135,8 +135,7 @@ write(current_chord,
       save_as_file=True,
       msg=None,
       nomsg=False,
-      deinterleave=False,
-      remove_duplicates=False,
+      ticks_per_beat=960,
       **midi_args)
 ```
 
@@ -160,11 +159,9 @@ write(current_chord,
 
 * nomsg: set whether write other MIDI messages to MIDI file or not, if set to True, then not written
 
-* other_args: some other config parameters when MIDI file is written, including:  
-  deinterleave=False,  
-  remove_duplicates=False,  
-  **midi_args  
-  (please refer to the midiutil documentation for details of these parameters)
+* ticks_per_beat: ticks per beat of the MIDI file, set this higher to get higher resolution
+
+* **midi_args: other arguments for MIDI file, please refer to [mido documentation](https://mido.readthedocs.io/en/latest/lib.html#midi-files) for details
 
 ## I wrote an efficient IDE specifically for musicpy for everyone to use
 
@@ -409,176 +406,22 @@ When using the `read` function, if you choose to return the chord type, then `ot
 
 If you choose to return the track type, then `other_messages` will be added to the chord type of each track, and the other MIDI messages of all the tracks will be merged as a whole `other_messages` and added to the track type property. When extracting a track for a read track type, the `content` of the extracted track type (which is a chord type) will also have the `other_messages` added during the previous read.
 
-Since the other MIDI messages defined in musicpy includes `program_change`, that is, information about changing the instrument, if you modify the instrument of the piece type or track type, it is very likely that the instrument will not change after writing to the MIDI file because `other_messages` has the information of `program_change`. You can set the `nomsg` parameter in the `play` and `write` functions to True to ignore the `other_messages` (i.e., no writing), which will allow the instrument to change. Or you can clear the list of `other_messages`. If you still want to keep the other MIDI messages in `other_messages`, you can remove the MIDI messages in `other_messages` that are of type 'program_change', e.g. `a.other_messages = [i for i in a if type(i) ! = program_change]`
+Since the other MIDI messages defined in musicpy includes `program_change`, that is, information about changing the instrument, if you modify the instrument of the piece type or track type, it is very likely that the instrument will not change after writing to the MIDI file because `other_messages` has the information of `program_change`. You can set the `nomsg` parameter in the `play` and `write` functions to True to ignore the `other_messages` (i.e., no writing), which will allow the instrument to change. Or you can clear the list of `other_messages`. If you still want to keep the other MIDI messages in `other_messages`, you can remove the MIDI messages in `other_messages` that are of type 'program_change', e.g. `a.other_messages = [i for i in a if i.type != 'program_change']`
 
 When using the `play` function or the `write` function, when the chord type or the piece type (or other music theory type) written does not have the `other_messages` attribute or the list of `other_messages` is empty/None, you can specify the `msg` parameter and it will write the MIDI messages in the list of `msg` parameters. If the written piece type has the attribute `other_messages` and is not empty/None, it will write the piece type's own `other_messages`, and the `msg` argument of the `play` function or `write` function will be ignored.
 
 If you don't want to write any `other_messages`, then you can set the `nomsg` parameter to True (the default is False), which will ignore the `other_messages` of the incoming piece type and the `other_messages` of the specified `msg` parameter.
 
-### Other types of MIDI messages currently defined by musicpy
+### event type
 
-The types of other MIDI messages are standardized on General MIDI.
-Most of the MIDI message types have three parameters `track` (track number, starting from 0), `channel` (channel number, starting from 0), `time` (start time, starting from 0, in bars), they are all used in the same way, so they are not described below.
+In musicpy, event types represent MIDI messages.
 
-1. controller event  
-   controller_event(track=0,
-                 channel=0,
-                 time=0,
-                 controller_number=None,
-                 parameter=None)
+All event types have `type` (MIDI message type string), `track` (track number, starting from 0), `start_time` (start time, starting from 0, in bars), which are all used in the same way.
 
-* controller_number: the number of the controller event
-* parameter: the parameter of the controller event
-
-2. copyright event  
-   copyright_event(track=0, time=0, notice=None)
-
-* notice: the content of the copyright declaration, string
-
-3. key signature event  
-   key_signature(track=0,
-              time=0,
-              accidentals=None,
-              accidental_type=None,
-              mode=None)
-
-* accidentals: the number of accidentals in the key, integer
-* accidental_type: The type of the ascending (SHARPS) or descending (FLATS) horn used in the tune.
-* mode: modulation, you can specify MAJOR or MINOR
-
-4. sysex event  
-   sysex(track=0, time=0, manID=None, payload=None)
-
-* manID: manufacturer's ID
-* payload: actual data (load), must be packed in binary value
-
-5. text event  
-   text_event(track=0, time=0, text='')
-
-* text: text written, string
-
-6. time signature event  
-   time_signature(track=0,
-               time=0,
-               numerator=None,
-               denominator=None,
-               clocks_per_tick=None,
-               notes_per_quarter=8)
-
-* numerator: numerator of the clocks
-* denominator: denominator of the clocks
-* clocks_per_tick: ticks for each metronome click
-* notes_per_quarter: the number of 32nd notes in a quarter
-
-7. universal sysex event  
-   universal_sysex(track=0,
-                time=0,
-                code=None,
-                subcode=None,
-                payload=None,
-                sysExChannel=127,
-                realTime=False)
-
-* code: the code of the event
-* subcode: subcode of the event
-* payload: the actual data (load), must be the value packed in binary
-* sysExChannel: SysEx channel (0 - 127)
-* realTime: Set the real time flags
-
-8. registered parameter number event  
-   rpn(track=0,
-    channel=0,
-    time=0,
-    controller_msb=None,
-    controller_lsb=None,
-    data_msb=None,
-    data_lsb=None,
-    time_order=False,
-    registered=True)
-
-* controller_msb: The highest valid byte of the controller
-* controller_lsb: The lowest valid byte of the controller
-* data_msb: The highest valid byte of the controller's parameters
-* data_lsb: The lowest valid byte of the controller's parameters
-* time_order: whether to order the control events chronologically
-* registered: if True, returns RPN (Registered Parameter Number), if False, returns NRPN (Non-Registered Parameter Number)
-
-9. tuning bank event  
-   tuning_bank(track=0,
-            channel=0,
-            time=0,
-            bank=None,
-            time_order=False)
-
-* bank: tuning group number (0 - 127)
-* time_order: Whether to order component events in chronological order
-
-10. tuning program event  
-    tuning_program(track=0,
-               channel=0,
-               time=0,
-               program=None,
-               time_order=False)
-
-* program: the tuning program number (0 - 127)
-* time_order: Whether to order component events in chronological order
-
-11. channel pressure event  
-    channel_pressure(track=0, channel=0, time=0, pressure_value=None)
-
-* pressure_value: channel pressure (0 - 127)
-
-12. program change event  
-    program_change(track=0, channel=0, time=0, program=0)
-
-* program: program number (0 - 127)
-
-13. track name event  
-    track_name(track=0, time=0, name='')
-
-* name: name assigned to the track, string
-
-### You can use the event function to generate any other types of MIDI messages
-
-You can use the `event` function to get any other types of MIDI messages
+The `type` parameter of the event type is based on the MIDI message type of the Mido library, and the parameters other than `track` and `start_time` are based on the parameters of the corresponding MIDI message types of the Mido library, please refer to the official documentation of Mido [Message Types](https://mido.readthedocs.io/en/latest/message_types.html) and [Meta Message Types](https://mido.readthedocs.io/en/latest/meta_message_types.html).
 
 ```python
-event(mode='controller', *args, **kwargs)
-# mode: indicates the type of MIDI event you want to generate, can be 'controller', 'copyright', 'key signature', 'sysex',
-# 'text', 'time signature', 'universal sysex', 'nrpn', 'rpn', 'tuning bank', 'tuning program',
-# one of 'channel pressure', 'program change', 'track name'
-
-# *args, **kwargs: arguments for the MIDI event of your choice
-
-new_event = event('controller', track=1, channel=2, controller_number=12, parameter=30)
-```
-
-## Change the temperament of chord type and piece type
-
-You can use the `tuning` type to change the temperament (customize the frequency of each note) by inserting it as a note into the track of the chord type and the tune type. 
-When you write the chord type and piece type to the MIDI file, the MIDI messages of the changed temperament will be written to the MIDI file as well.
-
-```python
-tuning(tuning_dict,
-       track=0,
-       sysExChannel=127,
-       realTime=True,
-       tuningProgam=0)
-
-# tuning_dict: A dictionary representing the rhythm system, in the form of note:frequency, the note can be a string or a note type, e.g.: {'C5': 530, 'D5': 590}
-
-# track: number of tracks
-
-# sysExChannel: SysEx channel (0 - 127)
-
-# realTime: Set the real time flags
-
-# tuningProgram: adjusts the program number
-
-part1 = C('C')
-part1.append(tuning({'C5': 530, 'D5': 590}))
->>> part1
-[C4, E4, G4, tuning: {'C5': 530, 'D5': 590}] with interval [0, 0, 0, 0]
+event(type, track=0, start_time=0, **kwargs)
 ```
 
 ## Improvement of the function to clear tempo changes and pitch bends for chord type and piece type

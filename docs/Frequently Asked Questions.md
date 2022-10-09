@@ -18,32 +18,6 @@ When you use python IDE like Pycharm or VS Code, this issue will occur, since th
 
 Solution: You can add `wait=True` in the parameter of the `play` function, which will block the function till the playback ends, so you can hear the sounds.
 
-* ## When I tries to play/write a piece instance to a MIDI file with `deinterleave=True`, I get `builtins.IndexError: pop from empty list` error
-This is a known bug of midiutil, which is one of the python MIDI libraries that musicpy uses. This issue has been mentioned by someone several years ago at the issue section of midiutil on github [here](https://github.com/MarkCWirt/MIDIUtil/issues/24), and the fixes of this bug is actually pretty easy, which is adding a boundary check, but the author of midiutil does not fix this bug till now.
-
-Solution: Navigate to the python installation path of the python version that you are currently using, then go to `Lib\site-packages\midiutil`, open the file `MidiFile.py` in an IDE or text editor, find the function `deInterleaveNotes` of the class `MIDITrack`, change this part:
-```python
-elif event.evtname == 'NoteOff':
-    if len(stack[noteeventkey]) > 1:
-        event.tick = stack[noteeventkey].pop()
-        tempEventList.append(event)
-    else:
-        stack[noteeventkey].pop()
-        tempEventList.append(event)
-```
-to this:
-```python
-elif event.evtname == 'NoteOff':
-    if len(stack[noteeventkey]) > 1:
-        event.tick = stack[noteeventkey].pop()
-        tempEventList.append(event)
-    else:
-        if stack[noteeventkey]:
-            stack[noteeventkey].pop()
-            tempEventList.append(event)
-```
-And then save the file.
-
 * ## I tries to read a MIDI file using the read function but it gives me index out of range error
 This is a bug of mido, which is one of the python MIDI libraries that musicpy uses. When some meta messages of the MIDI file contains empty data and mido tries to get attributes from it, not all of the decode function of every type of meta messages has the boundary check for data to see if it is empty, and straightly get the data element by indexing as assuming the data is not empty, which causes index out of range error.
 

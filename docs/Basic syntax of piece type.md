@@ -358,7 +358,7 @@ a.other_messages.clear()
 a.other_messages = []
 
 a.clear_other_messages() # Clear all other MIDI messages
-a.clear_other_messages(program_change) # clear other MIDI messages of type program_change
+a.clear_other_messages('program_change') # clear other MIDI messages of type program_change
 
 # When a is a piece type, similar to the clear_program_change function, there is an apply_tracks argument
 # The usage is similar, and the default value is True
@@ -435,13 +435,13 @@ c = a.move(2, 1) # the length of the 1st track of the piece type a moved 2 bars 
 You can use the `get_msg` function to filter for a type of MIDI message in a chord type, which returns a list of MIDI messages, for example
 
 ```python
-a.get_msg(program_change) # Filter program_change messages in chord type a
+a.get_msg('program_change') # Filter program_change messages in chord type a
 ```
 
 The piece type also has the `get_msg` function, which you can use to extract a type of MIDI message from a track by specifying the `ind` parameter, or from all tracks if you don't specify it.
 
 ```python
-a.get_msg(program_change, ind=0) # Filter program_change messages in the first track
+a.get_msg('program_change', ind=0) # Filter program_change messages in the first track
 ```
 
 ## Transpose the whole piece type
