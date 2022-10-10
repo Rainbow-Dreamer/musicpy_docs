@@ -73,19 +73,19 @@ If there is an interval between two drums (drums can be monophonic or polyphonic
 'K, i:1, S, H, i:1, K, S, H'
 ```
 
-Set the length, interval and volume for each drum beat, each drum beat can be followed by a settings block like `[l:length;i:interval;v:volume]`, also including drums played at the same time (drums concatenated with `;`), if the second argument is the same as the first, then it can also be omitted by writing `. ` to omit it, the default volume is 100.
+Set the length, interval and volume for each drum beat, each drum beat can be followed by a settings block like `[l:length;i:interval;v:volume]`, also including drums played at the same time (drums concatenated with `;`), if the second argument is the same as the first, then it can also be omitted by writing `.` to omit it, the default volume is 100.
 
 ```python
 'K[l:1/4]'
 ```
 
-In the setting block, if there are parameters you don't want to set, you can write ``n`` to indicate that you don't want to set them, and use them to set to the batch setting statement if there is one later. Please note that the bulk setting statement will overwrite the setting of each drum block, unless `n` is written to indicate no setting.
+In the settings block, if there are parameters you don't want to set, you can write `n` to indicate that you don't want to set them, and use them to set to the batch setting statement if there is one later. Please note that the batch setting statement will overwrite the setting of each drum block, unless `n` is written to indicate no setting.
 
 ```python
 'K[l:1/4;i:n;v:80]'
 ```
 
-Note that if drums that are played simultaneously (drums that are joined with ;) are set for the setup block, put it after the last note.
+Note that if drums that are played simultaneously (drums that are joined with ;) are set for the settings block, put it after the last note.
 
 ```python
 'H;S[l:1/4;i:1/8]'
@@ -98,35 +98,35 @@ Some of the keyword header can be placed in the settings block, separated by `;`
 Here is a description of the function of each keyword header:
 
 ```python
-r:n repeats the drumbeat n times, and can also be placed in a set block
+r:n repeats the drumbeat n times, and can also be placed in a settings block
 
 d:l;i;v sets the default length l, interval i, volume v, or you can use dl, di, dv respectively
 
 a:l;i;v set all uniform lengths l, interval i, volume v, or use al, ai, av respectively
 
-t:n sets the total length of the interval to n. The length of each note in the interval is the total length divided by the number of notes in the block, and can be occupied using empty notes (characters with a value of -1 in the drum mapping) and continuation notes (characters with a value of -2 in the drum mapping), for example
+t:n sets the total length of the interval to n. The length of each note in the interval is the total length divided by the number of notes in the region, and can be occupied using empty notes (characters with a value of -1 in the drum mapping) and continuation notes (characters with a value of -2 in the drum mapping), for example
 K, H, S, H, 0, K, S, H, K, -, S, H, K, K, S, H, t:2
 This is a section where each note takes up 1/8 of a measure, the 0 is the empty beat, and the - is the continuation of the previous note
 
-i:n insert interval n bars in the middle of the note, in the setting block is to set the interval of the note to n bars
+i:n insert interval of n bars in the middle of the note, in the setting block this is to set the interval of the note to n bars
 
-l:n set the note length to n bars in the setup block
+l:n set the note length to n bars in the settings block
 
-v:n sets the note volume to n in the set block
+v:n sets the note volume to n in the settings block
 
-n:name sets the name of the drum beat in the block to name
+n:name sets the name of the drum beat in the region
 
-u:name Use the interval drums according to the name name
+u:name Use the drum region with the name
 
-s:T to; whether the connected drums are played simultaneously (T/F), if no, the drums will be divided equally by the length of one drum when the total length is fixed, use
+s:T whether the connected drums are played simultaneously or not (T/F), if not, the drums will be divided equally by the length of one drum when the total length is fixed
 
-! in combination with the keyword header means to set all the current notes in batch,
+Use ! in combination with the keyword header means to set all the current notes in batch,
 for example: K, H, S, H | K, K, S, H, !r:2
 ```
 
 ## Caution
 
-1. Please note that in the setup block, when the parameter is a list, you need to set a separate setup block, use `;` to separate the elements of the list, you can put multiple setup blocks together.
+1. Please note that in the settings block, when the parameter is a list, you need to set a separate settings block, use `;` to separate the elements of the list, you can put multiple settings blocks together.
 2. you can place any spaces and newlines, they will not affect the content after parser conversion, so you can write the drum code more beautiful and hierarchical.  
 3. Note length and spacing can also be set using syntactic sugar, using `.n` for `1/n`, which is an nth note.
 
