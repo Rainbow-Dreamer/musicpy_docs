@@ -2,12 +2,6 @@
 
 Here are some issues you may encounter when using musicpy with solutions, some of them are existing bugs of the python libraries that musicpy has dependencies with, or just not giving you the desired result when the function parameters are set as default.
 
-* ## I tries to play or write the piece instance I read from a MIDI file to a new MIDI file, but when I see the new MIDI file in DAW, some notes become extremely long, which has totally different lengths from the original MIDI file
-
-This is because some MIDI files has duplicate notes in some tracks, here duplicate notes means these notes has the exact same pitch, start at the same time or has some part overlapped, in this case, some python MIDI libraries might consider these duplicate notes as a whole note, which makes the issue happen.
-
-Solution: you can set the parameter `remove_duplicates` of the `write` or `play` function to True to make the written MIDI file the same as when you view the original MIDI file in the DAW.
-
 * ## I get `pygame.error: Couldn't open /etc/timidity/freepats.cfg` error on Linux
 On Linux, the pygame library uses the freepats sound libraries to play MIDI files, so you need to install freepats.
 
