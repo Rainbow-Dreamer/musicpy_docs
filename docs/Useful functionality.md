@@ -16,7 +16,6 @@
 - [eval_time function has been added to return time value](#eval_time-function-has-been-added-to-return-time-value)
 - [Redesign of the reverse function](#redesign-of-the-reverse-function)
 - [Added the ability to read other types of MIDI messages](#added-the-ability-to-read-other-types-of-MIDI-messages)
-- [Change the temperament of chord type and piece type](#change-the-temperament-of-chord-type-and-piece-type)
 - [Improvement of the function to clear tempo changes and pitch bends for chord type and piece type](#improvement-of-the-function-to-clear-tempo-changes-and-pitch-bends-for-chord-type-and-piece-type)
 - [Stop all currently playing sounds](#stop-all-currently-playing-sounds)
 - [Use of interval names](#use-of-interval-names)
