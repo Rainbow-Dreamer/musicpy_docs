@@ -1047,17 +1047,17 @@ A @ [1, 3, 2, 3, 1.1, 3, 2, 3]
 
 The easiest way to do this is to use the syntax of python's own lambda function, e.g.
 
+Enter a chord name and then form a new chord type (a chord accompaniment) with this chord in the order of 1st note, 2nd note, 3rd note, 1st note 1 octave higher, 2nd note 1 octave higher, 3rd note, 1st note 1 octave higher, 2nd note 1 octave higher, and then set the length of each note of the chord accompaniment to 0.5 bars and the interval of each note to 0.5 bars, and repeat the chord accompaniment twice.
+
 ```python
 rules = lambda x: C(x) @ [1, 2, 3, 1.1, 2.1, 3, 1.1, 2.1] % (1/8, 1/8) * 2
 ```
 
-Now rules is a chord processing rule (used as a function) that allows you to enter a chord name and then form a new chord type (a chord accompaniment) with this chord in the order of 1st note, 2nd note, 3rd note, 1st note 1 octave higher, 2nd note 1 octave higher, 3rd note, 1st note 1 octave higher, 2nd note 1 octave higher, and then put this Then set the length of each note of the chord accompaniment to 0.5 bars and the interval of each note to 0.5 bars, and repeat the chord accompaniment twice.
+Now we can use the chord processing rules rules to process the C major triad, the C7sus4 chord, the G7/B chord, and the C major triad, and then connect them with the '|' sign to form a little piece of music.
 
 ```python
-A = rules('Cmajor') | rules('C7sus4') | rules('G7/B') - octave | rules('Cmajor')
+A = rules('Cmajor') | rules('C7sus4') | rules('G7/B') - database.octave | rules('Cmajor')
 ```
-
-Now we can use the chord processing rules rules to process the C major triad, the C7sus4 chord, the G7/B chord, and the C major triad, and then connect them with the '|' sign to form a little piece of music.
 
 Play part A at 115 BPM (speed)
 
@@ -1065,31 +1065,7 @@ Play part A at 115 BPM (speed)
 play(A, 115)
 ```
 
-In addition to the lambda function that comes with python, you can also use the function exp inside musicpy to implement the construction of chord rules.
-
-The exp function has two modes, 'tail' and 'whole'. In the tail mode, a processing rule is passed in that follows a chord type, for example
-
-```python
-rules = exp('up(2).reverse()', mode='tail')
-```
-
-At this point rules is a function that takes a chord type and raises it by two semitones overall, then arranges the notes in reverse order. rules itself is a function that can be passed directly into the chord type, e.g.
-
-```python
-rules(C('Dmaj7'))
-```
-
-In whole mode, just write the same as the expression of the lambda function. The argument obj_name is the name of the lambda variable, and the default value is 'x', for example
-
-```python
-rules = exp('(x / 1) % ([1/4, 1/2, 1/2], [1/4, 1/4, 1/2])', mode='whole')
-```
-
-At this point rules is a chord processing rule (which is a function that can be passed directly into the chord type) that gets a chord type inversion 1, and then sets the note lengths of the chords to 1/4, 1/2, 1/2 (in bars), respectively.
-
-The note intervals are set to 1/4, 1/4, 1/2 (in bars).
-
-Using the lambda function to express this is
+Get the 1st inversion of a chord type, and then set the note lengths of the chords to 1/4, 1/2, 1/2 (in bars), respectively.
 
 ```python
 rules = lambda x: (x / 1) % ([1/4, 1/2, 1/2], [1/4, 1/4, 1/2])
