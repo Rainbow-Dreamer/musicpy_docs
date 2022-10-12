@@ -123,7 +123,7 @@ This way we create a minor seventh chord of A. It is represented as
 
 There are many types of chord types, which can be found in the chordTypes file in database.py. You can also add your own chord types by writing the chord name and the corresponding chord interval in the same format as in chordTypes.
 The first parameter of the chd function is the root note of the chord, and if no specific pitch is specified (e.g. C5, D6 is a note with a specific pitch), then by default it is treated as the 4th octave, e.g. chd('A', 'm7'), which is equivalent to
-chd('A4', 'm7'), and if you specify a specific pitch for the root note, for example, if you now want to write a major 7th chord with root note D6, you can write.
+chd('A4', 'm7'), and if you specify a specific pitch for the root note, for example, if you now want to write a major 7th chord with root note D6, you can write:
 
 ```python
 Dmaj7 = chd('D6', 'maj7')
@@ -327,13 +327,13 @@ If we want to get the 1st note of the chord A, then we write
 A[0]
 ```
 
-If we want to get the 2nd note of the chord A, then write.
+If we want to get the 2nd note of the chord A, then write:
 
 ```python
 A[1]
 ```
 
-If we want to get the last note of chord A, then write.
+If we want to get the last note of chord A, then write:
 
 ```python
 A[-1]
@@ -349,21 +349,21 @@ If you want to intercept a part of a chord/melody/track A, then just A
 
 and that's it. What you get is a new chord with the notes in it as the intercepted part.
 
-For example, if chord B has 6 notes, and you want to get the first 5 notes of chord B, then you can write.
+For example, if chord B has 6 notes, and you want to get the first 5 notes of chord B, then you can write:
 
 ```python
 B[:5]
 # The ending position 6 is not included, so it corresponds to the 1st, 2nd, 3rd, 4th, and 5th notes of B
 ```
 
-If you want to get the 2nd to 5th notes of chord B, then you can write.
+If you want to get the 2nd to 5th notes of chord B, then you can write:
 
 ```python
 B[1:5]
 # Note that here the left is closed and the right is open, which means that the ending position 5 is not included in the result, so B[1:5] is extracting the 2nd to the 5th note of B, for a total of 4 notes.
 ```
 
-If you want to get the 2nd note of chord B and all the notes after it, then you can write.
+If you want to get the 2nd note of chord B and all the notes after it, then you can write:
 
 ```python
 B[1:]
@@ -745,83 +745,68 @@ Regarding the current definition of rest in musicpy, rest itself is a data struc
 ## Chord name parsing structure
 
 The trans function can be used to parse the full chord name and return the corresponding chord. It supports root position chord representation, inverted chord representation, polychord representation, etc.
-The first parameter of the trans function is the chord name, the second parameter is the pitch of the root note of the chord (the default value is 4), and the third parameter is the duration.
-The third parameter is duration (the length of the note, default is 0.25), and the fourth parameter is interval (the interval of the note, default is None, the returned chord interval is 0), or you can write `note:chord_type` to indicate the specific note octave.
-For example
+The first parameter of the trans function is the chord name, the second parameter is the pitch of the root note of the chord (the default value is 4), and the third parameter is the duration (the length of the note, default is 0.25), and the fourth parameter is interval (the interval of the note, default is None, the returned chord interval is 0), or you can write `note:chord_type` to indicate the specific note octave.
+For example:
+
+Dmaj7 chord and Dmaj7 chord with D5 as the root note
 
 ```python
-trans('Dmaj7')
-trans('D5:maj7')
-```
-
-You can get Dmaj7 chord and Dmaj7 chord with D5 as the root note
-
-```python
+>>> trans('Dmaj7')
 [D4, F#4, A4, C#5] with interval [0, 0, 0, 0]
+
+>>> trans('D5:maj7')
 [D5, F#5, A5, C#6] with interval [0, 0, 0, 0]
 ```
 
-```python
-trans('F/C')
-```
-
-You can get the second inversion of the F major triad
+the second inversion of the F major triad
 
 ```python
+>>> trans('F/C')
 [C5, F5, A5] with interval [0, 0, 0]
 ```
 
-The inversion parsing can also take numbers, for example
+The inversion parsing can also take numbers, for example:
+
+the first inversion of the C major triad E, G, C
 
 ```python
 trans('C/1')
 ```
 
-You can get the first inversion of the C major triad E, G, C
+the C major triad by putting the 1st note to the highest note of the chords E, G, C
 
 ```python
 trans('C/-1')
 ```
 
-You can get the C major triad by putting the 1st note to the highest note of the chords E, G, C
+the inversion E, C, G for a C major triad that puts the second note to the lowest note (as opposed to the traditional inversion)
 
 ```python
 trans('C/1!')
 ```
 
-You can get the inversion E, C, G for a C major triad that puts the second note to the lowest note (as opposed to the traditional inversion)
+C major triad
 
 ```python
-trans('C')
-```
-
-You can get a C major triad
-
-```python
+>>> trans('C')
 [C4, E4, G4] with interval [0, 0, 0]
 ```
 
-```python
-trans('Am/Gm')
-```
-
-You can get a polychord with the A minor triad over the G minor triad
+polychord with the A minor triad over the G minor triad
 
 ```python
+>>> trans('Am/Gm')
 [G4, A#4, D5, A5, C6, E6] with interval [0, 0, 0, 0, 0, 0]
 ```
 
-```python
-trans('G/C', 6, 1, 1)
-```
-
-You can get a G major triad plus a C chord on the lowest note
+G major triad plus a C chord on the lowest note
 
 ```python
+>>> trans('G/C', 6, 1, 1)
 [C6, G6, B6, D7] with interval [1, 1, 1, 1]
 ```
 
-A shortened way of writing the trans function.
+A shortened way of writing the trans function:
 
 ```python
 C(chord name, other arguments)
