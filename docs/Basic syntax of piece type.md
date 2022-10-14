@@ -275,7 +275,10 @@ then we can use the built-in function `merge` of the piece type.
 a = read('example.mid') # a is the piece type to convert to after reading
 # the MIDI file example.mid
 
-a.merge(add_labels=True, add_pan_volume=False, get_off_drums=False)
+a.merge(add_labels=True,
+        add_pan_volume=False,
+        get_off_drums=False,
+        track_names_add_channel=False)
 
 # add_labels: when set to True, adds a new attribute track_num to each note of each track of the
 # piece type with the value of index of the current channel, index is the current number of channels
@@ -287,9 +290,11 @@ a.merge(add_labels=True, add_pan_volume=False, get_off_drums=False)
 
 # get_off_drums: when set to True, the result will exclude the drum tracks
 
-bpm, b, start_time = a.merge()
+# track_names_add_channel: when set to True, the track name event in the piece type will store the channel of the track
+
+b, bpm, start_time = a.merge()
 # Use the built-in function merge of the piece type to get the tuple of
-# (bpm, merged chord type, start_time), with the start_time in bars
+# (merged chord type, bpm, start time), with the start time in bars
 ```
 
 ## New attribute of piece name and BPM display for piece type

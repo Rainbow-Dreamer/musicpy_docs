@@ -1012,9 +1012,10 @@ When False, if no chord type is passed in, then the negative harmonic scale type
 
 ```python
 >>> alg.negative_harmony(scale('C', 'major'))
-scale name: C5 minor scale
+[scale]
+scale name: C4 minor scale
 scale intervals: [2, 1, 2, 2, 1, 2, 2]
-scale notes: [C5, D5, D#5, F5, G5, G#5, A#5, C6]
+scale notes: [C4, D4, D#4, F4, G4, G#4, A#4, C5]
 ```
 
 There is also a parameter `sort`, which, when True, will sort the notes by pitch from lowest to highest after converting the chord a to a negative harmonic version. The default value is True.
@@ -1328,7 +1329,7 @@ a = a % (1/8,1/8,80)
 If you want to keep only the note types of a chord type and remove all other types (such as tempo types, pitch_bend types, etc.), then you can use the built-in function `only_notes`.
 
 ```python
-bpm, a, start_time = read('example.mid').merge()
+a, bpm, start_time = read('example.mid').merge()
 a = a.only_notes()
 ```
 
@@ -1472,7 +1473,7 @@ a = read('example.mid') # a is the piece type converted to after reading the MID
 a.normalize_tempo() # parameter bpm, default value is None, if bpm is None, use the tempo parameter that comes with the piece type
 a.normalize_tempo(100) # set bpm to 100, unify bpm to 100 for the whole piece, re-quantize each part of the notes
 
-bpm, b, start_time = read('example.mid').merge() # b is the chord type after reading the MIDI file example.mid and merging all the tracks
+b, bpm, start_time = read('example.mid').merge() # b is the chord type after reading the MIDI file example.mid and merging all the tracks
 b.normalize_tempo(bpm=100, start_time=0) # The bpm parameter is the tempo you want to normalize, and the start_time parameter is the time in bars when the chord type starts playing, the default is 0
 # Here we unify the speed of the chord type b to 100 BPM
 ```
@@ -1510,9 +1511,9 @@ split(return_type, get_time=False, sort=False)
 # sort is True to sort the tempo types or pitch_bend types in order of their start times.
 a = chord(['A5', 'B5', 'C5', tempo(150), 'D5', pitch_bend(50), 'E5', 'F5', tempo(170)])
 >>> print(a.split(tempo))
-[tempo change to 150, tempo change to 170] with interval [0, 0]
+[tempo(bpm=150, start_time=None, channel=None, track=None), tempo(bpm=170, start_time=None, channel=None, track=None)] with interval [0, 0]
 >>> print(a.split(pitch_bend))
-[pitch bend up by 50.0 cents] with interval [0]
+[pitch_bend(value=2048, start_time=None, channel=None, track=None, cents=50)] with interval [0]
 >>> print(a.split(note))
 [A5, B5, C5, D5, E5, F5] with interval [0, 0, 0, 0, 0, 0, 0]
 # The chord type returned is the set of music types you want to extract and can be used as a list.

@@ -147,6 +147,7 @@ scale('C5', interval=[2, 2, 1, 2, 2, 2, 2, 1], name='major')
 This gives us the C major scale with C5 as the root note, expressed as follows
 
 ```python
+[scale]
 scale name: C5 major scale
 scale intervals: [2, 2, 1, 2, 2, 2, 1]
 scale notes: [C5, D5, E5, F5, G5, A5, B5, C6]
@@ -161,6 +162,7 @@ scale('C5', 'major')
 and you get the C major scale with C5 as the root note.
 
 ```python
+[scale]
 scale name: C5 major scale
 scale intervals: [2, 2, 1, 2, 2, 2, 2, 1]
 scale notes: [C5, D5, E5, F5, G5, A5, B5, C6]
@@ -175,6 +177,7 @@ scale('C5', 'minor')
 Get the C minor scale with C5 as the root note.
 
 ```python
+[scale]
 scale name: C5 minor scale
 scale intervals: [2, 1, 2, 2, 2, 1, 2, 2]
 scale notes: [C5, D5, D#5, F5, G5, G#5, A#5, C6]
