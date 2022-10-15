@@ -148,18 +148,18 @@ The up and down functions for note types, chord types and their advanced syntax 
 
 ## Parsing of a scale (mode) name
 
-The toScale function allows you to parse a scale (mode) by entering its name directly, returning the type of scale corresponding to the entered scale (mode) name, the octave of the tonic (also the octave of the scale)
+The to_scale function allows you to parse a scale (mode) by entering its name directly, returning the type of scale corresponding to the entered scale (mode) name, the octave of the tonic (also the octave of the scale)
 
 is determined by the second parameter pitch, the default value is 4. For example
 
 ```python
-toScale('C major')
+to_scale('C major')
 ```
 
 You can get the major scale with C5 as the tonic.
 
 ```python
-toScale('G lydian', 6)
+to_scale('G lydian', 6)
 ```
 
 You can get the lydian scale with G6 as the tonic.

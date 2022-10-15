@@ -18,12 +18,12 @@ The arguments to the `split_melody` function are, in order
 
 ```python
 split_melody(current_chord,
-             mode='index',
+             mode='chord',
              melody_tol=database.minor_seventh,
              chord_tol=database.major_sixth,
              get_off_overlap_notes=True,
              average_degree_length=8,
-             melody_degree_tol=toNote('B4'))
+             melody_degree_tol='B4')
 ```
 
 - current_chord: the chord type you want to separate the main melody from the chord notes (a chord type itself can store a complete piece for a single instrument, such as a piano piece)

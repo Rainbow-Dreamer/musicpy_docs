@@ -39,7 +39,7 @@
 - [View a list of note intervals and note lengths for a chord type](#view-a-list-of-note-intervals-and-note-lengths-for-a-chord-type)
 - [View a list of note volumes for a chord type](#view-a-list-of-note-volumes-for-a-chord-type)
 - [chord function can parse the string of notes](#chord-function-can-parse-the-string-of-notes)
-- [The toNote function can now parse strings of note names without a specified pitch number](#the-toNote-function-can-now-parse-strings-of-note-names-without-a-specified-pitch-number)
+- [The to_note function can now parse strings of note names without a specified pitch number](#the-to_note-function-can-now-parse-strings-of-note-names-without-a-specified-pitch-number)
 - [How to build an empty chord](#how-to-build-an-empty-chord)
 - [Advanced syntax for setting length and volume of notes](#advanced-syntax-for-setting-length-and-volume-of-notes)
 - [Advanced syntax for chord setting note length and note interval and note volume](#advanced-syntax-for-chord-setting-note-length-and-note-interval-and-note-volume)
@@ -1162,9 +1162,9 @@ chord('C4, E4, G4, B4, D4')
 
 In addition, the chord function can take strings or lists of strings that are a mixture of notes without a specified pitch number and notes with a specified pitch number.
 
-## The toNote function can now parse strings of note names without a specified pitch number
+## The to_note function can now parse strings of note names without a specified pitch number
 
-Previously, the string received by the toNote function (or by the N function) for a note name had to specify a pitch number, for example
+Previously, the string received by the to_note function (or by the N function) for a note name had to specify a pitch number, for example
 
 ```python
 N('C5')
@@ -1213,7 +1213,7 @@ chord([]) | C('Am') | C('F') | C('G')
 
 ## Advanced syntax for setting length and volume of notes
 
-When using the toNote function or the N function, it is possible to write the note length and volume in a string with a new syntax
+When using the to_note function or the N function, it is possible to write the note length and volume in a string with a new syntax
 For example, now we want a note type with note length of 1 and volume of 80 for C5, so we can write
 
 ```python
@@ -1247,7 +1247,7 @@ N('C5{1;80}')
 
 All arguments inside the brackets can have spaces between them, except for the left bracket after the note name, which must be immediately after the note name.
 Note length and volume can be integers, decimals or fractions. I also added a syntactic sugar here, if you want to input notes like 2nd, 4th, 8th, 16th, etc.
-then you can write `.n` for nth note, which is the equivalent of 1/n note length. If it's a note length like 3/4, then you can just write 3/4, because the toNote function supports fractional representation.
+then you can write `.n` for nth note, which is the equivalent of 1/n note length. If it's a note length like 3/4, then you can just write 3/4, because the to_note function supports fractional representation.
 For example, now we want a D5 quarter note with no volume setting (the default is 100), so we can write
 
 ```python
@@ -1297,7 +1297,7 @@ example = chord('G5[3/4;3/4], F5[.8;.8], E5[.8;.8], F5[3/4;.3/4], E5[.8;.8], D5[
 [G5, F5, E5, F5, E5, D5, E5, D5, C5, B4, G4] with interval [0.75, 0.125, 0.125, 0.75, 0.125, 0.125, 0.25, 0.25, 0.5, 0.5, 0.5]
 ```
 
-The format and syntactic sugar of the chord function to receive the sound name string of this new syntax is the same as that of the toNote function written before, which also uses `;` as the separator between arguments, and can also use any of the parentheses, brackets, or braces, and can also have spaces between arguments, and also has `.n` for the syntactic sugar of n notes, and the order of the arguments is [note length The order of the parameters is [note length; note interval; note volume], and the parameters are also variable, so you can set only the note length, or only the note length and note interval, or all three parameters. The biggest advantage of this new syntax is that if you need to change the note length of a note or the note interval between a note and the next note when writing a melody, you can change it directly after the note name, instead of going to the note length list and the note interval list to find the position of the note you want to change. chord function also supports this new syntax for the note name string The chord function also supports this new syntax for the list of note names.
+The format and syntactic sugar of the chord function to receive the sound name string of this new syntax is the same as that of the to_note function written before, which also uses `;` as the separator between arguments, and can also use any of the parentheses, brackets, or braces, and can also have spaces between arguments, and also has `.n` for the syntactic sugar of n notes, and the order of the arguments is [note length The order of the parameters is [note length; note interval; note volume], and the parameters are also variable, so you can set only the note length, or only the note length and note interval, or all three parameters. The biggest advantage of this new syntax is that if you need to change the note length of a note or the note interval between a note and the next note when writing a melody, you can change it directly after the note name, instead of going to the note length list and the note interval list to find the position of the note you want to change. chord function also supports this new syntax for the note name string The chord function also supports this new syntax for the list of note names.
 
 In addition, the new syntax of the chord function has a unique syntactic sugar, that is, when the note length and note interval are the same, the note interval can be abbreviated as `. `, and you can follow this abbreviation with any addition, subtraction, multiplication or division operation, such as `. *2`, `. /2`, and the chord function will also do the calculation. When the note interval is abbreviated as `. `, it means that the note interval takes the same value as the note length. For example
 

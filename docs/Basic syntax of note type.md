@@ -36,15 +36,15 @@ means that a is note C5, the note length is 0.5 bars, and the note strength is 1
 
 ## Construct a note by entering the note name directly (note name + number of octaves)
 
-We can use the toNote function
+We can use the to_note function
 
 ```python
-toNote('E5')
+to_note('E5')
 ```
 
 The note E5 is obtained.
 
-A shortened version of the toNote function would be
+A shortened version of the to_note function would be
 
 ```python
 N('E5')
