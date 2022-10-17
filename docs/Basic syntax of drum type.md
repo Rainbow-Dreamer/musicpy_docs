@@ -124,6 +124,8 @@ u:name use the drum region with the name
 
 s:T whether the connected drums are played simultaneously or not (T/F), if not, the drums will be divided equally by the length of one drum when the total length is fixed
 
+cm:n use for single continue symbol only, set the continue mode to n, the value could be 0 or 1, if value is 0, only extend the duration of the last note, if value is 1, when the previous note is a group, extend the duration of all notes in the group; if the continue mode is not set, the default action of continue symbol is extending only last note except when the previous note is a group that set to playing at the same time, which in case extending all notes in the group
+
 Use ! in combination with the keyword header means to set all the current notes in batch,
 for example: K, H, S, H | K, K, S, H, !r:2
 ```
