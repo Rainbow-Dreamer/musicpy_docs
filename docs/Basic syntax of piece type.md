@@ -79,10 +79,10 @@ piece(tracks,
 For our current requirements, we can build a piece class like this.
 
 ```python
-C1 = chord('G4, D5, B5, F#5') % (1, 1/8) % 4
-C2 = (chord('C2, C2, G1, G1') % (1,1)) % 2
-C3 = (chord('F#6, G6') % (1/8, 1/8) % 8 | chord('A5, B5') % (1/8, 1/8) % 8) % 2
-C4 = chord('G3, G3, G3, G3') % ([3/8,1/8,1/4,1/4], [3/8,1/8,1/4,1/4]) % 4
+C1 = chord('G4, D5, B5, F#5') % (1, 1/8) * 4
+C2 = (chord('C2, C2, G1, G1') % (1,1)) * 2
+C3 = (chord('F#6, G6') % (1/8, 1/8) * 8 | chord('A5, B5') % (1/8, 1/8) * 8) * 2
+C4 = chord('G3, G3, G3, G3') % ([3/8,1/8,1/4,1/4], [3/8,1/8,1/4,1/4]) * 4
 
 new_piece = piece(tracks=[C1, C2, C3, C4],
                   instruments=['Acoustic Grand Piano', 'Electric Bass (finger)', 'Orchestral Harp', 'Synth Drum'],
@@ -199,7 +199,6 @@ b = a | n
 
 # If you want to copy and paste all MIDI channels of this piece type n times, then you can write
 b = a * n
-b = a % n
 # The chord types are written in different add modes, see the symbolic logic of the chord types
 
 # You can use the index value to see the information of a channel of a piece type, 0 as the first channel

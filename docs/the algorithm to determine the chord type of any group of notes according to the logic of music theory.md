@@ -1,4 +1,4 @@
-# the algorithm to determine the chord type of any group of notes according to the logic of music theory
+# The algorithm to determine the chord type of any group of notes according to the logic of music theory
 
 One of the most successful algorithms I've developed in musicpy so far is this original algorithm that determines the type of chord formed by any set of notes according to the logic of music theory.
 

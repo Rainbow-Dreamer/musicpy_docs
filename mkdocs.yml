@@ -19,16 +19,16 @@ nav:
     - Useful functionality:
       - Useful functionality: Useful functionality.md
     - Composition Examples:
-      - composition code examples Part 1: musicpy composition code examples part 1.md
-      - composition code examples Part 2: musicpy composition code examples part 2.md
-      - composition code examples Part 3: musicpy composition code examples part 3.md
+      - Composition code examples Part 1: Musicpy composition code examples part 1.md
+      - Composition code examples Part 2: Musicpy composition code examples part 2.md
+      - Composition code examples Part 3: Musicpy composition code examples part 3.md
     - Sampler Module:
-      - Musicpy sampler module: musicpy sampler module.md
-      - musicpy sampler module composition code examples: musicpy sampler module composition code examples.md
+      - Musicpy sampler module: Musicpy sampler module.md
+      - Musicpy sampler module composition code examples: Musicpy sampler module composition code examples.md
     - Algorithms:
       - Introduction of musicpy algorithms module: Introduction of musicpy algorithms module.md
-      - the algorithm to split the main melody and chords from a piece of music: the algorithm to split the main melody and chords from a piece of music.md
-      - the algorithm to determine the chord type of any group of notes according to the logic of music theory: the algorithm to determine the chord type of any group of notes according to the logic of music theory.md
+      - The algorithm to split the main melody and chords from a piece of music: The algorithm to split the main melody and chords from a piece of music.md
+      - The algorithm to determine the chord type of any group of notes according to the logic of music theory: The algorithm to determine the chord type of any group of notes according to the logic of music theory.md
     - Frequently Asked Questions:
       - Frequently Asked Questions: Frequently Asked Questions.md
 theme:

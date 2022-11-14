@@ -1,4 +1,4 @@
-# musicpy sampler module
+# Musicpy sampler module
 
 I wrote a sampler module for musicpy to load sound modules and export audio files (including wav, mp3, ogg and so on) in June 2021, which will be very useful since now you are no longer limited to only MIDI files (You can take the MIDI files exported by musicpy and put in DAW to load sound modules and export audio files anyways).
 
@@ -181,12 +181,12 @@ new_song.export(C('C'), channel_num=2, mode='wav', filename='my first song.wav')
 
 # play/export piece types examples
 rule1 = lambda x: x % (1 / 8, 1 / 8) @ [1, 2, 3, 2]
-part1 = rule1(C('D#', 5)) | rule1(C('F', 5)) | rule1(C('Gm', 5)) % 2
+part1 = rule1(C('D#', 5)) | rule1(C('F', 5)) | rule1(C('Gm', 5)) * 2
 part1_bass = chord('D#3[.2;.], F3[.2;.], G3[.2;.], G3[.4;.], F3[.4;.]')
 part1_harmony = part1_bass + perfect_fifth
 drums = drum('K, H, S, H, r:2').notes
 drums.setvolume(80)
-current_song = P([part1 % 2 | (part1 + database.octave) % 2, part1_bass % 4, part1_harmony % 2, drums % 4],
+current_song = P([part1 * 2 | (part1 + database.octave) * 2, part1_bass * 4, part1_harmony * 2, drums * 4],
                  bpm=120,
                  start_times=[0, 0, 4, 4.03],
                  sampler_channels=[0, 1, 1, 2])

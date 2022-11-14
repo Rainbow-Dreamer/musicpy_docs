@@ -253,16 +253,7 @@ If you want to repeat a chord A n times, then you just need
 A * n
 ```
 
-and that's it. What you get is a new chord repeated n times.
-
-Note that if chord A is a chord with all intervals of 0 (all notes start playing together at the same time), then A * n will make the notes of the repeated A's overlap.
-In this case, if you want to make multiple chord A repeats not overlap, then you need to write
-
-```python
-A % n
-```
-
-This syntax will make A repeat without overlapping the previous chord.
+and that's it. What you get is a new chord repeated chord A n times.
 
 
 ## Arranging a chord in reverse order
@@ -561,7 +552,7 @@ For example, there are two pieces of music (the chord type itself can also be a 
 
 The parameter mode can be used to select the mode of merging.
 
-When mode == 'head', the
+When mode == 'head',
 
 ```python
 A.add(B, mode='head')
@@ -586,39 +577,27 @@ A & B
 A & (B, start)
 ```
 
-When mode == 'tail', the
+When mode == 'tail',
 
 ```python
 A.add(B, mode='tail')
 ```
 
-You can get the new music clip after the music clip B is appended to the music clip A. Note, however, that this mode appends the note list of B directly to the note list of A after
-If the last few notes of music clip A have 0 intervals, then the beginning notes of music clip B may overlap with the last few notes of A. If you are sure that the last few notes of A are not 0 intervals, then this mode can be used safely.
-Equivalent to
+You can get the new music clip after the music clip B is appended to the music clip A. Note, however, that this mode appends the note list of B directly to the note list of A. If the last few notes of music clip A have 0 intervals, then the beginning notes of music clip B may overlap with the last few notes of A. If you are sure that the last few notes of A are not 0 intervals, then this mode can be used safely.
 
-```python
-A + B
-```
-
-When mode == 'after', the
+When mode == 'after',
 
 ```python
 A.add(B, mode='after')
 ```
 
-You can get the new music clip after the music clip B is appended to the music clip A. The difference with the tail mode is that this mode will specifically calculate whether more notes need to be spaced between A and B
-This mode differs from the tail mode in that it specifically calculates whether more notes need to be spaced between A and B to avoid the situation where the end of A and the beginning of B overlap in some cases in the tail mode. So it is best to use this mode when you are not sure if the last few notes of A are zero.
+You can get the new music clip after the music clip B is appended to the music clip A. This mode differs from the tail mode in that it specifically calculates whether more notes need to be spaced between A and B to avoid the situation where the end of A and the beginning of B overlap in some cases in the tail mode. So it is best to use this mode when you are not sure if the last few intervals of A are zero.
 
 Advanced syntax:
 
 ```python
-A // B
-```
-
-or
-
-```python
 A | B
+A + B
 ```
 
 ## Making changes to the notes within a chord
@@ -729,12 +708,6 @@ A.rest(n)
 which adds a rest of n bars to chord A. The result is a new chord with chord A plus a rest of n bars.
 
 Advanced syntax:
-
-```python
-A // n
-```
-
-or
 
 ```python
 A | n
@@ -1928,8 +1901,8 @@ multi_voice(*current_chord, method=chord, start_times=None)
 # start_times: a list of the start times of the chord types after the first chord type.
 # If you want to set the start times of the other voices after the first chord type relative to the first chord type, you can set this parameter in bars
 
-a = multi_voice(chord('C2') % (1, 1) % 2,
-                C('G') % (1/8, 1/8) % 4)
+a = multi_voice(chord('C2') % (1, 1) * 2,
+                C('G') % (1/8, 1/8) * 4)
 
 >>> a
 [C2, G4, B4, D5, G4, B4, D5, G4, B4, C2, D5, G4, B4, D5] with interval [0, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.0, 0.125, 0.125, 0.125, 0.125, 0.125]
@@ -1937,14 +1910,14 @@ a = multi_voice(chord('C2') % (1, 1) % 2,
 
 ## Concatenate chord types in a list
 
-You can use the `concat` function to merge all the chord types in a list by specifying a merge method, resulting in a new merged chord type, which can be specified as `tail`, `head`, `after`, with `+`, `&`, `|` respectively.
+You can use the `concat` function to merge all the chord types in a list by specifying a merge method, resulting in a new merged chord type.
 
 ```python
 concat(chordlist, mode='+', extra=None, start=None)
 
 # chordlist: list of chord types to merge
 
-# mode: mode of concatenation, can receive values '+', '&', '|', corresponding to 'tail', 'head', 'after' respectively, default value is '+'
+# mode: mode of concatenation, can receive values '+', '|', '&', the first 2 values correspond to 'after', the third value corresponds to 'head', the default value is '+'
 
 # extra: extra interval to be added when merging two adjacent chord types, in bars
 

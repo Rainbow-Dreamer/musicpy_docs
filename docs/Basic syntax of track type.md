@@ -88,5 +88,5 @@ The track types represent the information contained in each track, including cho
 
 ## Some new syntax for track type
 
-The syntax for `a + i`, `a - i`, `a | i`, `a & i`, `a % i` in the chord type has now been added to the track type as well, see the usage in the chord type.
+The syntax for `a + i`, `a - i`, `a | i`, `a & i` in the chord type has now been added to the track type as well, see the usage in the chord type.
 

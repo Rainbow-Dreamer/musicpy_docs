@@ -211,7 +211,7 @@ This musicpy editor has several very useful functions, which will be introduced 
 1.Adding `/` before a line of musicpy code will play the music represented by this code directly and internally, without opening any player on your computer. At the same time it will also generate the MIDI file corresponding to the current musicpy code in the musicpy folder. This syntax is equivalent to putting this line of code inside the play function. The parameters of the play function can be set with English commas followed by the code, such as bpm (song speed), instrument (instrument) and so on. It is recommended to run in real time while open (the default is open), you can musicpy code to write where, plus `/` can immediately hear. For example, in the editor write
 
 ```python
-/C('Dmaj7') % 4 | C('Em7') % 4, 150
+/C('Dmaj7') * 4 | C('Em7') * 4, 150
 ```
 
 Then you can hear the music corresponding to this musicpy language directly.
@@ -407,7 +407,7 @@ All event types have `type` (MIDI message type string), `track` (track number, s
 The `type` parameter of the event type is based on the MIDI message type of the Mido library, and the parameters other than `track` and `start_time` are based on the parameters of the corresponding MIDI message types of the Mido library, please refer to the official documentation of Mido [Message Types](https://mido.readthedocs.io/en/latest/message_types.html) and [Meta Message Types](https://mido.readthedocs.io/en/latest/meta_message_types.html).
 
 ```python
-event(type, track=0, start_time=0, **kwargs)
+event(type, track=0, start_time=0, is_meta=False, **kwargs)
 ```
 
 ## Improvement of the function to clear tempo changes and pitch bends for chord type and piece type
@@ -425,7 +425,7 @@ a.clear_pitch_bend(cond=lambda s: s.start_time == 1 and s.value == 0)
 You can use the `stopall` function to stop all currently playing sounds, specifically the sounds played by the `play` function.
 
 ```python
-play(C('C') % 8)
+play(C('C') * 8)
 stopall() # Stop the currently playing sound
 ```
 

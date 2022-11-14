@@ -1,4 +1,4 @@
-# the algorithm to split the main melody and chords from a piece of music
+# The algorithm to split the main melody and chords from a piece of music
 
 Recently, while writing some musicpy features, I came across the need to separate the main melody and chord parts of a piece. For example, there is a function that performs intelligent composition analysis of a piece. Let's say now we read a MIDI file, which is a piano piece, and the main melody and chord parts are all put in one track. Let's say this piano piece has a total of 1400 notes, including the main melody and the chord part. Now we need to perform a tonal analysis of these 1400 notes, (ignoring for the moment the modulation and tonicization of the piece) for example to determine whether the piece is in a major or minor key.
 
