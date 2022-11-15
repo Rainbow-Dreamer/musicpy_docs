@@ -195,11 +195,7 @@ a = piece(tracks=[A1, B1, C1, D1],
           track_names=['piano', 'electric bass', 'drums', 'strings'])
 
 # If you want to repeat this track type exactly n times, then you can write
-b = a | n
-
-# If you want to copy and paste all MIDI channels of this piece type n times, then you can write
 b = a * n
-# The chord types are written in different add modes, see the symbolic logic of the chord types
 
 # You can use the index value to see the information of a channel of a piece type, 0 as the first channel
 # Using the syntax of a[n] you can get the nth track type
