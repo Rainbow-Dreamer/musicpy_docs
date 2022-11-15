@@ -314,7 +314,7 @@ False
 >>> print('E4' in S('C major', 5)) 
 True
 # The actual pitch number of the note will be ignored and True will be returned as long as the note name is in the scale, if you want to consider the pitch number,
-# you can use 'E4' in S('C major', 5).getScale()
+# you can use 'E4' in S('C major', 5).get_scale()
 
 >>> print('A#' in S('Bb major')) # If it's a homophonic allophone (under the standard of the twelve averages), it will be judged as contained and return True
 True
