@@ -49,6 +49,10 @@ If you think this is too simple, musicpy could also produce music like [this](ht
 
 * [Introduction](https://musicpy.readthedocs.io/en/latest/Introduction/)
 
+## Quickstart and Cheat Sheet
+
+- [Musicpy Quickstart and Cheat Sheet](https://musicpy.readthedocs.io/en/latest/Musicpy%20Quickstart%20and%20Cheat%20Sheet/)
+
 ### Data structures
 
 * [Data structures of musicpy](https://musicpy.readthedocs.io/en/latest/Data%20Structures%20of%20musicpy/)

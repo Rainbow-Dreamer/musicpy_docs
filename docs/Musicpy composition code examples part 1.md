@@ -5,17 +5,17 @@
 play((getchord_by_interval('D#4', [5,7,10,7,5], 1/2, 1/8)*3 + getchord_by_interval('F4', [1,0,-4], 1/2, 1/8)) * 3, 150)
 ```
 ## 2. Play the A minor seventh chord followed by a rest half beat 4 times, then the B minor seventh chord followed by a rest half beat 4 times, then the C major seventh chord breaking up the chord 1 time.
-(Both of these examples are written without using progressions, using progressions makes the musicpy language look more compact and shorter)
+(Both of these examples are written without using advanced syntax, using advanced syntax makes the musicpy language look more compact)
 ```python
 a = C('Am7') % (1/8, 0)
 play(a * 4 | (a + 2) * 4 | chd(a[0] + 3, 'maj7').set(interval=1/8), bpm=80)
 ```
 
 ## 3. A short piano piece
-(The 3rd example uses a lot of progressions, the code looks much more compact, and the use of the separator '|' for progressions that connect two chord types can also have a similar feel to bar lines, which can enhance the readability of the code. (In addition, the chord separation '|' can also be replaced by '//', depending on your preference.)
+The 3rd example uses a lot of advanced syntax, the code looks much more compact, and the use of the separator `|` for advanced syntax that connect two chord types can also have a similar feel to bar lines, which can enhance the readability of the code.
 ```python
 a = C('Dmaj7') % (1/4,1/4) | C('Cmaj7') | C('Fadd9',3) | C('D#maj7',4) | (C('Dmaj7',3)/-2) % (5/4,)
-b = chord(['F#5','G5','A5','B5','G5'], 1/8,1/8)   
+b = chord('F#5, G5, A5, B5, G5', 1/8, 1/8)   
 play(a & b, 140, instrument=1)
 ```
 

@@ -70,7 +70,7 @@ Because of this basic property of pitch number, the note class itself is equival
 
 ## chord
 
-This should be the most important class. In musicpy, a chord class is defined as "a set of notes", which is perhaps more general than the definition of a chord in music theory. This definition is perhaps more general than the definition of chords in music theory, because a complete piece of music can fit into a chord class, and it does in this library.
+This should be the most important class. In musicpy, a chord class is defined as "a set of notes", which is perhaps more general than the definition of a chord in music theory, because a complete piece of music can fit into a chord class, and it does in this library.
 
 You can use the chord type to represent a chord, and also a melody, or the combination of both.
 
