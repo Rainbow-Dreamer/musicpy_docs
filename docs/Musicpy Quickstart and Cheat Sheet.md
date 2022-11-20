@@ -7,7 +7,7 @@ This is a chapter for a quickstart and cheat sheet for musicpy, in case you find
 
 Note: the chord type of muscipy has a `interval` attribute which is the list of the length of bars between the starts of each 2 adjacent notes of the chord, please don't confuse this with the music theory's interval which is a difference in pitch between 2 notes (e.g. major third, semitone). In the cheat sheet we'll use `music intervals` to denote the music theory's interval.
 
-|         <div style="width:200px">functionality</div>         |                     syntax (recommended)                     |                         alternatives                         |
+|                        functionality                         |                     syntax (recommended)                     |                         alternatives                         |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                     construct a note C5                      |                           N('C5')                            |                    N('c5');  note('C', 5)                    |
 |                   construct a chord Cmaj7                    |                          C('Cmaj7')                          |                       chd('C', 'maj7')                       |
