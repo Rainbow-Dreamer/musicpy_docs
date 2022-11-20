@@ -4,7 +4,7 @@ nav:
     - Introduction:
       - Introduction: Introduction.md
     - Quickstart and Cheat Sheet:
-      - Musicpy Quickstart and Cheat Sheet.md
+      - Musicpy Quickstart and Cheat Sheet: Musicpy Quickstart and Cheat Sheet.md
     - Data Structures:
       - Data structures of musicpy: Data Structures of musicpy.md
     - Basic Syntax:

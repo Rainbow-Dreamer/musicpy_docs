@@ -97,7 +97,6 @@ Note: the chord type of muscipy has a `interval` attribute which is the list of 
 |         get the degree (MIDI note number) of note A          |                           A.degree                           |                                                              |
 |                 get the note name of note A                  |                            A.name                            |                                                              |
 |               get the octave number of note A                |                            A.num                             |                                                              |
-|                  get the duration of note A                  |                          A.duration                          |                                                              |
 |              get the music intervals of chord A              |                        A.intervalof()                        |                                                              |
 | construct a tempo change instance with bpm 150 and start time at 0 |                   tempo(150, start_time=0)                   |                                                              |
 | construct a pitch_bend instance with value of 100 cents and start time at 0 |                pitch_bend(100, start_time=0)                 |                                                              |
