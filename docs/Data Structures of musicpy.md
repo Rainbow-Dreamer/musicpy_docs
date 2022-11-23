@@ -9,6 +9,8 @@ First of all, we need to declare that all note lengths and note intervals in mus
 
 In this chapter, we will introduce some of the most important and most commonly used data structures of musicpy.
 
+
+
 ## Contents
 
   - [note](#note)
@@ -22,6 +24,12 @@ In this chapter, we will introduce some of the most important and most commonly 
   - [pan](#pan)
   - [volume](#volume)
   - [rest](#rest)
+  - [beat](#beat)
+  - [rest_symbol](#rest_symbol)
+  - [continue_symbol](#continue_symbol)
+  - [rhythm](#rhythm)
+
+
 
 ## note
 
@@ -66,6 +74,7 @@ note(name,
 - degree: the pitch number of a note, C0 is 12, each octave has 12 notes, for example, the pitch number of C1 is 24, the pitch number of D1 is 26, the pitch number of C5 is 72, and so on, each note will automatically calculate its own pitch number corresponding to its name and octave number and store it, which is very useful afterwards. (The pitch number is the MIDI number that corresponds to the note in the common standard for MIDI files)
 
 Because of this basic property of pitch number, the note class itself is equivalent to a pure number, i.e. it can be used as a pure number, and the chord class is a collection of note classes. It also means that the chord class itself is equivalent to a set of all numbers, and can be treated as a vector or even a matrix (For example, the concatenation of multiple chords can be seen as a concatenation of vectors, and therefore as a matrix). Therefore, the data structures of this language are designed in such a way that notes, chords, and scales can be used for mathematical operations. For example, operations in the field of linear algebra, operations in the field of discrete mathematics, and so on. It is also possible to build a set of algorithms for musical logic based on the data structure of the language. It is possible to combine pure mathematical logic to perform various aspects of musical analysis. Many experiments in the field of modern music, such as sequentialism, incidental music, and postmodernism (e.g., minimalist music), have been developed. Post-modernist music (e.g., minimalist music) can all theoretically be created rigorously on the basis of the purely digital data structures of this language. Even without mentioning experimental music, the language can be used to write any classical, jazz, or pop music.
+
 
 
 ## chord
@@ -134,6 +143,7 @@ chord(notes,
 
 - start_time: The start time of the chord type in bars, you can understand it as the rest from the beginning to the beginning of the first note, the default value is 0  
   **Please note that when a chord type is placed as a track in the track list of a piece type, the `start_time` property is ignored and the start time of each track's chord type is based on the `start_times` list of the piece type, except when the chord type is merged (e.g. the piece type itself is merged into a chord type) or when the chord type is played separately from the track list, the `start_time` will still work. It is recommended that the `start_time` be set to 0 for all chord types placed as tracks in the piece type, to avoid possible conflicts between the start time of the chord type and the piece type.**
+
 
 
 ## scale
@@ -205,11 +215,15 @@ scale(start=None,
 
 The built-in methods of the scale class are rich in musical logic functions, such as harmonic functions, tonic chord, dominant chord, subdominant chord, secondary dominant chord of a degree, and so on. Extraction of natural triads and natural seventh chords from the scale in a certain number of steps, modulation in a circle of fifths in a certain number of steps in clockwise or counterclockwise direction, relative key, parallel key, negative harmony (mirror harmony), chord progression extraction by step, modulation to a specified key, derivation of the key from a degree of the note and get the standardized note name notation (the sharp and flat notation of the note names in each key), etc. I will explain the details in the section on basic syntax and how to use it.
 
+
+
 ## piece
 
 When we need to write a piece with multiple tracks and each track with its own instrument, we could use the piece type. An instance of the piece type can store any number of tracks, and each track can have its own instrument, and the instrument can be changed at any time via MIDI messages.
 
 There are detailed introductions of piece type in `Basic syntax of piece type`.
+
+
 
 ## track
 
@@ -217,11 +231,15 @@ The track type is a data structure used to store information about a single trac
 
 There are detailed introductions of track type in `Basic syntax of track type`.
 
+
+
 ## drum
 
 The drum type is a special data structure dedicated to representing drum beats, also known as percussion rhythms. The drum type is essentially very similar to the chord type, which also internally stores note types that can correspond to different types of drum beats on the drum track when written to a MIDI file. The most important feature of the drum type is that it can be built using a unique syntax for writing drums. This syntax is relatively simple, does not require consideration of which note corresponds to which type of drum beat in the MIDI file, and supports a certain degree of batch processing.
 
 There are detailed introductions of drum type in `Basic syntax of drum type`.
+
+
 
 ## tempo
 
@@ -229,11 +247,15 @@ The tempo type can be used to change the tempo of the current piece in real time
 
 There are detailed introductions of tempo type in `Basic syntax of tempo type`.
 
+
+
 ## pitch_bend
 
 The pitch_bend type can be used to change the pitch of notes of a fragment in real time, allowing very subtle pitch changes. Like the tempo type, the pitch_bend type can be inserted into a chord type as a note type, or you can set your own time, in bars, when the pitch change begins. The pitch_bend types can be applied to chord types, piece types and track types, and are also stored as MIDI events in the MIDI file after being written to it.
 
 There are detailed introductions of pitch_bend type in `Basic syntax of pitch_bend type`.
+
+
 
 ## pan
 
@@ -241,11 +263,15 @@ The pan type is a type specifically used to store the position of the left and r
 
 There are detailed introductions of pan type in `Basic syntax of pan type`.
 
+
+
 ## volume
 
-Volume type is a type dedicated to storing the overall volume level of a track. Using the volume type in the piece type allows you to set the overall volume level of each track.
+The volume type is a type dedicated to storing the overall volume level of a track. Using the volume type in the piece type allows you to set the overall volume level of each track.
 
 There are detailed introductions of volume type in `Basic syntax of volume type`.
+
+
 
 ## rest
 
@@ -282,5 +308,107 @@ C3 = C1 | rest(1/2) | C2
 
 >>> C3
 [C4, E4, G4, B4, D4, F#4, A4, C#5] with interval [0, 0, 0, 0.75, 0, 0, 0, 0]
+```
+
+
+
+## beat
+
+This is a data structure that represents meter in music theory, which is used in a rhythm.
+
+A beat instance holds a single beat with a duration and a dotted number (in case it is a dotted beat).
+
+You can form a complete rhythm with a list of beat instances.
+
+### The composition of beat type
+
+```python
+beat(duration=1/4,
+     dotted=None)
+```
+
+* duration: the duration of the beat in bars (without the dotted number)
+* dotted: the dotted number of the beat, if it is None, the beat is not a dotted beat
+
+You can use the `get_duration` method of the beat instance to get the actual duration of the beat by applying the dotted number.
+
+
+
+## rest_symbol
+
+This is a data structure that represents a rest in music theory, which could be used along with the beat type to form a rhythm.
+
+The rest_symbol instances take the same parameters as the beat instances.
+
+In practice, you can use `rest` instances interchangeably with `rest_symbol` instances, but it is recommended to use `rest_symbol` instances to form a rhythm, because there is a `continue_symbol` type that works together with it, it is better that their names are more standard.
+
+
+
+## continue_symbol
+
+This is a data structure that extends the previous note's duration and interval, which could be used along with the beat type to form a rhythm.
+
+The continue_symbol instances take the same parameters as the beat instances.
+
+
+
+## rhythm
+
+This is a data structure that represents a rhythm, which is equivalent to a list of beats, rest symbols and continue symbols.
+
+A rhythm instance can be applied to a chord instance to change the intervals and durations of a chord instance.
+
+You can think of this data structure as a higher level abstraction of the drum type.
+
+You can set a fixed total length when initializing a rhythm instance, then the durations of the beats you set will be divided equally according to the length and number of the beats.
+
+You can also set the time signature for the rhythm, such as 4/4, 3/4, 5/4.
+
+For simplification purposes, there is a rhythm pattern syntax which is somewhat similar to the drum pattern syntax to help you make a rhythm instance quicker.
+
+You can add 2 rhythm instances to get a new combined rhythm instance, or multiply a rhythm instance by an integer to get a new repeated rhythm instance.
+
+### The composition of rhythm type
+
+```python
+rhythm(beat_list,
+       total_bar_length=None,
+       unit=None,
+       time_signature=None,
+       separator=' ')
+```
+
+* beat_list: a list of beat, rest_symbol and continue_symbol instances, or a string that matches a rhythm pattern syntax
+* total_bar_length: the total length in bars of the rhythm, if set, the durations of the beats will be equally divided
+* unit: if set, set the durations of all beats to the value
+* time_signature: the time signature of the rhythm, a list of the form [numerator, denominator], if not set, the time signature of the rhythm will be 4/4
+* separator: the separator of the beats if `beat_list` is a string
+
+
+
+### The rhythm pattern syntax
+
+Use `b` to represent a beat, `0` to represent a rest symbol, `-` to represent a continue symbol.
+
+if you want to set the duration of the beat, use `:` after the beat symbol, then write the duration after it, the duration supports the same syntax as the drum pattern syntax.
+
+You can add `.` after a beat symbol to make the beat dotted, the dots could be one or more, which is the dotted number of the beat.
+
+The beat symbols are separated by whitespaces by default.
+
+
+
+### Apply rhythm to a chord instance
+
+You can use `apply_rhythm` method of a chord instance to apply a rhythm instance, which will set the note intervals and durations of the chord instance according to the rhythm instance that is applied. If the number of the beats of the rhythm instance does not match with the number of the notes of the chord instance, the minimum of them will be chosen as the number of notes to apply the rhythm. This method returns a new chord instance.
+
+Here is an example of creating a rhythm instance and apply the rhythm to a melody.
+
+```python
+rhythm1 = rhythm('b b b - b b b - b b b - b - b -', 2)
+chord1 = chord('C5, D5, E5, E5, F5, G5, E5, D5, C5, A5, G5').apply_rhythm(rhythm1)
+>>> print(chord1)
+[C5, D5, E5, E5, F5, G5, E5, D5, C5, A5, G5] with interval [0.125, 0.125, 0.25, 0.125, 0.125, 0.25, 0.125, 0.125, 0.25, 0.25, 0.25]
+
 ```
 
