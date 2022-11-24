@@ -342,6 +342,11 @@ The rest_symbol instances take the same parameters as the beat instances.
 
 In practice, you can use `rest` instances interchangeably with `rest_symbol` instances, but it is recommended to use `rest_symbol` instances to form a rhythm, because there is a `continue_symbol` type that works together with it, it is better that their names are more standard.
 
+```python
+rest_symbol(duration=1/4,
+            dotted=None)
+```
+
 
 
 ## continue_symbol
@@ -349,6 +354,11 @@ In practice, you can use `rest` instances interchangeably with `rest_symbol` ins
 This is a data structure that extends the previous note's duration and interval, which could be used along with the beat type to form a rhythm.
 
 The continue_symbol instances take the same parameters as the beat instances.
+
+```python
+continue_symbol(duration=1/4,
+                dotted=None)
+```
 
 
 
@@ -406,7 +416,18 @@ Here is an example of creating a rhythm instance and apply the rhythm to a melod
 
 ```python
 rhythm1 = rhythm('b b b - b b b - b b b - b - b -', 2)
+'''
+equivalent to: rhythm1 = rhythm([beat(), beat(), beat(), continue_symbol(), beat(), beat(), beat(), continue_symbol(), beat(), beat(), beat(), continue_symbol(), beat(), continue_symbol(), beat(), continue_symbol()], 2)
+'''
+
+>>> print(rhythm1)
+[rhythm]
+rhythm: beat(1/8), beat(1/8), beat(1/8), continue(1/8), beat(1/8), beat(1/8), beat(1/8), continue(1/8), beat(1/8), beat(1/8), beat(1/8), continue(1/8), beat(1/8), continue(1/8), beat(1/8), continue(1/8)
+total bar length: 2
+time signature: 4 / 4
+
 chord1 = chord('C5, D5, E5, E5, F5, G5, E5, D5, C5, A5, G5').apply_rhythm(rhythm1)
+
 >>> print(chord1)
 [C5, D5, E5, E5, F5, G5, E5, D5, C5, A5, G5] with interval [0.125, 0.125, 0.25, 0.125, 0.125, 0.25, 0.125, 0.125, 0.25, 0.25, 0.25]
 
