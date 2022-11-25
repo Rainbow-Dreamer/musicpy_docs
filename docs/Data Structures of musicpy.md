@@ -378,21 +378,25 @@ For simplification purposes, there is a rhythm pattern syntax which is somewhat 
 
 You can add 2 rhythm instances to get a new combined rhythm instance, or multiply a rhythm instance by an integer to get a new repeated rhythm instance.
 
+This data structure is inherited from list, so you can do the same operations as lists on the rhythm instances.
+
 ### The composition of rhythm type
 
 ```python
 rhythm(beat_list,
        total_bar_length=None,
-       unit=None,
+       beats=None,
        time_signature=None,
-       separator=' ')
+       separator=' ',
+       unit=None)
 ```
 
 * beat_list: a list of beat, rest_symbol and continue_symbol instances, or a string that matches a rhythm pattern syntax
 * total_bar_length: the total length in bars of the rhythm, if set, the durations of the beats will be equally divided
-* unit: if set, set the durations of all beats to the value
+* beats: when total_bar_length is set, the number of beats of the rhythm, you can set this to assign a fixed duration to each beat
 * time_signature: the time signature of the rhythm, a list of the form [numerator, denominator], if not set, the time signature of the rhythm will be 4/4
 * separator: the separator of the beats if `beat_list` is a string
+* unit: if set, set the durations of all beats to the value
 
 
 
@@ -400,11 +404,19 @@ rhythm(beat_list,
 
 Use `b` to represent a beat, `0` to represent a rest symbol, `-` to represent a continue symbol.
 
+The beat symbols are separated by whitespaces by default.
+
 if you want to set the duration of the beat, use `:` after the beat symbol, then write the duration after it, the duration supports the same syntax as the drum pattern syntax.
 
 You can add `.` after a beat symbol to make the beat dotted, the dots could be one or more, which is the dotted number of the beat.
 
-The beat symbols are separated by whitespaces by default.
+You can add settings block with keywords and values after a beat, which is similar to the drum pattern syntax. Note that if the separator is whitespace, there cannot be any whitespaces in the settings block. The supported keywords are:
+
+```
+r:n repeat the beat n times with the equally divided unit duration
+R:n repeat the beat n times with the unit duration
+b:n change the duration of the beat to the unit duration * n
+```
 
 
 

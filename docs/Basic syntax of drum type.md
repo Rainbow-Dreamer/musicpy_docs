@@ -98,33 +98,35 @@ Some of the keyword header can be placed in the settings block, separated by `;`
 Here is a description of the function of each keyword header:
 
 ```python
-r:n Repeat the drum beats n times, also in the setup block, the lengths and intervals of each note in the setup block are divided equally according to the number of repetitions when there is a fixed length assigned to it
+r:n  Repeat the drum beats n times, also in the setup block, the lengths and intervals of each note in the setup block are divided equally according to the number of repetitions when there is a fixed length assigned to it
 
-R:n In the set block, repeats the drum beats n times, and when there is a fixed length assigned to it, the lengths and intervals of each note is not divided equally
+R:n  In the set block, repeats the drum beats n times, and when there is a fixed length assigned to it, the lengths and intervals of each note is not divided equally
 
-d:l;i;v sets the default length l, interval i, volume v, or you can use dl, di, dv respectively
+d:l;i;v  set the default length l, interval i, volume v, or you can use dl, di, dv respectively
 
-a:l;i;v set all uniform lengths l, interval i, volume v, or use al, ai, av respectively
+a:l;i;v  set all uniform lengths l, interval i, volume v, or use al, ai, av respectively
 
-t:n sets the total length of the interval to n. The length of each note in the interval is the total length divided by the number of notes in the region, and can be occupied using empty notes (characters with a value of -1 in the drum mapping) and continuation notes (characters with a value of -2 in the drum mapping), for example
+t:n  set the total length of the interval to n. The length of each note in the interval is the total length divided by the number of notes in the region, and can be occupied using empty notes (characters with a value of -1 in the drum mapping) and continuation notes (characters with a value of -2 in the drum mapping), for example
 K, H, S, H, 0, K, S, H, K, -, S, H, K, K, S, H, t:2
 This is a section where each note takes up 1/8 of a measure, the 0 is the empty beat, and the - is the continuation of the previous note
 
-b:n sets the number of beats in the region to n beats
+b:n  when the total length is set, set the number of beats in the region to n beats, this will assign a unit duration to each drum beat unit; if set in the settings block, set the duration to unit duration * n
 
-i:n insert interval of n bars in the middle of the note, in the setting block this is to set the interval of the note to n bars
+B:n used in the settings block, works the same as the global case of b, valid when there is a set total length in the settings block
 
-l:n set the note length to n bars in the settings block
+i:n  insert interval of n bars in the middle of the note, in the setting block this is to set the interval of the note to n bars
 
-v:n sets the note volume to n in the settings block
+l:n  set the note length to n bars in the settings block
 
-n:name sets the name of the drum beat in the region
+v:n  set the note volume to n in the settings block
 
-u:name use the drum region with the name
+n:name  set the name of the drum beat in the region
 
-s:T whether the connected drums are played simultaneously or not (T/F), if not, the drums will be divided equally by the length of one drum when the total length is fixed
+u:name  use the drum region with the name
 
-cm:n use for single continue symbol only, set the continue mode to n, the value could be 0 or 1, if value is 0, only extend the duration of the last note, if value is 1, when the previous note is a group, extend the duration of all notes in the group; if the continue mode is not set, the default action of continue symbol is extending only last note except when the previous note is a group that set to playing at the same time, which in case extending all notes in the group
+s:T  whether the connected drums are played simultaneously or not (T/F), if not, the drums will be divided equally by the length of one drum when the total length is fixed
+
+cm:n  use for single continue symbol only, set the continue mode to n, the value could be 0 or 1, if value is 0, only extend the duration of the last note, if value is 1, when the previous note is a group, extend the duration of all notes in the group; if the continue mode is not set, the default action of continue symbol is extending only last note except when the previous note is a group that set to playing at the same time, which in case extending all notes in the group
 
 Use ! in combination with the keyword header means to set all the current notes in batch,
 for example: K, H, S, H | K, K, S, H, !r:2
