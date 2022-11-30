@@ -330,7 +330,7 @@ beat(duration=1/4,
 * duration: the duration of the beat in bars (without the dotted number)
 * dotted: the dotted number of the beat, if it is None, the beat is not a dotted beat
 
-You can use the `get_duration` method of the beat instance to get the actual duration of the beat by applying the dotted number.
+You can use the `get_duration` method of the beat instance to get the actual duration of the beat by applying the dotted number, this method also applies to rest_symbol and continue_symbol.
 
 
 
@@ -370,78 +370,5 @@ A rhythm instance can be applied to a chord instance to change the intervals and
 
 You can think of this data structure as a higher level abstraction of the drum type.
 
-You can set a fixed total length when initializing a rhythm instance, then the durations of the beats you set will be divided equally according to the length and number of the beats.
-
-You can also set the time signature for the rhythm, such as 4/4, 3/4, 5/4.
-
-For simplification purposes, there is a rhythm pattern syntax which is somewhat similar to the drum pattern syntax to help you make a rhythm instance quicker.
-
-You can add 2 rhythm instances to get a new combined rhythm instance, or multiply a rhythm instance by an integer to get a new repeated rhythm instance.
-
-This data structure is inherited from list, so you can do the same operations as lists on the rhythm instances.
-
-### The composition of rhythm type
-
-```python
-rhythm(beat_list,
-       total_bar_length=None,
-       beats=None,
-       time_signature=None,
-       separator=' ',
-       unit=None)
-```
-
-* beat_list: a list of beat, rest_symbol and continue_symbol instances, or a string that matches a rhythm pattern syntax
-* total_bar_length: the total length in bars of the rhythm, if set, the durations of the beats will be equally divided
-* beats: when total_bar_length is set, the number of beats of the rhythm, you can set this to assign a fixed duration to each beat
-* time_signature: the time signature of the rhythm, a list of the form [numerator, denominator], if not set, the time signature of the rhythm will be 4/4
-* separator: the separator of the beats if `beat_list` is a string
-* unit: if set, set the durations of all beats to the value
-
-
-
-### The rhythm pattern syntax
-
-Use `b` to represent a beat, `0` to represent a rest symbol, `-` to represent a continue symbol.
-
-The beat symbols are separated by whitespaces by default.
-
-if you want to set the duration of the beat, use `:` after the beat symbol, then write the duration after it, the duration supports the same syntax as the drum pattern syntax.
-
-You can add `.` after a beat symbol to make the beat dotted, the dots could be one or more, which is the dotted number of the beat.
-
-You can add settings block with keywords and values after a beat, which is similar to the drum pattern syntax. Note that if the separator is whitespace, there cannot be any whitespaces in the settings block. The supported keywords are:
-
-```
-r:n repeat the beat n times with the equally divided unit duration
-R:n repeat the beat n times with the unit duration
-b:n change the duration of the beat to the unit duration * n
-```
-
-
-
-### Apply rhythm to a chord instance
-
-You can use `apply_rhythm` method of a chord instance to apply a rhythm instance, which will set the note intervals and durations of the chord instance according to the rhythm instance that is applied. If the number of the beats of the rhythm instance does not match with the number of the notes of the chord instance, the minimum of them will be chosen as the number of notes to apply the rhythm. This method returns a new chord instance.
-
-Here is an example of creating a rhythm instance and apply the rhythm to a melody.
-
-```python
-rhythm1 = rhythm('b b b - b b b - b b b - b - b -', 2)
-'''
-equivalent to: rhythm1 = rhythm([beat(), beat(), beat(), continue_symbol(), beat(), beat(), beat(), continue_symbol(), beat(), beat(), beat(), continue_symbol(), beat(), continue_symbol(), beat(), continue_symbol()], 2)
-'''
-
->>> print(rhythm1)
-[rhythm]
-rhythm: beat(1/8), beat(1/8), beat(1/8), continue(1/8), beat(1/8), beat(1/8), beat(1/8), continue(1/8), beat(1/8), beat(1/8), beat(1/8), continue(1/8), beat(1/8), continue(1/8), beat(1/8), continue(1/8)
-total bar length: 2
-time signature: 4 / 4
-
-chord1 = chord('C5, D5, E5, E5, F5, G5, E5, D5, C5, A5, G5').apply_rhythm(rhythm1)
-
->>> print(chord1)
-[C5, D5, E5, E5, F5, G5, E5, D5, C5, A5, G5] with interval [0.125, 0.125, 0.25, 0.125, 0.125, 0.25, 0.125, 0.125, 0.25, 0.25, 0.25]
-
-```
+There are detailed introductions of rhythm type in `Basic syntax of rhythm type`.
 
