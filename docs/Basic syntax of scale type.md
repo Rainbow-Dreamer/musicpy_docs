@@ -64,15 +64,15 @@ This will shift the music clip p from A major to A minor.
 
 ## Selecting the chords according to the number of steps in the scale
 
-For example, if the 4th triad of C major is F and the 6th triad is Am, you can use the pickchord_by_degree function, where the parameter `degree1` is the chord degree, starts from 0, `num` is the number of notes to pick, and `step` is the number of notes in the scale to span each time. By default,
+For example, if the 4th triad of C major is F and the 6th triad is Am, you can use the pick_chord_by_degree function, where the parameter `degree1` is the chord degree, starts from 0, `num` is the number of notes to pick, and `step` is the number of notes in the scale to span each time. By default,
 
 ```python
-scale('C', 'major').pickchord_by_degree(4)
+scale('C', 'major').pick_chord_by_degree(4)
 ```
 
 will get the 5th triad of C major scale G major triad.
 
-The function pickchord_by_degree, which picks the corresponding chord according to the step of the scale, can be abbreviated as a scale type followed by parentheses with arguments inside.
+The function pick_chord_by_degree, which picks the corresponding chord according to the step of the scale, can be abbreviated as a scale type followed by parentheses with arguments inside.
 
 Advanced syntax:
 
@@ -80,9 +80,9 @@ Advanced syntax:
 S('C major')(4)
 ```
 
-pickchord_by_degree has many other parameters that can be used to extract natural triads, natural seventh chords, natural ninth chords, etc. You can also set whether to stack in thirds or other degrees each time, as well as set the note length and note spacing of the returned chord type, etc.
+pick_chord_by_degree has many other parameters that can be used to extract natural triads, natural seventh chords, natural ninth chords, etc. You can also set whether to stack in thirds or other degrees each time, as well as set the note length and note spacing of the returned chord type, etc.
 
-The parameters of pickchord_by_degree are, in order
+The parameters of pick_chord_by_degree are, in order
 
 ```python
 degree1: the degree of the chord to pick, as a positive integer
@@ -92,7 +92,7 @@ num: the number of notes of the extracted chord, the default value is 3, i.e. th
 step: the number of steps of the extracted chord to find the next chord note in the scale, the default value is 2, i.e. stacking by thirds.
 ```
 
-Since the pickchord_by_degree function can be abbreviated to a pair of parentheses, you can add a pair of parentheses directly after a scale type, and then write the parameters of the pickchord_by_degree function inside, which is more concise, for example
+Since the pick_chord_by_degree function can be abbreviated to a pair of parentheses, you can add a pair of parentheses directly after a scale type, and then write the parameters of the pick_chord_by_degree function inside, which is more concise, for example
 
 ```python
 # Build a C major scale called c_major_scale

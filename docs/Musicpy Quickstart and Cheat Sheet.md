@@ -66,10 +66,10 @@ Note: the chord type of muscipy has a `interval` attribute which is the list of 
 |     raise/lower ith to jth notes of scale A n semitones      |                 A + (n, i, j); A - (n, i, j)                 |                A.up(n, i, j); A.down(n, i, j)                |
 |                raise/lower scale A 1 semitone                |                            +A; -A                            |                       A.up(); A.down()                       |
 |                  get ith degree of scale A                   |                             A[i]                             |                                                              |
-|                   get ith triad of scale A                   |                             A(i)                             |                   A.pickchord_by_degree(i)                   |
-|                 get ith 7th chord of scale A                 |                         A(i, num=4)                          |               A.pickchord_by_degree(i, num=4)                |
+|                   get ith triad of scale A                   |                             A(i)                             |                   A.pick_chord_by_degree(i)                   |
+|                 get ith 7th chord of scale A                 |                         A(i, num=4)                          |               A.pick_chord_by_degree(i, num=4)                |
 |                   get ith mode of scale A                    |                            A / i                             |                        A.inversion(i)                        |
-|          get chord with notes from scale A by index          |                     A @ [1, 2, 3, 4, 5]                      |            A.pickchord_by_index([1, 2, 3, 4, 5])             |
+|          get chord with notes from scale A by index          |                     A @ [1, 2, 3, 4, 5]                      |            A.pick_chord_by_index([1, 2, 3, 4, 5])             |
 |              get the reversed scale of scale A               |                              ~A                              |                         A.reverse()                          |
 |       get a chord progression with degrees of scale A        |                           A % 6451                           |                       A.pattern(6451)                        |
 |                   get ith track of piece A                   |                             A[i]                             |                                                              |
