@@ -160,7 +160,7 @@ write(current_chord,
 
 * ticks_per_beat: ticks per beat of the MIDI file, set this higher to get higher resolution
 
-* **midi_args: other arguments for MIDI file, please refer to [mido documentation](https://mido.readthedocs.io/en/latest/lib.html#midi-files) for details
+* midi_args: other arguments for MIDI file, please refer to [mido documentation](https://mido.readthedocs.io/en/latest/lib.html#midi-files) for details
 
 ## I wrote an IDE specifically for musicpy for everyone to use
 
@@ -207,7 +207,7 @@ This musicpy editor has several very useful functions, which will be introduced 
 
 5. There are many combinations of computer keyboard shortcuts built into this editor, each corresponding to a variety of different functions.
 
-```python
+```
 ctrl + e to stop playback  
    
 ctrl + d import a MIDI file  
