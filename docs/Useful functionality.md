@@ -196,17 +196,17 @@ This musicpy editor has several very useful functions, which will be introduced 
 
 1. Adding `/` before a line of musicpy code will play the music represented by this code directly and internally, without opening any player on your computer. At the same time it will also generate the MIDI file corresponding to the current musicpy code in the musicpy folder. This syntax is equivalent to putting this line of code inside the play function. The parameters of the play function can be set with English commas followed by the code, such as bpm (song speed), instrument (instrument) and so on. It is recommended to run in real time while open (the default is open), you can musicpy code to write where, plus `/` can immediately hear. For example, in the editor write
 
-   ```python
-   /C('Dmaj7') * 4 | C('Em7') * 4, 150
-   ```
+```python
+/C('Dmaj7') * 4 | C('Em7') * 4, 150
+```
 
 ​		Then you can hear the music corresponding to this musicpy language directly.
 
 2. Add a `?` before a line of musicpy code (especially a chord code) You can get the name of the chord type according to the music logic, for example
 
-   ```python
-   ?chord(['C','E','G','B'])
-   ```
+```python
+?chord(['C','E','G','B'])
+```
 
 ​		will return `Cmaj7`.
 
@@ -219,7 +219,7 @@ This musicpy editor has several very useful functions, which will be introduced 
 
 5. There are many combinations of computer keyboard shortcuts built into this editor, each corresponding to a variety of different functions.
 
-   ```python
+```python
    ctrl + e to stop playback  
    
    ctrl + d import a MIDI file  
@@ -241,7 +241,7 @@ This musicpy editor has several very useful functions, which will be introduced 
    alt + z plays the selected musicpy code  
    
    alt + x to play the selected musicpy code visually
-   ```
+```
 
 I will improve this musicpy editor afterwards, hope you will have fun with it!
 
