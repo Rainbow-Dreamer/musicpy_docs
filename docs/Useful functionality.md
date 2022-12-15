@@ -7,7 +7,7 @@
 - [Play note, chord, piece and other music theory types](#play-note-chord-piece-and-other-music-theory-types)
 - [Read MIDI files and convert them to piece types for various music theory operations](#read-midi-files-and-convert-them-to-piece-types-for-various-music-theory-operations)
 - [Write music theory types to MIDI files for easy viewing and editing in DAW](#write-music-theory-types-to-midi-files-for-easy-viewing-and-editing-in-DAW)
-- [I wrote an efficient IDE specifically for musicpy for everyone to use](#i-wrote-an-efficient-IDE-specifically-for-musicpy-for-everyone-to-use)
+- [I wrote an IDE specifically for musicpy for everyone to use](#i-wrote-an-IDE-specifically-for-musicpy-for-everyone-to-use)
 - [Storing musicpy's data structures as a separate data file](#storing-musicpys-data-structures-as-a-separate-data-file)
 - [Conversion between notes and frequencies](#conversion-between-notes-and-frequencies)
 - [The play function can be abbreviated when selecting an instrument](#the-play-function-can-be-abbreviated-when-selecting-an-instrument)
@@ -162,7 +162,7 @@ write(current_chord,
 
 * **midi_args: other arguments for MIDI file, please refer to [mido documentation](https://mido.readthedocs.io/en/latest/lib.html#midi-files) for details
 
-## I wrote an efficient IDE specifically for musicpy for everyone to use
+## I wrote an IDE specifically for musicpy for everyone to use
 
 [musicpy_editor](https://github.com/Rainbow-Dreamer/musicpy_editor) is an IDE I developed specifically for musicpy language.
 
@@ -176,92 +176,72 @@ I also added a light-on/light-off function for the input and output screens, so 
 
 The description of the parameters in the settings.
 
-* bakground_image: You can choose the file path of the background image, click the "Change" button to open a file browser box, select the file path of the background image you want to set, you can also manually enter the file path. Click "Save" to reload the background image after modification.
-
-* background_places: the position of the background image, the first item is the x (horizontal) coordinates, the second item is the y (vertical) coordinates, the upper left corner of the editor as 0, 0 (origin), x from the left to the right to increase, y from the top to the bottom to increase. Clicking save after the modification will reload the position of the background image.
-
-* eachline_character: the maximum number of characters in each line of the auto line feed.
-
-* pairing_symbols: the list of auto-complete symbols, you can customize the symbols you want to auto-complete, for example, type a `(` will auto-complete `)`.
-
-* wraplines_number: the number of blank lines between each line when auto-wrap.
-
-* font_type: the font type of the input and output windows.
-
-* font_size: the font size of the input and output windows.
-
-* background_mode: the parameter of light on/off mode, `white` means light on mode, `black` means light off mode, there will be a button to toggle light on/off in the editor's main interface.
-
-* grammar_highlight: Dictionary for grammar highlighting, key is the color name, value is the list of words that need grammar highlighting to this color.
-
-* background_color: The background color of the widget in the editor. (need to restart the editor to see the modified effect)
-
-* foreground_color: The font color of the widget in the editor. (Need to restart the editor to see the modified effect)
-
-* active_background_color: The color displayed when the mouse cursor is moved over the widget in the editor. (Need to restart the editor to see the modified effect)
-
-* day_and_night_colors: The names of the background colors of the input and output windows corresponding to the light-on/light-off modes respectively. (Need to restart the editor to see the modified effect)
-
-* search_highlight_color: the color of the highlight of the matching fragment when searching for keywords, in order of general highlight color, selected highlight color
+* bakground_image: you can choose the file path of the background image, click the "Change" button to open a file browser box, select the file path of the background image you want to set, you can also manually enter the file path. Click "Save" to reload the background image after modification
+* background_places: the position of the background image, the first item is the x (horizontal) coordinates, the second item is the y (vertical) coordinates, the upper left corner of the editor as 0, 0 (origin), x from the left to the right to increase, y from the top to the bottom to increase. Clicking save after the modification will reload the position of the background image
+* pairing_symbols: the list of auto-complete symbols, you can customize the symbols you want to auto-complete, for example, type a `(` will auto-complete `)`
+* font_type: the font type of the input and output windows
+* font_size: the font size of the input and output windows
+* background_mode: the parameter of light on/off mode, `white` means light on mode, `black` means light off mode, there will be a button to toggle light on/off in the editor's main interface
+* syntax_highlight: dictionary for syntax highlighting, key is the color name, value is the list of words that need syntax highlighting to this color.
+* background_color: the background color of the widget in the editor
+* foreground_color: the font color of the widget in the editor
+* active_background_color: the background color displayed when the mouse cursor is moved over the widget in the editor
+* button_background_color: the background color of the button of the window where the file is saved when the editor is closed
+* active_foreground_color: the foreground color displayed when the mouse cursor is moved over the widget in the editor
+* language: the language used by the editor
 
 Without print if you check the box, when you type a line of code, in each line, if there is something that can be shown, the box below will be shown, equivalent to automatically adding print. real-time run if you check the box, the editor will run the code you wrote in real time when the code you wrote changes, and the result will be shown in the box below (if you do not use print to check the box). In this musicpy editor, in addition to the live run, auto-completion, no-print checkboxes and the file bar, there is also a save button, which saves the current code as a file; a run button, which runs the current code, and displays the error message in the box below if the current code runs with an error, and does not affect the normal work of the editor. When running in real time, if the current code will run with errors, nothing will be shown in the box below, at this time click the run button to see the error message; the auto line feed button, you can make the following box show the running result automatically line feed.
 
 This musicpy editor has several very useful functions, which will be introduced one by one.
 
-1.Adding `/` before a line of musicpy code will play the music represented by this code directly and internally, without opening any player on your computer. At the same time it will also generate the MIDI file corresponding to the current musicpy code in the musicpy folder. This syntax is equivalent to putting this line of code inside the play function. The parameters of the play function can be set with English commas followed by the code, such as bpm (song speed), instrument (instrument) and so on. It is recommended to run in real time while open (the default is open), you can musicpy code to write where, plus `/` can immediately hear. For example, in the editor write
+1. Adding `/` before a line of musicpy code will play the music represented by this code directly and internally, without opening any player on your computer. At the same time it will also generate the MIDI file corresponding to the current musicpy code in the musicpy folder. This syntax is equivalent to putting this line of code inside the play function. The parameters of the play function can be set with English commas followed by the code, such as bpm (song speed), instrument (instrument) and so on. It is recommended to run in real time while open (the default is open), you can musicpy code to write where, plus `/` can immediately hear. For example, in the editor write
 
-```python
-/C('Dmaj7') * 4 | C('Em7') * 4, 150
-```
+   ```python
+   /C('Dmaj7') * 4 | C('Em7') * 4, 150
+   ```
 
-Then you can hear the music corresponding to this musicpy language directly.
+​		Then you can hear the music corresponding to this musicpy language directly.
 
-2.Add a `?` before a line of musicpy code (especially a chord code) You can get the name of the chord type according to the music logic, for example
+2. Add a `?` before a line of musicpy code (especially a chord code) You can get the name of the chord type according to the music logic, for example
 
-```python
-?chord(['C','E','G','B'])
-```
+   ```python
+   ?chord(['C','E','G','B'])
+   ```
 
-will return `Cmaj7`.
+​		will return `Cmaj7`.
 
-This syntax is equivalent to representing a musicpy code for a chord placed inside the detect function. The parameters of the detect function can also be configured with English commas following the code.
+​		This syntax is equivalent to representing a musicpy code for a chord placed inside the detect function. The parameters of the detect function can 		also be configured with English commas following the code.
 
-3.Click the right mouse button to bring up the IDE menu, you can choose to play the selected musicpy statement, you can also choose to play the selected musicpy statement visually, the visualization window is the body of another music-related project I wrote, [Ideal Piano](https://github.com/Rainbow-Dreamer/Ideal-Piano).
+3. Click the right mouse button to bring up the IDE menu, you can choose to play the selected musicpy statement, you can also choose to play the selected musicpy statement visually, the visualization window is the body of another music-related project I wrote, [Ideal Piano](https://github.com/Rainbow-Dreamer/Ideal-Piano).
 
-4.In the right mouse menu, you can choose to import a MIDI file, (also available in the file bar) and after selecting a MIDI file a code for the read function with default parameters is automatically generated and assigned to a variable new_midi_file.
-The variable name can be changed by yourself. Stop play is used when playing musicpy code, if you only want to listen to a section, but not the whole song, then you can stop playing immediately. Use the search function to search for keywords.
+4. In the right mouse menu, you can choose to import a MIDI file, (also available in the file bar) and after selecting a MIDI file a code for the read function with default parameters is automatically generated and assigned to a variable new_midi_file.
+   The variable name can be changed by yourself. Stop play is used when playing musicpy code, if you only want to listen to a section, but not the whole song, then you can stop playing immediately.
 
-5.There are many combinations of computer keyboard shortcuts built into this editor, each corresponding to a variety of different functions.
+5. There are many combinations of computer keyboard shortcuts built into this editor, each corresponding to a variety of different functions.
 
-ctrl + f pops up the search box  
-
-ctrl + e to stop playback  
-
-ctrl + d import a MIDI file  
-
-ctrl + w open file (text file)  
-
-ctrl + s Save the current code as a text file  
-
-ctrl + q Close the editor  
-
-ctrl + r Run the current code  
-
-ctrl + g Turn on/off lights  
-
-ctrl + b Open settings  
-
-ctrl + t Open the settings of the visual piano  
-
-ctrl + c, ctrl + a, ctrl + v, ctrl + x, ctrl + z, ctrl + y These shortcut key combinations have the same function as most text editors: Copy, Select All, Paste, Cut, Undo, Restore
-
-ctrl + mouse wheel can adjust the font size, scroll up to make the font bigger, scroll down to make the font smaller, and will automatically save the changed font size settings.
-
-The Line Col in the lower right corner shows the number of lines and columns where the current input cursor is located, so that it is easy to check the corresponding position when the code is wrong.
-
-alt + z plays the selected musicpy code  
-
-alt + x to play the selected musicpy code visually
+   ```python
+   ctrl + e to stop playback  
+   
+   ctrl + d import a MIDI file  
+   
+   ctrl + w open file (text file)  
+   
+   ctrl + s Save the current code as a text file  
+   
+   ctrl + q Close the editor  
+   
+   ctrl + r Run the current code  
+   
+   ctrl + g Turn on/off lights  
+   
+   ctrl + mouse wheel can adjust the font size, scroll up to make the font bigger, scroll down to make the font smaller, and will automatically save the changed font size settings.
+   
+   The Line Col in the lower right corner shows the number of lines and columns where the current input cursor is located, so that it is easy to check the corresponding position when the code is wrong.
+   
+   alt + z plays the selected musicpy code  
+   
+   alt + x to play the selected musicpy code visually
+   ```
 
 I will improve this musicpy editor afterwards, hope you will have fun with it!
 
