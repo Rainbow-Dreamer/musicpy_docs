@@ -200,7 +200,7 @@ This musicpy editor has several very useful functions, which will be introduced 
 /C('Dmaj7') * 4 | C('Em7') * 4, 150
 ```
 
-​  Then you can hear the music corresponding to this musicpy language directly.
+​Then you can hear the music corresponding to this musicpy language directly.
 
 2. Add a `?` before a line of musicpy code (especially a chord code) You can get the name of the chord type according to the music logic, for example
 
@@ -208,9 +208,9 @@ This musicpy editor has several very useful functions, which will be introduced 
 ?chord(['C','E','G','B'])
 ```
 
-​  will return `Cmaj7`.
+​will return `Cmaj7`.
 
-​  This syntax is equivalent to representing a musicpy code for a chord placed inside the detect function. The parameters of the detect function can 		also be configured with English commas following the code.
+​This syntax is equivalent to representing a musicpy code for a chord placed inside the detect function. The parameters of the detect function can 		also be configured with English commas following the code.
 
 3. Click the right mouse button to bring up the IDE menu, you can choose to play the selected musicpy statement, you can also choose to play the selected musicpy statement visually, the visualization window is the body of another music-related project I wrote, [Ideal Piano](https://github.com/Rainbow-Dreamer/Ideal-Piano).
 
