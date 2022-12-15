@@ -6,8 +6,8 @@
 
 - [Play note, chord, piece and other music theory types](#play-note-chord-piece-and-other-music-theory-types)
 - [Read MIDI files and convert them to piece types for various music theory operations](#read-midi-files-and-convert-them-to-piece-types-for-various-music-theory-operations)
-- [Write music theory types to MIDI files for easy viewing and editing in DAW](#write-music-theory-types-to-midi-files-for-easy-viewing-and-editing-in-DAW)
-- [I wrote an IDE specifically for musicpy for everyone to use](#i-wrote-an-IDE-specifically-for-musicpy-for-everyone-to-use)
+- [Write music theory types to MIDI files for easy viewing and editing in DAW](#write-music-theory-types-to-midi-files-for-easy-viewing-and-editing-in-daw)
+- [I wrote an IDE specifically for musicpy for everyone to use](#i-wrote-an-ide-specifically-for-musicpy-for-everyone-to-use)
 - [Storing musicpy's data structures as a separate data file](#storing-musicpys-data-structures-as-a-separate-data-file)
 - [Conversion between notes and frequencies](#conversion-between-notes-and-frequencies)
 - [The play function can be abbreviated when selecting an instrument](#the-play-function-can-be-abbreviated-when-selecting-an-instrument)
