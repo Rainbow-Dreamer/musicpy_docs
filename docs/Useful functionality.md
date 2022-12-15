@@ -194,23 +194,11 @@ Without print if you check the box, when you type a line of code, in each line, 
 
 This musicpy editor has several very useful functions, which will be introduced one by one.
 
-1. Adding `/` before a line of musicpy code will play the music represented by this code directly and internally, without opening any player on your computer. At the same time it will also generate the MIDI file corresponding to the current musicpy code in the musicpy folder. This syntax is equivalent to putting this line of code inside the play function. The parameters of the play function can be set with English commas followed by the code, such as bpm (song speed), instrument (instrument) and so on. It is recommended to run in real time while open (the default is open), you can musicpy code to write where, plus `/` can immediately hear. For example, in the editor write
+1. Adding `/` before a line of musicpy code will play the music represented by this code directly and internally, without opening any player on your computer. At the same time it will also generate the MIDI file corresponding to the current musicpy code in the musicpy folder. This syntax is equivalent to putting this line of code inside the play function. The parameters of the play function can be set with English commas followed by the code, such as bpm (song speed), instrument (instrument) and so on. It is recommended to run in real time while open (the default is open), you can musicpy code to write where, plus `/` can immediately hear. For example, in the editor write `/C('Dmaj7') * 4 | C('Em7') * 4, 150`
+   Then you can hear the music corresponding to this musicpy language directly.
 
-```python
-/C('Dmaj7') * 4 | C('Em7') * 4, 150
-```
-
-​		Then you can hear the music corresponding to this musicpy language directly.
-
-2. Add a `?` before a line of musicpy code (especially a chord code) You can get the name of the chord type according to the music logic, for example
-
-```python
-?chord(['C','E','G','B'])
-```
-
-​		will return `Cmaj7`.
-
-​		This syntax is equivalent to representing a musicpy code for a chord placed inside the detect function. The parameters of the detect function can 		also be configured with English commas following the code.
+2. Add a `?` before a line of musicpy code (especially a chord code) You can get the name of the chord type according to the music logic, for example `?chord(['C','E','G','B'])` will return `Cmaj7`.
+   This syntax is equivalent to representing a musicpy code for a chord placed inside the detect function. The parameters of the detect function can 		also be configured with English commas following the code.
 
 3. Click the right mouse button to bring up the IDE menu, you can choose to play the selected musicpy statement, you can also choose to play the selected musicpy statement visually, the visualization window is the body of another music-related project I wrote, [Ideal Piano](https://github.com/Rainbow-Dreamer/Ideal-Piano).
 
