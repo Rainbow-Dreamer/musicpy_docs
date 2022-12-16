@@ -69,6 +69,7 @@ If you think this is too simple, musicpy could also produce music like [this](ht
 * [Basic syntax of pan type](https://musicpy.readthedocs.io/en/latest/Basic%20syntax%20of%20pan%20type/)
 * [Basic syntax of volume type](https://musicpy.readthedocs.io/en/latest/Basic%20syntax%20of%20volume%20type/)
 * [Basic syntax of drum type](https://musicpy.readthedocs.io/en/latest/Basic%20syntax%20of%20drum%20type/)
+* [Basic syntax of rhythm type](https://musicpy.readthedocs.io/en/latest/Basic%20syntax%20of%20rhythm%20type/)
 
 
 ### Useful functionality
