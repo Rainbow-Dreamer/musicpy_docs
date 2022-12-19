@@ -2,13 +2,13 @@
 
 ## 1. Touhou Project main theme
 ```python
-play((getchord_by_interval('D#4', [5,7,10,7,5], 1/2, 1/8)*3 + getchord_by_interval('F4', [1,0,-4], 1/2, 1/8)) * 3, 150)
+play((get_chord_by_interval('D#4', [5,7,10,7,5], 1/2, 1/8)*3 + get_chord_by_interval('F4', [1,0,-4], 1/2, 1/8)) * 3, 150)
 ```
 ## 2. Play the A minor seventh chord followed by a rest half beat 4 times, then the B minor seventh chord followed by a rest half beat 4 times, then the C major seventh chord breaking up the chord 1 time.
 (Both of these examples are written without using advanced syntax, using advanced syntax makes the musicpy language look more compact)
 ```python
 a = C('Am7') % (1/8, 0)
-play(a * 4 | (a + 2) * 4 | chd(a[0] + 3, 'maj7').set(interval=1/8), bpm=80)
+play(a * 4 | (a + 2) * 4 | get_chord(a[0] + 3, 'maj7').set(interval=1/8), bpm=80)
 ```
 
 ## 3. A short piano piece
@@ -83,8 +83,8 @@ play(piece([a, c, a2 * 2, c * 2], [1, 81, 34, 81], 130, [0, 1/4, 8, 33/4]))
 
 ## 11. horror ambient music, orchestral tones
 ```python
-a = chd('B4','maj9').sort([2,3,4,1,5])
-b = chd('B4','maj9').sort([2,3,4,1,5,2])
+a = get_chord('B4','maj9').sort([2,3,4,1,5])
+b = get_chord('B4','maj9').sort([2,3,4,1,5,2])
 q = a + a[1:-1].reverse_chord()
 q2 = b + b[3:-1].reverse_chord()
 play((q.set(1/8,1/8) + q2.set(1/8,1/8))*2, 100, instrument=50)

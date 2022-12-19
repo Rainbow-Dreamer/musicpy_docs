@@ -48,14 +48,14 @@ play(a, wait=True)
 * ### Play chords
 
 ```python
-b = chd('C', 'maj7', intervals=1, duration=2)
+b = get_chord('C', 'maj7', intervals=1, duration=2)
 play(b, 150)
 ```
 
 Play a broken chord of a C major seventh chord at 150 BPM.
 
 ```python
-c = chd('D', 'm7', intervals=1)*2 + chd('E', 'maj9', intervals=0.5).reverse()
+c = get_chord('D', 'm7', intervals=1)*2 + get_chord('E', 'maj9', intervals=0.5).reverse()
 play(c, 100)
 ```
 
@@ -321,8 +321,8 @@ b = note('gb', 5)
 c = N('A6')
 c = N('a6')
 
-d = chd('Bb3', 'm11')
-d = chd('bb3', 'm11')
+d = get_chord('Bb3', 'm11')
+d = get_chord('bb3', 'm11')
 
 e = C('Bbm11', 3)
 e = C('bbm11', 3)

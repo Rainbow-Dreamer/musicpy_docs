@@ -109,10 +109,10 @@ A % (1.5, 1)
 
 ## Get a chord based on its root note and chord name
 
-Introducing a very handy function: getchord. This function allows you to get the type of chord you want, simply by giving the root note of the chord and the chord type. Since the name of this function is relatively a bit long, you can also call getchord with the name chd (short for chord). e.g.
+Introducing a very handy function: get_chord. This function allows you to get the type of chord you want, simply by giving the root note of the chord and the chord type. e.g.
 
 ```python
-Am7 = chd('A', 'm7')
+Am7 = get_chord('A', 'm7')
 ```
 
 This way we create a minor seventh chord of A. It is represented as
@@ -122,17 +122,17 @@ This way we create a minor seventh chord of A. It is represented as
 ```
 
 There are many types of chord types, which can be found in the chordTypes file in database.py. You can also add your own chord types by writing the chord name and the corresponding chord interval in the same format as in chordTypes.
-The first parameter of the chd function is the root note of the chord, and if no specific pitch is specified (e.g. C5, D6 is a note with a specific pitch), then by default it is treated as the 4th octave, e.g. chd('A', 'm7'), which is equivalent to
-chd('A4', 'm7'), and if you specify a specific pitch for the root note, for example, if you now want to write a major 7th chord with root note D6, you can write:
+The first parameter of the get_chord function is the root note of the chord, and if no specific pitch is specified (e.g. C5, D6 is a note with a specific pitch), then by default it is treated as the 4th octave, e.g. get_chord('A', 'm7'), which is equivalent to
+get_chord('A4', 'm7'), and if you specify a specific pitch for the root note, for example, if you now want to write a major 7th chord with root note D6, you can write:
 
 ```python
-Dmaj7 = chd('D6', 'maj7')
+Dmaj7 = get_chord('D6', 'maj7')
 ```
 
-In addition, the chd function has a very large number of parameters that can be used to set the chord's omission, altered notes, added notes, as well as the exact length of each note of the chord, the interval of the notes, etc. You can even enter the intervals of the notes to build the chords (you can also set the value of cummulative to determine whether you want to enter the interval of each note to the root note or the interval between each two notes). In musicpy, the name of each interval is already defined and can be used directly, for example, the value of major_third is 4, which is the number of semitones in the major third. For example, to construct a C major seventh chord according to the intervals, you can write it like this
+In addition, the get_chord function has a very large number of parameters that can be used to set the chord's omission, altered notes, added notes, as well as the exact length of each note of the chord, the interval of the notes, etc. You can even enter the intervals of the notes to build the chords (you can also set the value of cummulative to determine whether you want to enter the interval of each note to the root note or the interval between each two notes). In musicpy, the name of each interval is already defined and can be used directly, for example, the value of major_third is 4, which is the number of semitones in the major third. For example, to construct a C major seventh chord according to the intervals, you can write it like this
 
 ```python
-chd('C', interval=[database.major_third, database.perfect_fifth, database.major_seventh])
+get_chord('C', interval=[database.major_third, database.perfect_fifth, database.major_seventh])
 ```
 
 The result is
@@ -169,7 +169,7 @@ In musicpy, a chord type is represented as
 For example, A is a C major seventh chord with a root note of C5.
 
 ```python
-A = chd('C5', 'maj7')
+A = get_chord('C5', 'maj7')
 ```
 
 The chord A is represented as
@@ -184,7 +184,7 @@ The chord A is represented as
 inversion gets the inversion of a chord, with a parameter num representing the inversion of the chord. For example.
 
 ```python
-chd('A', 'm7').inversion(1) 
+get_chord('A', 'm7').inversion(1) 
 ```
 
 You can get the first inversion of the minor seventh chord of A, expressed as follows.
@@ -196,14 +196,14 @@ You can get the first inversion of the minor seventh chord of A, expressed as fo
 Advanced syntax: (I designed symbolic syntax for many functions of musicpy to write faster)
 
 ```python
-chd('A', 'm7') / 1
+get_chord('A', 'm7') / 1
 ```
 
-The result is the same as chd('A', 'm7').inversion(1).
+The result is the same as get_chord('A', 'm7').inversion(1).
 You can also write the note you want to invert after '/', and if the note is within a chord it will invert that note to the lowest note, e.g.
 
 ```python
-chd('A', 'm7') / 'E'
+get_chord('A', 'm7') / 'E'
 ```
 
 The result obtained is
@@ -285,13 +285,13 @@ Note that chord A here is not necessarily just a chord in music theory, but can 
 The intervalof function returns the interval relationship between the constituent notes of a chord. The parameter cumulative is set to True to return the interval between all the constituent notes of the chord (except the root note) and the root note, and False to return the interval between the lowest and highest notes of the chord. The default value is True, e.g.
 
 ```python
-chd('C','maj').intervalof()
+get_chord('C','maj').intervalof()
 ```
 
 You will get [4,7], which means that there are four semitones between the second note and the root note inside the C major triad (C,E,G) (major third), and seven semitones between the third note and the root note (perfect fifth). If you want to see the names of the intervals in music theory, then you can set the parameter translate to True, then you can see the names of the corresponding intervals. For example.
 
 ```python
-chd('C','maj').intervalof(translate=True)
+get_chord('C','maj').intervalof(translate=True)
 ```
 
 will get ['major third', 'perfect fifth'], which means major third and perfect fifth.
@@ -299,7 +299,7 @@ will get ['major third', 'perfect fifth'], which means major third and perfect f
 When cummulative is set to False returns the interval between every two notes of the chord from low to high, e.g.
 
 ```python
-chd('C','maj').intervalof(translate=True, cummulative=False)
+get_chord('C','maj').intervalof(translate=True, cummulative=False)
 ```
 
 will get ['major third', 'minor third'], which means that a C major third chord is composed of a major third and a minor third.
@@ -309,7 +309,7 @@ will get ['major third', 'minor third'], which means that a C major third chord 
 For example, now we have a chord A.
 
 ```python
-A = chd('C', 'maj7')
+A = get_chord('C', 'maj7')
 ```
 
 If we want to get the 1st note of the chord A, then we write
@@ -449,14 +449,14 @@ A - (x, k)
 where k denotes the index of the note. For example
 
 ```python
-chd('C','maj').up(1)
+get_chord('C','maj').up(1)
 ```
 
 gives a new chord, each note of which is a semitone higher than the previous chord.
 The notes of the chord are C#, F, G#.
 
 ```python
-chd('C','maj').up(1,0)
+get_chord('C','maj').up(1,0)
 ```
 
 will get a new chord with only the first note raised a semitone and the notes of the chord are C#, E, G.
@@ -536,7 +536,7 @@ to get a list of the notes of chord A. For example, if A is an A minor seventh c
 If you want to get a list of all the note names of the chord A, then you can use one of the built-in functions names of the chord, for example
 
 ```python
-chd('A','m7').names()
+get_chord('A','m7').names()
 ```
 
 and you get
@@ -1684,11 +1684,11 @@ b = chord('Ab0, C5, E5, G5, A5, C7, G10')
 
 ## Generate chord types according to the interval relationship
 
-You can use the `getchord_by_interval` function to generate chord types from a list of interval relations. You can select the interval relationship with the root note or the interval relationship between every two adjacent notes.
+You can use the `get_chord_by_interval` function to generate chord types from a list of interval relations. You can select the interval relationship with the root note or the interval relationship between every two adjacent notes.
 The note type can also use this function, and the note type itself will be used as the starting note when used.
 
 ```python
-getchord_by_interval(start,
+get_chord_by_interval(start,
                      interval1,
                      duration=0.25,
                      interval=0,
@@ -1700,16 +1700,16 @@ getchord_by_interval(start,
 # interval: The note interval of the generated chord type
 # cummulative: If True, the interval relationship is the interval relationship with the initial note. If False, the interval relationship is the interval relationship between every two adjacent sounds. The default value is True
 
->>> getchord_by_interval('C5', [database.major_third, database.perfect_fifth, database.major_seventh])
+>>> get_chord_by_interval('C5', [database.major_third, database.perfect_fifth, database.major_seventh])
 # Obtain the chord type composed of the initial note C5, and C5 in turn to form the major third, the complete fifth and the major seventh
 [C5, E5, G5, B5] with interval [0, 0, 0, 0] # Get the C major seventh chord
 
->>> getchord_by_interval('C5', [database.major_third, database.minor_third, database.major_third], cummulative=False)
+>>> get_chord_by_interval('C5', [database.major_third, database.minor_third, database.major_third], cummulative=False)
 # Get the chord type composed of the initial note C5 and the adjacent intervals as the major third, minor third, and major third.
 [C5, E5, G5, B5] with interval [0, 0, 0, 0] # Get the C major seventh chord
 
 a = N('C5')
->>> a.getchord_by_interval([database.major_third, database.perfect_fifth, database.major_seventh]) #The note type calls this function
+>>> a.get_chord_by_interval([database.major_third, database.perfect_fifth, database.major_seventh]) #The note type calls this function
 [C5, E5, G5, B5] with interval [0, 0, 0, 0]
 ```
 
