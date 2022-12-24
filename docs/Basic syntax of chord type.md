@@ -1062,7 +1062,7 @@ a = C('Dmaj7')
 
 ```python
 a = C('Dmaj7')
-a.setvolume([80,80,100,100])
+a.set_volume([80,80,100,100])
 # View a list of note volumes for a chord type
 >>> print(a.get_volume())
 [80, 80, 100, 100]
@@ -1289,9 +1289,9 @@ example = chord('G5[3/4;3/4], F5[.8;.8], E5[.8;.8], F5[3/4;1/4], r[.2], E5[.8;.8
 ## Another way to set the volume of a chord type
 
 ```python
-# You can use the setvolume method to set the volume of a chord type
+# You can use the set_volume method to set the volume of a chord type
 a = C('Emaj7')
-a.setvolume(80)
+a.set_volume(80)
 # You can also use the set function or the advanced syntax % to set the volume as the third argument after the first note length and interval
 a = a.set(1/8,1/8,80)
 a = a % (1/8,1/8,80)
@@ -1645,12 +1645,12 @@ filter(self, cond, action=None, mode=0, action_mode=0)
 # action_mode: If it is 0, the return value of the action function will replace the note it is acting on. If it is 1, the action function will directly act on the note.
 
 a = chord('C, E, G, B') # Initialize a chord
-a.setvolume([10, 20, 50, 90]) # Set the volume of the note
->>> a.filter(lambda s: 20 <= s.volume <80) # Filter the notes with a volume between 20 and 80 in the chord type
+a.set_volume([10, 20, 50, 90]) # Set the volume of the note
+>>> a.filter(lambda s: 20 <= s.volume < 80) # Filter the notes with a volume between 20 and 80 in the chord type
 ([E4, G4] with interval [0, 0], 0) # Return the chord type composed of the filtered notes and the start time of the first filtered note
 
 # For notes with a volume between 20 and 80, the volume is set to 50
-b = a.filter(lambda s: 20 <= s.volume <80, action=lambda s: s.setvolume(50), action_mode=1)
+b = a.filter(lambda s: 20 <= s.volume < 80, action=lambda s: s.set_volume(50), action_mode=1)
 >>> b
 [C4, E4, G4, B4] with interval [0, 0, 0, 0] # Return the chord type whose volume is modified by the action function
 >>> b.get_volume() # Get the volume of the new chord type
