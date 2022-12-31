@@ -2,8 +2,6 @@
 
 One of the most successful algorithms I've developed in musicpy so far is this original algorithm that determines the type of chord formed by any set of notes according to the logic of music theory.
 
-The code part of this algorithm is in the detect function in the musicpy.py file.  
-
 This algorithm is a logically complex algorithm, and I may have to write a whole lot to talk about it from beginning to end, so I'll pick the key points to talk about.
 
 This algorithm is very good at determining chord types. First of all, this algorithm can determine the chord type of any group of notes, no matter how complex the chord formed by this group of notes sounds, no matter how many notes there are in the group, and it must be correct in terms of music theory analysis. Although even the exact same chord may be called differently in different contexts, because it may have a completely different function, extrapolating the chords according to the results returned by this algorithm will definitely give you the group of notes you entered, and in the same order.
@@ -14,38 +12,31 @@ The algorithm for chord determination is in the detect function, and the content
 
 ```python
 detect(current_chord,
-       inv_num=False,
        change_from_first=True,
        original_first=True,
        same_note_special=False,
        whole_detect=True,
-       return_fromchord=False,
        poly_chord_first=False,
-       root_position_return_first=True,
-       alter_notes_show_degree=False)
+       show_degree=False,
+       get_chord_type=False,
+       original_first_ratio=0.85,
+       similarity_ratio=0.6,
+       custom_mapping=None)
 ```
 
 * current_chord: a set of notes you enter, which can be represented in many different ways, either as a chord type, or as a list of note types.  
   It can also be a list of strings that represent notes, or it can be a separate string (with notes separated by commas).  
   The notes can have only the note name and no octave number, in which case the chord construction will be done for the note name according to the rules of normalized chords.
-
-* inv_num: is True, the chord type is presented as "nth inversion" if it is an inversion of a chord, with n being a number, i.e. 1st inversion of a chord, 2nd inversion of a chord, etc. If inv_num is False, then If inv_num is False, the name of the inverted note is written, e.g. Am/C. The default value is False.
-
-* change_from_first: is True, it gives priority to the logical analysis of whether a set of notes is a certain chord obtained by changing the pitch (e.g. #5, b5, #9, b9, #11, b13). The returned chord result is also more likely to be a chord with a change (the name of the change is given, as well as the exact rise and fall). The default value is True.
-
+* change_from_first: if True, it gives priority to the logical analysis of whether a set of notes is a certain chord obtained by changing the pitch (e.g. #5, b5, #9, b9, #11, b13). The returned chord result is also more likely to be a chord with a change (the name of the change is given, as well as the exact rise and fall). The default value is True.
 * original_first: In this algorithm, the original order of the notes of a is analyzed logically (first to check if it matches the interval of the original chord), then a is inverted (including the lowest and highest notes), and then each inversion is analyzed logically, returning the result as soon as the chord type is successfully determined on the way. When original_first is True, if the chord type of the original order of a's notes is determined, the result is returned if the chord similarity of the result is greater than or equal to 0.86 (the default chord similarity threshold, which is not provided in the function's parameters but can be modified directly in the code) and if the type of the result is not a change of note type If original_first is False, then this step is not performed, and after determining the chord type of the original order of the notes of a, the chord type of each inversion of a is then analyzed by the music logic. If the chord similarity of the original order of chord a is 1, i.e. an exact match, then the result of the original order of chord a is returned, regardless of whether the value of original_first is True or False. The reason why the original_first is True and the original order of the chord a is not a voicing type is that if the chord a is a voicing type, there may be a better and more logical analysis of the chord a after transforming or splitting the chord a into two parts (e.g. omission, voicings, polychords, etc.). The default value is True.
-
-* same_note_special: With True, if the set of note names of chord a is equal to the set of note names of a certain chord (same note name composition, regardless of order), then the chord similarity is set to 1 for that chord, i.e. the chord type with the same set of note names will be preferred. The default value is False.
-
-* whole_detect: is True, when the chord a is so complex that the chord type cannot be analyzed by using the original order and various inversions, the detector function is used to determine the chord type again for each inversion of the chord a. In other words, the chord type can be determined for almost all possible cases of the chord a's note ordering, as long as there is The result is returned as soon as the chord type is determined in one case. The default value is True.
-
-* return_fromchord: When True, the result is returned with the chord type name and the chord type from which it came. The default value is False.
-
-* poly_chord_first: is True, before the whole_detect is done, the chord a is split into its upper and lower parts and analyzed separately for musical logic, and the result is returned in the form of a polychord. If the number of notes of chord a is less than 4, then the whole_detect is continued. If it is greater than or equal to 4 and less than 6, the chord a is broken into a new chord with the first note at the bottom and the remaining notes above, and the result is the result of the upper chord/the bottom note. If it is greater than 6, the chord a is divided into two chords according to its length, where the number of notes of the lower chord is the number of notes of a divided by 2 rounded down, and the upper chord is the remaining notes except for the lower chord. For example, if chord a has 7 notes, then the chord below is the first 3 notes of chord a, and the chord above is the last 4 notes of chord a. The upper and lower chords are judged separately by the detect function, and the result is the result of the upper chord / the result of the lower chord. poly_chord_first is True, which makes this algorithm much faster in very complex chord It is very suitable for jazz chord analysis (especially for real-time chord analysis). The default value is False.
-
-* root_position_return_first: When False, if the current input note forms an root position chord, a list is returned with the various versions of what such a chord is called. When True, only a string is returned with the most common name of the chord. The default value is True.
-
-* alter_notes_show_degree: When False, the chord type is returned, and if there is an alteration of some note in the chord that needs to be mentioned, such as an omitted note or a change, the name of the changed note is written out, e.g. `Cmaj7 (omit E)`. When True, the position (interval, or degree, of the root note) of the changed notes in the chord is calculated and displayed in degrees, e.g. `Cmaj7 (omit 3)`. The default value is False.
+* same_note_special: if True, if the set of note names of chord a is equal to the set of note names of a certain chord (same note name composition, regardless of order), then the chord similarity is set to 1 for that chord, i.e. the chord type with the same set of note names will be preferred. The default value is False.
+* whole_detect: if True, when the chord a is so complex that the chord type cannot be analyzed by using the original order and various inversions, the detector function is used to determine the chord type again for each inversion of the chord a. In other words, the chord type can be determined for almost all possible cases of the chord a's note ordering, as long as there is The result is returned as soon as the chord type is determined in one case. The default value is True.
+* poly_chord_first: if True, before the whole_detect is done, the chord a is split into its upper and lower parts and analyzed separately for musical logic, and the result is returned in the form of a polychord. If the number of notes of chord a is less than 4, then the whole_detect is continued. If it is greater than or equal to 4 and less than 6, the chord a is broken into a new chord with the first note at the bottom and the remaining notes above, and the result is the result of the upper chord/the bottom note. If it is greater than 6, the chord a is divided into two chords according to its length, where the number of notes of the lower chord is the number of notes of a divided by 2 rounded down, and the upper chord is the remaining notes except for the lower chord. For example, if chord a has 7 notes, then the chord below is the first 3 notes of chord a, and the chord above is the last 4 notes of chord a. The upper and lower chords are judged separately by the detect function, and the result is the result of the upper chord / the result of the lower chord. Set poly_chord_first to True could makes this algorithm run much faster in very complex chord detection. It is very suitable for jazz chord analysis (especially for real-time chord analysis). The default value is False.
+* show_degree: if False, the chord type is returned, and if there is an alteration of some note in the chord that needs to be mentioned, such as an omitted note or a change, the name of the changed note is written out, e.g. `Cmaj7 (omit E)`. When True, the position (interval, or degree, of the root note) of the changed notes in the chord is calculated and displayed in degrees, e.g. `Cmaj7 (omit 3)`. The default value is False.
+* get_chord_type: if True, return the chord type instance instead of string
+* original_first_ratio: the threshold of the match ratio of the detected chord with the root position chords when the detected chord is in the original order
+* similarity_ratio: the threshold of the match ratio of the detect chord with the root position chords when the detected chord is in non-original order
+* custom_mapping: custom mapping of chord detections, should be a list [a1, a2, a3], where a1 is a dictionary that maps integers with note interval names (refer to INTERVAL in database), a2 is a match instance that maps integer tuples to chord types (refer to detectTypes in database), a3 is a match instance that maps chord types to integer tuples  (refer to chordTypes in database)
 
 The detect function returns a string with the specific name of the chord type (including the name of the root note with the chord type) of the note composition entered.
 
