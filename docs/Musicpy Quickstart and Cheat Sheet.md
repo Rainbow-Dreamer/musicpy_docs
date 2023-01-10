@@ -12,8 +12,8 @@ Note2: the default indexing is 0-based for all functions unless 1-based is menti
 |                        functionality                         |                     syntax (recommended)                     |                         alternatives                         |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                     construct a note C5                      |                           N('C5')                            |                    N('c5');  note('C', 5)                    |
-|                   construct a chord Cmaj7                    |                          C('Cmaj7')                          |                       get_chord('C', 'maj7')                       |
-|        construct a chord Cmaj7 with starting note C5         |                         C('C5:maj7')                         |      C('Cmaj7', pitch=5);<br/>get_chord('C', 'maj7', pitch=5)      |
+|                   construct a chord Cmaj7                    |                          C('Cmaj7')                          |                    get_chord('C', 'maj7')                    |
+|        construct a chord Cmaj7 with starting note C5         |                         C('C5:maj7')                         |   C('Cmaj7', pitch=5);<br/>get_chord('C', 'maj7', pitch=5)   |
 |           construct a chord with notes C5, E5, G6            |                     chord('C5, E5, G6')                      | chord('c5, e5, g6');<br/>chord(['C5', 'E5', 'G6']);<br/>chord(['c5', 'e5', 'g6']);<br/>chord([N('C5'), N('E5'), N('G6')]) |
 |                  construct a C major scale                   |                         S('C major')                         |                     scale('C', 'major')                      |
 |                      construct a piece                       | build(track(content=C('C'), instrument=1, start_time=0),<br/>track(content=C('D'), instrument=47, start_time=1), bpm=150) | P(tracks=[C('C'), C('D')],<br/>instruments=[1, 47],<br/>start_times=[0, 1],<br/>bpm=150) |
@@ -105,6 +105,6 @@ Note2: the default indexing is 0-based for all functions unless 1-based is menti
 | construct a pitch_bend instance with value of 100 cents and start time at 0 |                pitch_bend(100, start_time=0)                 |                                                              |
 | construct a pan instance with value of 100% and start time at 0 |                    pan(100, start_time=0)                    |                                                              |
 | construct a volume instance with value of 100% and start time at 0 |                  volume(100, start_time=0)                   |                                                              |
-|                                                              |                                                              |                                                              |
-|                                                              |                                                              |                                                              |
-|                                                              |                                                              |                                                              |
+|                 construct a rhythm instance                  |                 rhythm('b b 0 0 b 0 b 0', 1)                 |                                                              |
+|                 generate chords from rhythm                  | get_chords_from_rhythm(C('C'), rhythm('b b 0 0 b 0 b 0', 1)) |                                                              |
+|       generate arpeggios of a chord between 2 octaves        |                    arp(C('Cmaj7'), 3, 7)                     |                                                              |
