@@ -583,8 +583,7 @@ sine_A4 = sine(440, 2000, 20) # generate a sine wave AudioSegment with frequency
 ```
 
 ### Triangle waves, sawtooth waves, square waves
-To generate these basic waveforms, the parameters are the same as sine waves, you just need to change the name of the function from `sine` to 
-`triangle` / `sawtooth` / `square`.
+To generate these basic waveforms, the parameters are the same as sine waves, you just need to change the name of the function from `sine` to `triangle` / `sawtooth` / `square`.
 
 ### White noise
 To generate white noises, you can use `white_noise` function
@@ -600,15 +599,11 @@ white_noise(2000, 20) # generate a white noise with duration of 2s and volume of
 
 ### Generate a chord type of basic waveforms
 Well, now you may think: yeah we can generate these basic waveforms, that's kind of cool, but how can we use them in musicpy sampler? 
+
 And how can we get a chord type or even piece type of these basic waveforms? Here are the answers.
 
-First of all, you need to load at least 1 sound module into the sampler object to be able to play basic waveforms. If you only want to play 
-basic waveforms and don't need to load any sound modules, you can modify the `channel_sound_modules` attribute, and set one of the channels 
-to some value that is not None, for example, an integer, a non-empty string will work fine. Then you can use the channel number as the index of 
-the channel you modify the sound modules (note that the channel number parameter in play or export function is 0-based) to play basic waveforms.
+To generate a chord type of basic waveforms, you can use `get_wave` function (this is a global function), this is a convenient function to generate basic waveforms from musicpy data structures.
 
-To generate a chord type of basic waveforms, you can use `get_wave` function (this is a global function), this is a convenient function to generate 
-basic waveforms from musicpy data structures.
 ```python
 get_wave(sound, mode='sine', bpm=120, volume=None)
 
@@ -626,9 +621,7 @@ get_wave(sound, mode='sine', bpm=120, volume=None)
 get_wave(C('C') % (1, 1/8), 'sine', volume=20) # generate a chord type of sine waves of C major chord with volume of 20%
 get_wave(C('C') % (1, 1/8), triangle, volume=20) # generate a chord type of triangle waves of C major chord with volume of 20%
 ```
-The generated chord types of basic waveforms could be used as regular musicpy data structures in the play/export function of the 
-sampler object, and could be put in a piece type (or a track type) to play/export by the sampler object (just don't forget you need to 
-load at least 1 sound module into the sampler object to play/export or you can modify the channel_sound_modules attribute)
+The generated chord types of basic waveforms could be used as regular musicpy data structures in the play/export function of the sampler object, and could be put in a piece type (or a track type) to play/export by the sampler object.
 
 ### Generate more general waveforms
 You can use `pulse` function to generate more general waveforms, where you can specify the duty cycle of the waveform. 
