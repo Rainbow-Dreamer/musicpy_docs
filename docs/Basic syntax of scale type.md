@@ -31,7 +31,7 @@ Using this class, you can quickly build a scale according to the interval of the
 So if you want to build a C major scale, you can write
 
 ```python
-scale('C5', interval = [2,2,1,2,2,2,2,1])
+scale('C5', interval=[2,2,1,2,2,2,1])
 ```
 
 This gives us the C major scale with C5 as the root note.
