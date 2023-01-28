@@ -20,6 +20,8 @@
 - [Stop all currently playing sounds](#stop-all-currently-playing-sounds)
 - [Use of interval names](#use-of-interval-names)
 - [Modify the properties of the music theory type and return the new piece type](#modify-the-properties-of-the-music-theory-type-and-return-the-new-music-theory-type)
+- [Convert music data structures to JSON format](#convert-music-data-structures-to-json-format)
+- [Reading and writing musicxml files](#reading-and-writing-musicxml-files)
 
 
 
@@ -450,4 +452,58 @@ a = C('C')
 >>> a.reset(interval=[1,1,1])
 [C4, E4, G4] with interval [1, 1, 1]
 ```
+
+## Convert music data structures to JSON format
+
+You can convert music data structures to JSON files as a more portable storage method, and read from the JSON files to get the music data structures stored in them.
+
+Use `write_json` function to convert a music data structure into a JSON file. The parameters and their usages are similar to `write` function, the supported data structures including note, chord, piece, track, drum. During the conversion, all of the data structures will be converted to piece instances for brevity. The JSON file will be written to the given file path.
+
+```python
+write_json(current_chord,
+           bpm=120,
+           channel=0,
+           start_time=None,
+           name=None,
+           filename='untitled.json',
+           instrument=None,
+           i=None,
+           msg=None,
+           nomsg=False)
+```
+
+* filename: the file name of the converted JSON file
+* the usages of the other parameters are the same as `write` function
+
+Use `read_json` function to read a JSON file that is exported by `write_json` function and extract the music data structure stored in it. The return value is a piece instance.
+
+```python
+read_json(file)
+```
+
+* file: the file name of the JSON file
+
+## Reading and writing musicxml files
+
+You need to install partitura to use this functionality by `pip install partitura`.
+
+You can use `read_musicxml` function to read a musicxml file and convert it to a piece instance. The musicxml exclusive info are stored as a dictionary in `musicxml_info` attribute in the returned result.
+
+```python
+read_musicxml(file, load_musicxml_args={}, save_midi_args={})
+```
+
+* file: the file name of the musicxml file
+* load_musicxml_args: the dictionary of keyword arguments passed to `partitura.load_musicxml` function
+* save_midi_args: the dictionary of keyword arguments passed to `partitura.save_score_midi` function
+
+You can use `write_musicxml` function to write a music data structure to a musicxml file. The supported data structures are the same as `write` function.
+
+```python
+write_musicxml(current_chord, filename, save_musicxml_args={})
+```
+
+* current_chord: the music data structure you want to write
+* filename: the file name of the musicxml file
+* save_musicxml_args: the dictionary of keyword arguments passed to `partitura.save_musicxml` function
 
