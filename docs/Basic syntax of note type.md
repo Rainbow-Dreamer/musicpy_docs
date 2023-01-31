@@ -153,7 +153,7 @@ Note types can be passed in as functions or generators to get chord types, e.g.
 ```python
 A3 = N('A3')
 >>> print(A3('sus'))
-[A3, D4, E4] with interval [0, 0, 0]
+chord(notes=[A3, D4, E4], interval=[0, 0, 0], start_time=0)
 # Also supports inversion, polychords, and other C functions that support the syntax of parsed chord names
 ```
 
@@ -164,7 +164,7 @@ You can use the `with_interval` function of the note type to specify an interval
 ```python
 a = N('C5')
 >>> a.with_interval(database.major_seventh) # form a chord representing the major seventh interval of C5
-[C5, B5] with interval [0, 0]
+chord(notes=[C5, B5], interval=[0, 0], start_time=0)
 ```
 
 ## Usage of dotted notes

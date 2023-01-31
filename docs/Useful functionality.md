@@ -251,7 +251,7 @@ You can use `load_data` function to load any mpb file as musicpy's data structur
 result = load_data('C major chord.mpb')
 
 >>> result
-[C4, E4, G4] with interval [0, 0, 0]
+chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
 ```
 
 There are times when you don't want to store musicpy code or its generated MIDI files, storing them as binary data files is a good option.
@@ -448,9 +448,9 @@ reset(**kwargs)
 
 a = C('C')
 >>> a
-[C4, E4, G4] with interval [0, 0, 0]
+chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
 >>> a.reset(interval=[1,1,1])
-[C4, E4, G4] with interval [1, 1, 1]
+chord(notes=[C4, E4, G4], interval=[1, 1, 1], start_time=0)
 ```
 
 ## Convert music data structures to JSON format

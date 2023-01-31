@@ -181,8 +181,7 @@ drum_example = drum('K, H, S, H, K;H, K;H, S, H, r:2')
 play(drum_example, 150) # Play the drums at 150bpm
 >>> print(drum_example)
 [drum] 
-[C2, F#2, E2, F#2, C2, F#2, C2, F#2, E2, F#2, C2, F#2, E2, F#2, C2, F#2, C2, F#2, E2, F#2] with interval [0.125, 0.125, 0.125, 0.125, 0, 0.125, 0, 
-0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0, 0.125, 0, 0.125, 0.125, 0.125]
+chord(notes=[C2, F#2, E2, F#2, C2, F#2, C2, F#2, E2, F#2, ...], interval=[0.125, 0.125, 0.125, 0.125, 0, 0.125, 0, 0.125, 0.125, 0.125, ...], start_time=0)
 
 # If you use drum type as track in a piece type, you must use the notes attribute of the drum type as chord type,
 # and set the corresponding channel number to 9

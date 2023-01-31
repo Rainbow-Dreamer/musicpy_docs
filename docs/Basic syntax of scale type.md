@@ -101,7 +101,7 @@ c_major_scale = S('C major')
 a = c_major_scale(2, num=4)
 >>> print(a)
 # Show the chord. The natural 7th chord of the 3rd degree of the C major scale is the Em7 chord
-[E4, G4, B4, D5] with interval [0, 0, 0, 0]
+chord(notes=[E4, G4, B4, D5], interval=[0, 0, 0, 0], start_time=0)
 ```
 
 ## Modulation according to the circle of fifths
@@ -353,10 +353,10 @@ get_chord(degree, chord_type=None, natural=False)
 Cmajor_scale = S('C major')
 
 >>> Cmajor_scale.get_chord('IM7')
-[C4, E4, G4, B4] with interval [0, 0, 0, 0]
+chord(notes=[C4, E4, G4, B4], interval=[0, 0, 0, 0], start_time=0)
 
 >>> Cmajor_scale.get_chord('ii', '7')
-[D4, F4, A4, C5] with interval [0, 0, 0, 0]
+chord(notes=[D4, F4, A4, C5], interval=[0, 0, 0, 0], start_time=0)
 ```
 
 ## Generate chord progressions from scale types

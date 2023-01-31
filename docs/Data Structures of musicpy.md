@@ -104,7 +104,7 @@ play(Cmaj7)
 This C major seventh chord is represented as follows.
 
 ```python
-[C5, E5, G5, B5] with interval [0, 0, 0, 0]
+chord(notes=[C5, E5, G5, B5], interval=[0, 0, 0, 0], start_time=0)
 ```
 
 If you want to create a melody in musicpy, the logic is the same as creating a chord, here is an example
@@ -293,7 +293,7 @@ rest(duration=1/4, dotted=None)
 C1 = chord(['C', 'D', rest(1/2), 'E'])
 
 >>> C1
-[C4, D4, E4] with interval [0, 0.5, 0]
+chord(notes=[C4, D4, E4], interval=[0, 0.5, 0], start_time=0)
 ```
 
 ### Use rest when merging chord types
@@ -307,7 +307,7 @@ C3 = C1 | rest(1/2) | C2
 # C3 = C1 | 1/2 | C2
 
 >>> C3
-[C4, E4, G4, B4, D4, F#4, A4, C#5] with interval [0, 0, 0, 0.75, 0, 0, 0, 0]
+chord(notes=[C4, E4, G4, B4, D4, F#4, A4, C#5], interval=[0, 0, 0, 0.75, 0, 0, 0, 0], start_time=0)
 ```
 
 

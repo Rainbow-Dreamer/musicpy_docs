@@ -48,15 +48,15 @@ a = piece([A1, B1, C1, D1], [1, 47, 35, 2], 150, [0, 2, 2, 8], name='demo') # a 
 >>> print(a)
 [piece] demo
 BPM: 150
-track 1 | instrument: Acoustic Grand Piano | start time: 0 | [C4, E4, G4] with interval [0, 0, 0]
-track 2 | instrument: Orchestral Harp | start time: 2 | [C4, E4, G4] with interval [0, 0, 0]
-track 3 | instrument: Electric Bass (pick) | start time: 2 | [C4, E4, G4] with interval [0, 0, 0]
-track 4 | instrument: Bright Acoustic Piano | start time: 8 | [C4, E4, G4] with interval [0, 0, 0]
+track 1 | instrument: Acoustic Grand Piano | start time: 0 | chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
+track 2 | instrument: Orchestral Harp | start time: 2 | chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
+track 3 | instrument: Electric Bass (pick) | start time: 2 | chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
+track 4 | instrument: Bright Acoustic Piano | start time: 8 | chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
 
 >>> print(a[0]) # Print out the first track
 [track] demo
 BPM: 150
-instrument: Acoustic Grand Piano | start time: 0 | [C4, E4, G4] with interval [0, 0, 0]
+instrument: Acoustic Grand Piano | start time: 0 | chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
 
 c = build(track(A1, 1, 0),
           track(B1, 1, 2),
@@ -70,11 +70,11 @@ a.append(b) # Track types can be added to a track type using the track type's bu
 >>> print(a)
 [piece] demo
 BPM: 150
-track 1 | instrument: Acoustic Grand Piano | start time: 0 | [C4, E4, G4] with interval [0, 0, 0]
-track 2 | instrument: Orchestral Harp | start time: 2 | [C4, E4, G4] with interval [0, 0, 0]
-track 3 | instrument: Electric Bass (pick) | start time: 2 | [C4, E4, G4] with interval [0, 0, 0]
-track 4 | instrument: Bright Acoustic Piano | start time: 8 | [C4, E4, G4] with interval [0, 0, 0]
-track 5 | instrument: Electric Piano 1 | start time: 12 | [D4, F#4, A4] with interval [0, 0, 0]
+track 1 | instrument: Acoustic Grand Piano | start time: 0 | chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
+track 2 | instrument: Orchestral Harp | start time: 2 | chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
+track 3 | instrument: Electric Bass (pick) | start time: 2 | chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
+track 4 | instrument: Bright Acoustic Piano | start time: 8 | chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
+track 5 | instrument: Electric Piano 1 | start time: 12 | chord(notes=[D4, F#4, A4], interval=[0, 0, 0], start_time=0)
 
 # The track type can also be played separately, also using the play function, if the track type has a set tempo.
 # then use the tempo of the track type, otherwise set the tempo according to the bpm parameter of the play function
