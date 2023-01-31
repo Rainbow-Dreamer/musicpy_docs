@@ -385,12 +385,12 @@ chord_progression(chords,
 Cmajor_scale = S('C major')
 
 >>> Cmajor_scale.chord_progression(['IM7', 'Vsus', 'vi7', 'IVM7'])
-[C4, E4, G4, B4, G4, C5, D5, A4, C5, E5, G5, F4, A4, C5, E5] with interval [0, 0, 0, 0, 0.25, 0, 0, 0, 0, 0, 0, 0, 0, 0.25, 0, 0, 0, 0, 0, 0, 0]
+chord(notes=[C4, E4, G4, B4, G4, C5, D5, A4, C5, E5, ...], interval=[0, 0, 0, 0.25, 0, 0, 0.25, 0, 0, 0, ...], start_time=0)
 
 >>> Cmajor_scale.chord_progression([('I', 'M7'), ('V', 'sus'), ('vi', '7'), 'IV'], intervals=[1/8, [1/8,1/8,1/4], 1/8, 1/8])
-[C4, E4, G4, B4, G4, C5, D5, A4, C5, E5, G5, F4, A4, C5] with interval [0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.25, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125]
+chord(notes=[C4, E4, G4, B4, G4, C5, D5, A4, C5, E5, ...], interval=[0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.25, 0.125, 0.125, 0.125, ...], start_time=0)
 
 >>> Cmajor_scale.chord_progression(['1M7', '5sus', '6m7', '4M7'])
-[C4, E4, G4, B4, G4, C5, D5, A4, C5, E5, G5, F4, A4, C5, E5] with interval [0, 0, 0, 0, 0.25, 0, 0, 0, 0, 0, 0, 0, 0, 0.25, 0, 0, 0, 0, 0, 0, 0]
+chord(notes=[C4, E4, G4, B4, G4, C5, D5, A4, C5, E5, ...], interval=[0, 0, 0, 0.25, 0, 0, 0.25, 0, 0, 0, ...], start_time=0)
 ```
 
