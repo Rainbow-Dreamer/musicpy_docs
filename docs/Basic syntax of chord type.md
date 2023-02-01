@@ -1779,31 +1779,38 @@ play(C('Cm11').get_voicing([1,5,9,3,11,7])% (1, 1/8), 150) # Play with fast arpe
 
 ## Adjust the notes of the current chord type to a place closer to the notes of another chord type
 
-When considering the arrangement of chord parts, if you want a smoother connection between the next chord and the previous chord, then one of the ways is to place the sound of the next chord closer to the sound of the previous chord.
-In this way, the connection of different parts in a chord progression will be smoother, because the movement of the parts is relatively small. For example, the original position of the Am chord is connected to the original position of the F chord, that is, A C E is connected to F A C. If you want to connect these two chords more smoothly,
-You can adjust the order of the notes of the F chord so that each note of the F chord is as close as possible to the original position of the Am chord. For example, adjust it to ACF so that the first two notes of the F chord are in the original position of the Am chord. The first two notes of are the same,
-The third note F is only one semitone higher than the original third pitch of the Am chord, so the two chords connected will sound smoother and smoother.
+When considering the arrangement of chord parts, if you want a smoother connection between the next chord and the previous chord, then one of the ways is to place the sound of the next chord closer to the sound of the previous chord, in this way, the connection of different parts in a chord progression will be smoother, because the movement of the parts is relatively small.
 
-You can use the `near_voicing` function of a chord type to adjust the sound of the current chord type to the order of the pitch of another chord type. If the pitch difference between the two chords is relatively large,
-Then it will also move the pitch of the current chord type to the pitch range of another chord type. You can also fix the lowest note of the current chord type without adjusting the closest pitch distance, because sometimes the lowest note changes
-The chord inversion obtained is not what we want.
+For example, the original position of the Am chord is connected to the original position of the F chord, that is, A C E is connected to F A C. If you want to connect these two chords more smoothly, you can adjust the order of the notes of the F chord so that each note of the F chord is as close as possible to the original position of the Am chord. For example, adjust it to ACF so that the first two notes of the F chord are in the original position of the Am chord. The first two notes of are the same, the third note F is only one semitone higher than the original third pitch of the Am chord, so the two chords connected will sound smoother and smoother.
+
+You can use the `near_voicing` function of a chord type to adjust the sound of the current chord type to the order of the pitch of another chord type. If the pitch difference between the two chords is relatively large, then it will also move the pitch of the current chord type to the pitch range of another chord type.
+
+You can also fix the lowest note of the current chord type without adjusting the closest pitch distance, because sometimes the lowest note changes, the chord inversion obtained is not what we want.
 
 ```python
-near_voicing(self, other, keep_root=True, root_lower=False)
+near_voicing(self,
+             other,
+             keep_root=True,
+             standardize=True,
+             choose_nearest=False,
+             get_distance=False)
 
 # other: The chord type used as a standard for adjusting the pitch of the current chord type
 
 # keep_root: When it is True, keep the lowest note of the current chord type after the adjustment is still the lowest note
 
-# root_lower: When you choose to keep the lowest note of the current chord type, when it is True,
-# The lowest note of the current chord type will be below the lowest note of the standard chord type, and above it when it is False.
+# standardize: whether to standardize the notes
+
+# choose_nearest: if set to True, choose the one with the minimum distance between keep root and not keep root
+
+# get_distance: if set to True, return (result, distance)
 
 >>> C('F').near_voicing(C('Am'), keep_root=False) # Get the voicing of the closest distance to the original position of the F chord with respect to the original position of the Am chord, without keeping the lowest pitch
 chord(notes=[A4, C5, F5], interval=[0, 0, 0], start_time=0)
 
 # Write a smooth voice type connection of the 2516 chord progression in C major
 chord1 = C('Dm7', 3).get_voicing([1, 7, 3])% (1,[1/4,1/4,1/2])
-chord2 = C('G7, omit5', 4).near_voicing(chord1, keep_root=True, root_lower=True)% (1,[1/4,1/4,1/2])
+chord2 = C('G7, omit5', 4).near_voicing(chord1, keep_root=True)% (1,[1/4,1/4,1/2])
 chord3 = C('Cmaj7, omit5', 4).near_voicing(chord1, keep_root=True)% (1,[1/4,1/4,1/2])
 chord4 = C('Am7, omit5', 4).near_voicing(chord1, keep_root=True)% (1,[1/4,1/4,1/2])
 play(chord1 | chord2 | chord3 | chord4, 165)
