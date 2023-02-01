@@ -1,31 +1,31 @@
-# Musicpy sampler module
+# Musicpy daw module
 
-I wrote a sampler module for musicpy to load sound modules and export audio files (including wav, mp3, ogg and so on) in June 2021, which will be very useful since now you are no longer limited to only MIDI files (You can take the MIDI files exported by musicpy and put in DAW to load sound modules and export audio files anyways).
+I wrote a daw module for musicpy to load sound modules and export audio files (including wav, mp3, ogg and so on) in June 2021, which will be very useful since now you are no longer limited to only MIDI files (You can take the MIDI files exported by musicpy and put in DAW to load sound modules and export audio files anyways).
 
 Some of the basic audio mixing and editing functionalities are already implemented, including reverse, pan, ADSR envelope (currenly only with audio volumes), fade in/out effects.
 
 You can also build basic waveforms that appeared on synthesizer, including sine waves, sawtooth waves, square waves, triangle waves and white noises.
 
-Making new timbres using these basic waveforms with musicpy sampler will probably be possible in the near future.
+Making new timbres using these basic waveforms with musicpy daw will probably be possible in the near future.
 
 ## Contents
 
 - [Preparation before importing](#preparation-before-importing)
-- [Initialize a sampler object](#initialize-a-sampler-object)
+- [Initialize a daw object](#initialize-a-daw-object)
 - [Supported sound modules](#supported-sound-modules)
 - [Load sound modules](#load-sound-modules)
 - [Play and export audio files](#play-and-export-audio-files)
-- [Modify sampler's attributes](#modify-samplers-attributes)
+- [Modify daw's attributes](#modify-daws-attributes)
 - [Adding, deleting and clearing channels](#adding-deleting-and-clearing-channels)
 - [Audio mixing and editing](#audio-mixing-and-editing)
 - [Generating and playing with waveforms](#generating-and-playing-with-waveforms)
 - [Pitch shifter (make a whole sound module using only one recording audio file)](#pitch-shifter-make-a-whole-sound-module-using-only-one-recording-audio-file)
-- [More about ESI sound module format](#more-about-esi-sound-module-format)
+- [More about MDI sound module format](#more-about-mdi-sound-module-format)
 - [Some other reminders and thoughts](#some-other-reminders-and-thoughts)
 
 ## Preparation before importing
 
-Firstly, open cmd/terminal and run `pip install sf2_loader` to install all of the required python modules and packages to run musicpy sampler. If you are using Linux or macOS, there are some necessary configuration steps for the required module sf2_loader, you can refer to [here](https://github.com/Rainbow-Dreamer/sf2_loader#installation) for details.
+Firstly, open cmd/terminal and run `pip install sf2_loader` to install all of the required python modules and packages to run musicpy daw. If you are using Linux or macOS, there are some necessary configuration steps for the required module sf2_loader, you can refer to [here](https://github.com/Rainbow-Dreamer/sf2_loader#installation) for details.
 
 Next, please download `ffmpeg.zip` in [Releases](https://github.com/Rainbow-Dreamer/musicpy/releases/latest), extract the ffmpeg folder from the file, and then put the folder to `C:\` if you are on Windows or equivalent root path on macOS/Linux.
 
@@ -33,56 +33,56 @@ Then add the path `C:\ffmpeg\bin` to environment variables of your system (the p
 
 (this step is not required in some systems) Finally, restart the computer.
 
-Then you can import the sampler module in IDE or cmd/terminal using this line:
+Then you can import the daw module in IDE or cmd/terminal using this line:
 ```python
-from musicpy.sampler import *
+from musicpy.daw import *
 ```
 
-## Initialize a sampler object
+## Initialize a daw object
 
-Let's say we want to make a new song, we'll initialize a sampler called `my first song`.
+Let's say we want to make a new song, we'll initialize a daw called `my first song`.
 
 This song will contain 3 instruments, and 1 channel for each instrument, so there will be 3 channels in total.
 
 ```python
-new_song = sampler(3, name='my first song')
+new_song = daw(3, name='my first song')
 >>> print(new_song)
-[Sampler] my first song
+[daw] my first song
 Channel 1 | not loaded
 Channel 2 | not loaded
 Channel 3 | not loaded
 ```
-Now you have initialized a sampler object with 3 channels. The `not loaded` text means that currently this channel has not loaded any sound modules yet.
-Next we need to know what types of sound modules that musicpy sampler currently support and could load successfully.
+Now you have initialized a daw object with 3 channels. The `not loaded` text means that currently this channel has not loaded any sound modules yet.
+Next we need to know what types of sound modules that musicpy daw currently support and could load successfully.
 
 ## Supported sound modules
 
-The file formats that musicpy sampler currently could load: SoundFont files (.sf2, .sf3, .dls), audio files (such as .wav, .mp3, .ogg), and `ESI`, which is a sound module format invented by myself.
+The file formats that musicpy daw currently could load: SoundFont files (.sf2, .sf3, .dls), audio files (such as .wav, .mp3, .ogg), and `MDI`, which is a sound module format invented by myself.
 
 ### SoundFont files
-SoundFont is a very popular virtual instruments file format, you can load any SoundFont files into musicpy sampler, supports .sf2, .sf3, .dls.
+SoundFont is a very popular virtual instruments file format, you can load any SoundFont files into musicpy daw, supports .sf2, .sf3, .dls.
 
-This sampler module has built-in [sf2_loader](https://github.com/Rainbow-Dreamer/sf2_loader), which is my another project, you can refer to readme for documentation, you can use the syntax of sf2_loader to change the current instrument of loaded SoundFont files, play a piece of musicpy code by itself and so on. You can use `current_sampler.modules(i)` to get the sound module object that is loaded in the ith channel (0-based), (current_sampler is the name of the variable of your current sampler object), if there are SoundFont files loaded in the ith channel, then it will return a sf2_loader object.
+This daw module has built-in [sf2_loader](https://github.com/Rainbow-Dreamer/sf2_loader), which is my another project, you can refer to readme for documentation, you can use the syntax of sf2_loader to change the current instrument of loaded SoundFont files, play a piece of musicpy code by itself and so on. You can use `current_daw.modules(i)` to get the sound module object that is loaded in the ith channel (0-based), (current_daw is the name of the variable of your current daw object), if there are SoundFont files loaded in the ith channel, then it will return a sf2_loader object.
 
 ### Audio files
-Musicpy sampler currently could load a folder of audio files as a sound module for each channel, the formats of the audio files could be mixed (for example, the folder could contains a mixture of wav, mp3, ogg files and so on). It is strongly recommended to name each audio file as a pitch, for example, `C5.wav`, which is a note name with an octave number. If the pitch name contains a flat sign, it is recommended to change it to an equivalent pitch name with a sharp sign (in twelve-tone equal temperament), for example, if it is `Ab5.wav`, change it to `G#5.wav`.
+Musicpy daw currently could load a folder of audio files as a sound module for each channel, the formats of the audio files could be mixed (for example, the folder could contains a mixture of wav, mp3, ogg files and so on). It is strongly recommended to name each audio file as a pitch, for example, `C5.wav`, which is a note name with an octave number. If the pitch name contains a flat sign, it is recommended to change it to an equivalent pitch name with a sharp sign (in twelve-tone equal temperament), for example, if it is `Ab5.wav`, change it to `G#5.wav`.
 
 If the names of some audio files are not pitches, you will need to change the default mappings from musicpy note names to the file names of these audio files in order to match the pitches with the corresponding audio files you want correctly. I will talk about this later.
 
-### ESI files
-`ESI` is a sound module format invented by myself, which could merge and combine a folder of audio files (and maybe with a settings file) into a single binary file that is more convenient to operate and store.
+### MDI files
+`MDI` is a sound module format invented by myself, which could merge and combine a folder of audio files (and maybe with a settings file) into a single binary file that is more convenient to operate and store.
 
-You can use `make_esi` function to make an esi file easily:
+You can use `make_mdi` function to make an mdi file easily:
 ```python
-make_esi(path_of_sound_modules_folder, name_of_sound_modules_you_want_to_have)
+make_mdi(path_of_sound_modules_folder, name_of_sound_modules_you_want_to_have)
 ```
-An esi file will be generated in the current working directory.
+An mdi file will be generated in the current working directory.
 
-I am planning to add support for VST (this is a very commonly used audio plugin format) in musicpy sampler in the future.
+I am planning to add support for VST (this is a very commonly used audio plugin format) in musicpy daw in the future.
 
 ## Load sound modules
 
-You can load a sound module for each channel in a sampler object.
+You can load a sound module for each channel in a daw object.
 ```python
 new_song.load(channel_number, path_of_sound_modules) # channel number is 0-based
 
@@ -90,15 +90,15 @@ new_song.load(0, 'piano') # load a folder named 'piano' with audio files as a so
 
 new_song.load(0, 'test.sf2') # load a soundfont file named 'test.sf2' as a sound module for the first channel
 
-new_song.load(0, esi='piano.esi') # load an esi file as a sound module for the first channel
+new_song.load(0, mdi='piano.mdi') # load an mdi file as a sound module for the first channel
 ```
 
 ## Play and export audio files
 
-You can convert musicpy data structures to an audio file using `export` function of the sampler object, or play using loaded sound modules
-in the sampler object using `play` function of the sampler object.  
+You can convert musicpy data structures to an audio file using `export` function of the daw object, or play using loaded sound modules
+in the daw object using `play` function of the daw object.  
 Supported musicpy data structures to export or play include note, chord, piece and track.  
-You can also specify using which channel to play or export if the input is not a piece type. If the input is a piece type, you can specify using which channel for each track using the `sampler_channels` attribute of the piece type.
+You can also specify using which channel to play or export if the input is not a piece type. If the input is a piece type, you can specify using which channel for each track using the `daw_channels` attribute of the piece type.
 ```python
 play(current_chord,
      channel_num=0,
@@ -110,11 +110,11 @@ play(current_chord,
      soundfont_args=None,
      wait=False)
 
-# current_chord: the musicpy data structures you want to play by the sampler
+# current_chord: the musicpy data structures you want to play by the daw
 
 # channel_num: the index of channel used to play, 0-based, used when current_chord is note or chord type
 
-# bpm: the BPM (tempo) used to play, if not specified, the sampler will use its own default bpm
+# bpm: the BPM (tempo) used to play, if not specified, the daw will use its own default bpm
 
 # length: you can specify the whole length of the rendered audio in seconds (used in case of audio effects)
 
@@ -143,7 +143,7 @@ export(obj,
        show_msg=False,
        soundfont_args=None)
 
-# obj: the musicpy data structures you want to export by the sampler
+# obj: the musicpy data structures you want to export by the daw
 
 # mode: the audio format of the exported audio file you want to have, supports wav, mp3, ogg and so on
 
@@ -156,7 +156,7 @@ export(obj,
 
 # channel_num: the index of channel used to export, 0-based, used when current_chord is note or chord type
 
-# bpm: the BPM (tempo) used to export, if not specified, the sampler will use its own default bpm
+# bpm: the BPM (tempo) used to export, if not specified, the daw will use its own default bpm
 
 # length - track_extra_lengths: same as play function
 
@@ -170,7 +170,7 @@ export(obj,
 
 
 # play/export chord types examples
-new_song.play(C('C')) # play a C major chord using the sampler object with loaded sound modules of channel 1
+new_song.play(C('C')) # play a C major chord using the daw object with loaded sound modules of channel 1
 new_song.play(C('C'), 2) # do the same thing except using channel 2
 new_song.play(C('C'), 2, bpm=165) # do the same thing except using channel 2 with BPM 165
 
@@ -189,7 +189,7 @@ drums.set_volume(80)
 current_song = P([part1 * 2 | (part1 + database.octave) * 2, part1_bass * 4, part1_harmony * 2, drums * 4],
                  bpm=120,
                  start_times=[0, 0, 4, 4.03],
-                 sampler_channels=[0, 1, 1, 2])
+                 daw_channels=[0, 1, 1, 2])
 new_song.play(current_song) # play the piece type current_song
 new_song.export(current_song, filename='my first song.wav') # export the piece type current_song to
 # a wav file named "my first song.wav"
@@ -198,13 +198,13 @@ new_song.export(current_song, action='play') # this will play the piece type cur
 # playing on the fly, this method will be slower to start playing but will have more stable playing
 ```
 
-## Modify sampler's attributes
+## Modify daw's attributes
 
-You can change the channel names of the sampler object by modifying `channel_names` attribute.
+You can change the channel names of the daw object by modifying `channel_names` attribute.
 ```python
 new_song.channel_names = ['Piano', 'Bass', 'Electric Guitar']
 >>> print(new_song)
-[Sampler] my first song
+[daw] my first song
 Piano | not loaded
 Bass | not loaded
 Electric Guitar | not loaded
@@ -215,10 +215,10 @@ new_song.channel_names[0] = 'Piano 2' # change the name of the first channel to 
 new_song.set_channel_name(1, 'Piano 2') # change the name of the first channel to 'Piano 2'
 ```
 
-You can change the channel mappings of the sampler object by modifying `channel_dict` attribute.  
+You can change the channel mappings of the daw object by modifying `channel_dict` attribute.  
 Change the mapping dictionary of some of the channels will be necessary if not all of the audio files in the sound modules folder loaded for some channels are named as pitches, and you are lazy to rename them.
 ```python
-# change some of the mappings of the 3rd channel of the sampler object
+# change some of the mappings of the 3rd channel of the daw object
 # note that the mappings will always be a pitch maps to a file name (without file extensions)
 new_song.channel_dict[2]['C2'] = 'Kick'
 new_song.channel_dict[2]['E2'] = 'Snare'
@@ -232,37 +232,37 @@ You can change the sound modules of each channel by 2 ways:
 new_song.load(0, new_path_of_sound_modules)
 
 # or modify the path of sound modules for some of the channels
-# in 'channel_sound_modules_name' attribute of the sampler object
+# in 'channel_sound_modules_name' attribute of the daw object
 # and then reload for the channels which sound modules path has been modified
 new_song.channel_sound_modules_name[0] = new_path_of_sound_modules
 new_song.reload_channel_sounds(0)
 ```
 
-You can change the name of the sampler object by modifying `name` attribute.
+You can change the name of the daw object by modifying `name` attribute.
 ```python
 new_song.name = 'another song'
 >>> print(new_song)
-[Sampler] another song
+[daw] another song
 Channel 1 | not loaded
 Channel 2 | not loaded
 Channel 3 | not loaded
 ```
 
-Each sampler object will have a default bpm, it is used when you play or export without specifying bpm parameter.  
-The default value of the default bpm of a sampler object is 120. You can modify the default bpm of a sampler object by modifying `bpm` attribute.
+Each daw object will have a default bpm, it is used when you play or export without specifying bpm parameter.  
+The default value of the default bpm of a daw object is 120. You can modify the default bpm of a daw object by modifying `bpm` attribute.
 ```python
 new_song.bpm = 150 # change the default bpm of new_song to 150
 ```
 
 ## Adding, deleting and clearing channels
 
-To add a new channel to the sampler object, use `add_new_channel` method:
+To add a new channel to the daw object, use `add_new_channel` method:
 ```python
 # this method takes one parameter "name", which is the name of the new channel,
 # if the name parameter is not specified, it will be "Channel number" where number is the new channel's number
 new_song.add_new_channel('Strings') 
 >>> print(new_song)
-[Sampler] my first song
+[daw] my first song
 Channel 1 | not loaded
 Channel 2 | not loaded
 Channel 3 | not loaded
@@ -271,7 +271,7 @@ Strings | not loaded
 
 new_song.add_new_channel()
 >>> print(new_song)
-[Sampler] my first song
+[daw] my first song
 Channel 1 | not loaded
 Channel 2 | not loaded
 Channel 3 | not loaded
@@ -279,14 +279,14 @@ Strings | not loaded
 Channel 5 | not loaded
 ```
 
-To delete a channel of the sampler object, use `delete_channel` method, the indexing is 0-based:
+To delete a channel of the daw object, use `delete_channel` method, the indexing is 0-based:
 ```python
 new_song.delete_channel(1) # delete the first channel
 # or you can use del keyword, the indexing is also 0-based
 del new_song[1] # delete the first channel
 ```
 
-To clear a channel of the sampler object, use `clear_channel` method, the indexing is 0-based:  
+To clear a channel of the daw object, use `clear_channel` method, the indexing is 0-based:  
 (clear a channel means to reset the channel's name, sound modules and other set attributes)
 ```python
 new_song.clear_channel(1) # clear the first channel
@@ -295,22 +295,22 @@ new_song.clear_channel(1) # clear the first channel
 # sound modules
 ```
 
-To clear all of the channels of the sampler object, use `clear_all_channels` method:  
-(note that this method is to delete all of the channels of the sampler object, so that the channel number of the sampler object will be 0 after you use this method because there are no channels in the sampler object, the name of the sampler object will not be reset)
+To clear all of the channels of the daw object, use `clear_all_channels` method:  
+(note that this method is to delete all of the channels of the daw object, so that the channel number of the daw object will be 0 after you use this method because there are no channels in the daw object, the name of the daw object will not be reset)
 
 ```python
 new_song.clear_all_channels()
 >>> print(new_song)
-[Sampler] my first song
+[daw] my first song
 ```
 
 ## Audio mixing and editing
 
-Currently some basic audio mixing and editing functionalities are already implemented in musicpy sampler. Here we will go through all of them one by one.  
+Currently some basic audio mixing and editing functionalities are already implemented in musicpy daw. Here we will go through all of them one by one.  
 Note that different audio mixing effects can be combined with each other.
 
 ### General usage of audio effects on musicpy codes
-There is a class called `effect` implemented in the musicpy sampler module, which could store a type of audio effect, such as reverse, offset, fade in, fade out, ADSR envelope, and you can customize your own audio effect functions.
+There is a class called `effect` implemented in the musicpy daw module, which could store a type of audio effect, such as reverse, offset, fade in, fade out, ADSR envelope, and you can customize your own audio effect functions.
 
 You can use `effect` class to package an audio effect function and put it as an element in a list, the list could be used as the value of `effects` in the play and export functions.
 
@@ -380,7 +380,7 @@ parameters: [(0.2, 10), {}] unknown arguments: {}
 ### How to use effect instances on musicpy data structures
 
 you can use `set_effect` function to add a list of effects to common musicpy data structures (note, chord, track, piece).  
-The return value of `set_effect` function is the same musicpy data structures wrapped by it, but with an attribute `effects` which will be read when it is passed in play and export functions of the sampler. The added attribute `effects` is a list of the effect instances passed in by the `set_effect` function.
+The return value of `set_effect` function is the same musicpy data structures wrapped by it, but with an attribute `effects` which will be read when it is passed in play and export functions of the daw. The added attribute `effects` is a list of the effect instances passed in by the `set_effect` function.
 ```python
 set_effect(sound, *effects)
 
@@ -434,8 +434,8 @@ Cmaj7_chord = mixer1(Cmaj7_chord)
 # the return value is the same musicpy data structures with the effects stored
 ```
 
-### How audio effects are processed in the musicpy sampler module
-When you use play and export functions of the sampler, if the musicpy data structures passed in has an attribute `effects`, and is a non-empty list, then the rendered audio of the musicpy data structures will be processed by the audio effect functions of the effect instances one by one.
+### How audio effects are processed in the musicpy daw module
+When you use play and export functions of the daw, if the musicpy data structures passed in has an attribute `effects`, and is a non-empty list, then the rendered audio of the musicpy data structures will be processed by the audio effect functions of the effect instances one by one.
 
 Now we will talk about the predefined effect instances.
 
@@ -445,23 +445,23 @@ You can add a reverse effect to common musicpy data structures by using `reverse
 a = C('Cmaj9') % (1, 1/8)
 new_song.export(set_effect(a, reverse), 1) # export a Cmaj9 chord with a reverse effect
 
-current_song = P([A1, set_effect(B1, reverse), C1, D1], sampler_channels=[0, 1, 2, 3])
+current_song = P([A1, set_effect(B1, reverse), C1, D1], daw_channels=[0, 1, 2, 3])
 new_song.export(current_song)
 # export the piece type current_song with the track B1 having a reverse effect
 
-current_song2 = P([A1, B1, C1, D1], sampler_channels=[0, 1, 2, 3])
+current_song2 = P([A1, B1, C1, D1], daw_channels=[0, 1, 2, 3])
 new_song.export(set_effect(current_song2, reverse))
 # export the piece type current_song2 with the whole piece type having a reverse effect
 ```
 
 ### Offset
-You can add a offset to common musicpy data structures by using `offset`. The unit of the offset is bar (in 4/4 time signature). Add offset to the audio means the audio will start to play at the offset location. In other words, the audio before the offset location will be cut off. The offset effect requires an unknown argument `bpm`, you can set it by usual keyword arguments or `unknown_args` when initialized if you know the bpm beforehand, or you can just leave it because the current bpm will be passed to the offset instance by default in the play and export function of the sampler.
+You can add a offset to common musicpy data structures by using `offset`. The unit of the offset is bar (in 4/4 time signature). Add offset to the audio means the audio will start to play at the offset location. In other words, the audio before the offset location will be cut off. The offset effect requires an unknown argument `bpm`, you can set it by usual keyword arguments or `unknown_args` when initialized if you know the bpm beforehand, or you can just leave it because the current bpm will be passed to the offset instance by default in the play and export function of the daw.
 ```python
 a = C('Cmaj9') % (1, 1/8)
 new_song.export(set_effect(a, offset(1/8)), 1)
 # export a Cmaj9 chord with an offset at 1/8 bar, which means the audio will start to play at the place of 1/8 bar
 
-current_song = P([A1, B1, C1, D1], sampler_channels=[0, 1, 2, 3])
+current_song = P([A1, B1, C1, D1], daw_channels=[0, 1, 2, 3])
 new_song.export(set_effect(current_song, offset(1))) # export the piece type current_song with an offset at 1 bar
 ```
 
@@ -481,7 +481,7 @@ new_song.export(set_effect(a, fade(500, 2000)), 1)
 ```
 
 ### Add ADSR envelope
-You can add ADSR envelope to common musicpy data structures by using `adsr`. Note that currently the ADSR envelope added to the musicpy code only controls volumes of the audio, which is the most classic way that ADSR envelope works. `adsr` function takes 4 parameters which respond to ADSR: `attack`, `decay`, `sustain`, `release`. `attack` specifies how much time the audio fades in from the beginning, `decay` specifies how much time the audio decrease its volume, `sustain` specifies the sustain level that the audio decreases to, `release` specifies how much time the audio fades out to the end. ADSR envelope is a tool that works well not only for musicpy data structures, but also for basic waveforms that could be generating from musicpy sampler, as there are many possibilities in terms of timbres when combining ADSR envelope with basic waveforms (sine waves, triangle waves, etc.), The time unit of attack, decay and release are all milliseconds, the volume level unit of sustain is percentage, where 0% is mute and 100% is the loudest (could be an integer or float).
+You can add ADSR envelope to common musicpy data structures by using `adsr`. Note that currently the ADSR envelope added to the musicpy code only controls volumes of the audio, which is the most classic way that ADSR envelope works. `adsr` function takes 4 parameters which respond to ADSR: `attack`, `decay`, `sustain`, `release`. `attack` specifies how much time the audio fades in from the beginning, `decay` specifies how much time the audio decrease its volume, `sustain` specifies the sustain level that the audio decreases to, `release` specifies how much time the audio fades out to the end. ADSR envelope is a tool that works well not only for musicpy data structures, but also for basic waveforms that could be generating from musicpy daw, as there are many possibilities in terms of timbres when combining ADSR envelope with basic waveforms (sine waves, triangle waves, etc.), The time unit of attack, decay and release are all milliseconds, the volume level unit of sustain is percentage, where 0% is mute and 100% is the loudest (could be an integer or float).
 ```python
 a = C('Cmaj9') % (1, 1/8)
 new_song.export(set_effect(a, adsr(500, 1000, 20, 2000)), 1)
@@ -495,25 +495,25 @@ The first parameter of the audio effect function for the effect instance must be
 Planning to add some more predefined effect instances like EQ, reverb, compression, delay and so on in the future.
 
 ### Panning and volume of channels
-The pannings and volumes of channels of a piece type (or track type) also works for musicpy sampler, 
+The pannings and volumes of channels of a piece type (or track type) also works for musicpy daw, 
 as they will work the same as the output MIDI files.
 
-### Get the audio generated by sampler from musicpy data structures
-You can use `audio` function to get an AudioSegment instance from the sampler object. The AudioSegment instance itself could be exported 
+### Get the audio generated by daw from musicpy data structures
+You can use `audio` function to get an AudioSegment instance from the daw object. The AudioSegment instance itself could be exported 
 and do many other audio editing operations, for more details, you can refer to pydub's API documentations. The AudioSegment instance could also 
-be put in musicpy data structures such as chord types and piece types, and pass to the sampler to play or export.
+be put in musicpy data structures such as chord types and piece types, and pass to the daw to play or export.
 ```python
-audio(obj, sampler, channel_num=0, bpm=None)
+audio(obj, daw, channel_num=0, bpm=None)
 
 # obj: the musicpy data structures to process, could be note/chord/piece/track
 
-# sampler: the sampler object you want obj to pass
+# daw: the daw object you want obj to pass
 
-# channel_num: the index of channel you want to use in the sampler object, 0-based
+# channel_num: the index of channel you want to use in the daw object, 0-based
 
-# bpm: the BPM (tempo) used to generate audio, if not specified, then use the sampler's default bpm
+# bpm: the BPM (tempo) used to generate audio, if not specified, then use the daw's default bpm
 
-audio(C('C'), new_song) # generate an AudioSegment object with the new_song sampler object's first channel for a C major chord
+audio(C('C'), new_song) # generate an AudioSegment object with the new_song daw object's first channel for a C major chord
 ```
 
 ### Convert a list of audio objects to a chord type
@@ -534,7 +534,7 @@ audio_chord([audio(C('Cmaj7') + i, new_song) for i in range(10)], 1/8, 1, 50)
 ```
 
 ### Load audio files from path into audio objects
-Loading sound modules into the sampler objects might be convenient to do a play or export operation for whole musicpy data strcutures, 
+Loading sound modules into the daw objects might be convenient to do a play or export operation for whole musicpy data strcutures, 
 but sometimes we need to operate on more single audio files one by one. You can use `sound` class to load an audio file from a file path 
 and could use its `sounds` attribute (which is an AudioSegment object) in a chord type or piece type as an audio clip. An AudioSegment object 
 could be used as a note in a chord type, and since piece type is built upon chord types, an AudioSegment object also works in piece types.
@@ -567,9 +567,9 @@ stop() # stop all sounds playing currently
 
 ## Generating and playing with waveforms
 
-Musicpy sampler can generate some types of basic waveforms that appeared on synthesizer, including sine waves, sawtooth waves, square waves, triangle waves and white noises. Here we will go through the functions that could generate basic waveforms in musicpy sampler module.  
+Musicpy daw can generate some types of basic waveforms that appeared on synthesizer, including sine waves, sawtooth waves, square waves, triangle waves and white noises. Here we will go through the functions that could generate basic waveforms in musicpy daw module.  
 ### Sine waves
-To generate sine waves, you can use `sine` function, this is a global function (which is not a method of sampler class and uses globally)
+To generate sine waves, you can use `sine` function, this is a global function (which is not a method of daw class and uses globally)
 ```python
 sine(freq=440, duration=1000, volume=0)
 
@@ -598,7 +598,7 @@ white_noise(2000, 20) # generate a white noise with duration of 2s and volume of
 ```
 
 ### Generate a chord type of basic waveforms
-Well, now you may think: yeah we can generate these basic waveforms, that's kind of cool, but how can we use them in musicpy sampler? 
+Well, now you may think: yeah we can generate these basic waveforms, that's kind of cool, but how can we use them in musicpy daw? 
 
 And how can we get a chord type or even piece type of these basic waveforms? Here are the answers.
 
@@ -611,7 +611,7 @@ get_wave(sound, mode='sine', bpm=120, volume=None)
 
 # mode: the type of basic waveforms you want to generate, must be one of 'sine', 'triangle', 'sawtooth', 'square', or a function 
 # that takes exactly 3 parameters: frequency, duration, volume (must be in this order) and return an AudioSegment object,
-# you can refer to `sine`, `triangle`, `sawtooth`, `square`, `pulse` function in sampler.py
+# you can refer to `sine`, `triangle`, `sawtooth`, `square`, `pulse` function in daw.py
 
 # bpm: the BPM (tempo) of the basic waveforms, this will determine the absolute durations of generated basic waveforms
 
@@ -621,7 +621,7 @@ get_wave(sound, mode='sine', bpm=120, volume=None)
 get_wave(C('C') % (1, 1/8), 'sine', volume=20) # generate a chord type of sine waves of C major chord with volume of 20%
 get_wave(C('C') % (1, 1/8), triangle, volume=20) # generate a chord type of triangle waves of C major chord with volume of 20%
 ```
-The generated chord types of basic waveforms could be used as regular musicpy data structures in the play/export function of the sampler object, and could be put in a piece type (or a track type) to play/export by the sampler object.
+The generated chord types of basic waveforms could be used as regular musicpy data structures in the play/export function of the daw object, and could be put in a piece type (or a track type) to play/export by the daw object.
 
 ### Generate more general waveforms
 You can use `pulse` function to generate more general waveforms, where you can specify the duty cycle of the waveform. 
@@ -646,7 +646,7 @@ write a new class that inherits SignalGenerator (which is set SignalGenerator as
 
 ## Pitch shifter (make a whole sound module using only one recording audio file)
 
-There is a pitch shifter written in musicpy sampler module to make pitch changes of audio clips.
+There is a pitch shifter written in musicpy daw module to make pitch changes of audio clips.
 
 **Please note: some extra python libraries are required for using this part of functionality, you can run `pip install librosa soundfile numpy==1.20.3 numba==0.48` in cmd/terminal to install.**
 
@@ -721,7 +721,7 @@ pitch_1.export_sound_files(path='.', folder_name="someone's voice", start='A0', 
 # export a whole sound module of pitch_1 ranges from A0 to C8 named 'someone's voice' to current working directory,
 # the audio file format for this sound module is wav, given that the initial pitch of pitch_1 is C5,
 # you will have a folder of pitch shifted audio files of the audio clips in pitch_1 named 'someone's voice'
-# in the path you specified, and this folder could be loaded into the sampler object as a sound module
+# in the path you specified, and this folder could be loaded into the daw object as a sound module
 
 # note that for both of generate_dict and export_sound_files methods, you can specify
 # the method to make pitch changes with mode parameter.
@@ -734,23 +734,23 @@ pitch_1.play()
 pitch_1.stop()
 ```
 
-## More about ESI sound module format
+## More about MDI sound module format
 
-ESI is a sound module format invented by myself to pack a folder of audio files (and maybe with a settings file) into a single 
-binary file that is more convenient to operate and store. The name of ESI stands for Easy Sampler Instrument. 
-Easy sampler is one of my other projects, which is a whole music sampler and tracker (or you can call it a simple DAW) that is fully 
-compatible with musicpy. You can use easy sampler to load sound modules and make music with musicpy, export audio files with various of 
-audio file formats. Easy sampler has GUI, so you can make music with musicpy and some helps from GUI. This project is on github (click [here](https://github.com/Rainbow-Dreamer/easy-sampler)), you could add a star or fork if you like it.
+MDI is a sound module format invented by myself to pack a folder of audio files (and maybe with a settings file) into a single 
+binary file that is more convenient to operate and store. The name of MDI stands for Musicpy Daw Instrument. 
+Musicpy daw is one of my other projects, which is a whole music daw and tracker (or you can call it a simple DAW) that is fully 
+compatible with musicpy. You can use musicpy daw to load sound modules and make music with musicpy, export audio files with various of 
+audio file formats. Musicpy daw has GUI, so you can make music with musicpy and some helps from GUI. This project is on github (click [here](https://github.com/Rainbow-Dreamer/musicpy-daw)), you could add a star or fork if you like it.
 
-In fact, the musicpy sampler module is a porting of easy sampler in musicpy. I firstly finished the development of easy sampler, and then 
-port the functionalities of easy sampler to musicpy, which results in a new module in musicpy called musicpy sampler. So musicpy sampler module 
-is essentially a non-GUI version of easy sampler. I almost port all of the functionalities of easy sampler to the musicpy sampler module, 
-so easy sampler and the musicpy sampler module share almost the same set of functionalities. As the name of ESI, this sound module format comes 
-from easy sampler, you can make, load and unzip ESI files in easy sampler.
+In fact, the musicpy daw module is a porting of musicpy daw in musicpy. I firstly finished the development of musicpy daw, and then 
+port the functionalities of musicpy daw to musicpy, which results in a new module in musicpy called musicpy daw. So musicpy daw module 
+is essentially a non-GUI version of musicpy daw. I almost port all of the functionalities of musicpy daw to the musicpy daw module, 
+so musicpy daw and the musicpy daw module share almost the same set of functionalities. As the name of MDI, this sound module format comes 
+from musicpy daw, you can make, load and unzip MDI files in musicpy daw.
 
-You can use `make_esi` function to make ESI sound modules from a folder of audio files. Each time you make an ESI file from a folder of audio files, you will have an ESI file generated at the current file path. The ESI files contain information for unzipping sound modules files, so it could be used independently.
+You can use `make_mdi` function to make MDI sound modules from a folder of audio files. Each time you make an MDI file from a folder of audio files, you will have an MDI file generated at the current file path. The MDI files contain information for unzipping sound modules files, so it could be used independently.
 
-Besides audio files, you can also add a settings file in the folder to make ESI file, which is a text file (.txt) of some informations to set the mappings of the sound module's dictionary of a channel.  
+Besides audio files, you can also add a settings file in the folder to make MDI file, which is a text file (.txt) of some informations to set the mappings of the sound module's dictionary of a channel.  
 The format is very simple, you write a change of mappings with `pitch,value` on each line, note that the whitespaces will be counted into pitch and 
 value, so it is recommended to not add any whitespaces in each line.
 
@@ -769,29 +769,29 @@ F#2,CH1
 ```
 and then use
 ```python
-new_song.load(2, esi='drum.esi')
+new_song.load(2, mdi='drum.mdi')
 ```
-to load drum sound modules (if the name of drum's ESI file is called drum.esi).
+to load drum sound modules (if the name of drum's MDI file is called drum.mdi).
 
-You can use `unzip_esi` function to unzip ESI files into a folder of audio files (and a settings file if it has) for further uses.  
+You can use `unzip_mdi` function to unzip MDI files into a folder of audio files (and a settings file if it has) for further uses.  
 
 ```python
-unzip_esi(file_path, folder_name=None)
+unzip_mdi(file_path, folder_name=None)
 
-# file_path: the file path of the ESI file
+# file_path: the file path of the MDI file
 
 # folder_name: the name of the folder you unzip to
 
-unzip_esi('drum.esi', 'drum from esi')
-# unzip the audio files from drum.esi to a folder named 'drum from esi'
+unzip_mdi('drum.mdi', 'drum from mdi')
+# unzip the audio files from drum.mdi to a folder named 'drum from mdi'
 ```
 
 
 ## Some other reminders and thoughts
 
-1. Note that the tempo changes and pitch bends will not work for musicpy sampler, but there are some ways to work out.  
+1. Note that the tempo changes and pitch bends will not work for musicpy daw, but there are some ways to work out.  
    For tempo changes, with `normalize_tempo` function, you can normalize a chord type or a piece type's tempo changes as the tempo changes will straightly appear on the durations and intervals of the notes, which will result in a new chord type or piece type that is essentially the same as before but without tempo changes.  
-   For pitch bends, it works for SoundFont files, but not for the audio samples. The reason that why it is not working for audio samples in the musicpy sampler is that currently the pitch of audio samples (audio files) cannot be modified primarily, so pitch bends are ignored by musicpy sampler when using audio samples, but I write codes to make this works with the loaded SounFont files, so if you are using SoundFont files as sound modules on the channels, then it will work perfectly.
+   For pitch bends, it works for SoundFont files, but not for the audio samples. The reason that why it is not working for audio samples in the musicpy daw is that currently the pitch of audio samples (audio files) cannot be modified primarily, so pitch bends are ignored by musicpy daw when using audio samples, but I write codes to make this works with the loaded SounFont files, so if you are using SoundFont files as sound modules on the channels, then it will work perfectly.
    If you want to have pitch bends in the exported audio files when using audio samples, you can have audio samples that is pitch bend itself in the sound modules and set a special pitch with pitch bends audio samples in the mappings of channels.
    
 2. If you hear some crackles sounds when notes start or end when playing or in the exported audio files, 

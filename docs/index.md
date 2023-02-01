@@ -82,10 +82,10 @@ If you think this is too simple, musicpy could also produce music like [this](ht
 * [Musicpy composition code examples Part 2](https://musicpy.readthedocs.io/en/latest/Musicpy%20composition%20code%20examples%20part%202/)
 * [Musicpy composition code examples Part 3](https://musicpy.readthedocs.io/en/latest/Musicpy%20composition%20code%20examples%20part%203/)
 
-### Musicpy sampler module
+### Musicpy daw module
 
-* [Musicpy sampler module](https://musicpy.readthedocs.io/en/latest/Musicpy%20sampler%20module/)
-* [Musicpy sampler module composition code examples](https://musicpy.readthedocs.io/en/latest/Musicpy%20sampler%20module%20composition%20code%20examples/)
+* [Musicpy daw module](https://musicpy.readthedocs.io/en/latest/Musicpy%20daw%20module/)
+* [Musicpy daw module composition code examples](https://musicpy.readthedocs.io/en/latest/Musicpy%20daw%20module%20composition%20code%20examples/)
 
 ### Algorithms
 

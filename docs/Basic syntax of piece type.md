@@ -51,7 +51,7 @@ piece(tracks,
       pan=None,
       volume=None,
       other_messages=[],
-      sampler_channels=None)
+      daw_channels=None)
 ```
 
 * tracks: a list of chord types for each track
@@ -74,7 +74,7 @@ piece(tracks,
 
 * other_messages: list of other MIDI messages of the piece
 
-* sampler_channels: specify the corresponding sampler channel number of each track in the sampler module
+* daw_channels: specify the corresponding daw channel number of each track in the daw module
 
 For our current requirements, we can build a piece class like this.
 

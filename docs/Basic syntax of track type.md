@@ -23,7 +23,7 @@ track(content,
       volume=None,
       bpm=120,
       name=None,
-      sampler_channel=None)
+      daw_channel=None)
 ```
 
 - content: chord type, the content of the track type
@@ -35,7 +35,7 @@ track(content,
 - volume: the volume of the track
 - bpm: the tempo (BPM)
 - name: the name of the piece the track belongs to
-- sampler_channel: the sampler channel number the track corresponds to in sampler module
+- daw_channel: the daw channel number the track corresponds to in daw module
 
 
 The `__getitem__` built-in function of the piece type (that is, the syntax of `a[index]`, where a is the track type and index is the index of the track, with 0 being the first track) now returns the track type (track type). It has the same complete information as the piece type and can be used to extract type information.  
