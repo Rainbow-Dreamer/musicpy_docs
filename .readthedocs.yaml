@@ -25,9 +25,9 @@ nav:
       - Composition code examples Part 1: Musicpy composition code examples part 1.md
       - Composition code examples Part 2: Musicpy composition code examples part 2.md
       - Composition code examples Part 3: Musicpy composition code examples part 3.md
-    - Sampler Module:
-      - Musicpy sampler module: Musicpy sampler module.md
-      - Musicpy sampler module composition code examples: Musicpy sampler module composition code examples.md
+    - Musicpy daw Module:
+      - Musicpy daw module: Musicpy daw module.md
+      - Musicpy daw module composition code examples: Musicpy daw module composition code examples.md
     - Algorithms:
       - Introduction of musicpy algorithms module: Introduction of musicpy algorithms module.md
       - The algorithm to split the main melody and chords from a piece of music: The algorithm to split the main melody and chords from a piece of music.md
