@@ -204,7 +204,8 @@ analyze_rhythm(current_chord,
                total_length=None,
                remove_empty_beats=False,
                unit=None,
-               find_unit_ignore_duration=False)
+               find_unit_ignore_duration=False,
+               merge_continue=True)
 ```
 
 * current_chord: a chord instance
@@ -213,6 +214,7 @@ analyze_rhythm(current_chord,
 * remove_empty_beats: remove the beats with 0 duration
 * unit: you can manually provide a unit in bars
 * find_unit_ignore_duration: find unit only from chord intervals
+* merge_continue: merge successive continue symbols as extra duration to the beat before them
 
 
 
@@ -223,7 +225,7 @@ chord(notes=[C5, C5, C5, C5, C5], interval=[0.25, 0.1875, 0.1875, 0.125, 0.25], 
 
 >>> analyze_rhythm(chord1)
 [rhythm]
-rhythm: beat(1/8), continue(1/8), beat(1/8.), beat(1/8.), beat(1/8), beat(1/8), continue(1/8)
+rhythm: beat(1/4), beat(1/8.), beat(1/8.), beat(1/8), beat(1/4)
 total bar length: 1
 time signature: 4 / 4
 ```
