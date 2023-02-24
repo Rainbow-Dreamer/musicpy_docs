@@ -17,7 +17,7 @@ For the basic syntax and useful functionality of musicpy, just see the basic syn
 
 For musicpy composition codes examples, just see the musicpy composition code examples section.
 
-I added a new module called `daw` for musicpy in June 2021, this module can load sound modules such as audio files and soundfonts files (.sf2, .sf3, .dls) and play or export audio files with musicpy, it is very easy and convenient to use.  
+I added a new module called `daw` for musicpy in June 2021, this module can load instruments such as audio files and soundfonts files (.sf2, .sf3, .dls) and play or export audio files with musicpy, it is very easy and convenient to use.  
 
 To learn how to use this module, please refer to the musicpy daw module section.
 

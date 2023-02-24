@@ -1,6 +1,6 @@
 # Musicpy daw module
 
-I wrote a daw module for musicpy to load sound modules and export audio files (including wav, mp3, ogg and so on) in June 2021, which will be very useful since now you are no longer limited to only MIDI files (You can take the MIDI files exported by musicpy and put in DAW to load sound modules and export audio files anyways).
+I wrote a daw module for musicpy to load instruments and export audio files (including wav, mp3, ogg and so on) in June 2021, which will be very useful since now you are no longer limited to only MIDI files (You can take the MIDI files exported by musicpy and put in DAW to load instruments and export audio files anyways).
 
 Some of the basic audio mixing and editing functionalities are already implemented, including reverse, pan, ADSR envelope (currenly only with audio volumes), fade in/out effects.
 
@@ -12,15 +12,15 @@ Making new timbres using these basic waveforms with musicpy daw will probably be
 
 - [Preparation before importing](#preparation-before-importing)
 - [Initialize a daw object](#initialize-a-daw-object)
-- [Supported sound modules](#supported-sound-modules)
-- [Load sound modules](#load-sound-modules)
+- [Supported instruments](#supported-sound-modules)
+- [Load instruments](#load-sound-modules)
 - [Play and export audio files](#play-and-export-audio-files)
 - [Modify daw's attributes](#modify-daws-attributes)
 - [Adding, deleting and clearing channels](#adding-deleting-and-clearing-channels)
 - [Audio mixing and editing](#audio-mixing-and-editing)
 - [Generating and playing with waveforms](#generating-and-playing-with-waveforms)
-- [Pitch shifter (make a whole sound module using only one recording audio file)](#pitch-shifter-make-a-whole-sound-module-using-only-one-recording-audio-file)
-- [More about MDI sound module format](#more-about-mdi-sound-module-format)
+- [Pitch shifter (make a whole instrument using only one recording audio file)](#pitch-shifter-make-a-whole-sound-module-using-only-one-recording-audio-file)
+- [More about MDI instrument format](#more-about-mdi-sound-module-format)
 - [Some other reminders and thoughts](#some-other-reminders-and-thoughts)
 
 ## Preparation before importing
@@ -52,50 +52,50 @@ Channel 1 | not loaded
 Channel 2 | not loaded
 Channel 3 | not loaded
 ```
-Now you have initialized a daw object with 3 channels. The `not loaded` text means that currently this channel has not loaded any sound modules yet.
-Next we need to know what types of sound modules that musicpy daw currently support and could load successfully.
+Now you have initialized a daw object with 3 channels. The `not loaded` text means that currently this channel has not loaded any instruments yet.
+Next we need to know what types of instruments that musicpy daw currently support and could load successfully.
 
-## Supported sound modules
+## Supported instruments
 
-The file formats that musicpy daw currently could load: SoundFont files (.sf2, .sf3, .dls), audio files (such as .wav, .mp3, .ogg), and `MDI`, which is a sound module format invented by myself.
+The file formats that musicpy daw currently could load: SoundFont files (.sf2, .sf3, .dls), audio files (such as .wav, .mp3, .ogg), and `MDI`, which is an instrument format invented by myself.
 
 ### SoundFont files
 SoundFont is a very popular virtual instruments file format, you can load any SoundFont files into musicpy daw, supports .sf2, .sf3, .dls.
 
-This daw module has built-in [sf2_loader](https://github.com/Rainbow-Dreamer/sf2_loader), which is my another project, you can refer to readme for documentation, you can use the syntax of sf2_loader to change the current instrument of loaded SoundFont files, play a piece of musicpy code by itself and so on. You can use `current_daw.modules(i)` to get the sound module object that is loaded in the ith channel (0-based), (current_daw is the name of the variable of your current daw object), if there are SoundFont files loaded in the ith channel, then it will return a sf2_loader object.
+This daw module has built-in [sf2_loader](https://github.com/Rainbow-Dreamer/sf2_loader), which is my another project, you can refer to readme for documentation, you can use the syntax of sf2_loader to change the current instrument of loaded SoundFont files, play a piece of musicpy code by itself and so on. You can use `current_daw.instruments(i)` to get the instrument object that is loaded in the ith channel (0-based), (current_daw is the name of the variable of your current daw object), if there are SoundFont files loaded in the ith channel, then it will return a sf2_loader object.
 
 ### Audio files
-Musicpy daw currently could load a folder of audio files as a sound module for each channel, the formats of the audio files could be mixed (for example, the folder could contains a mixture of wav, mp3, ogg files and so on). It is strongly recommended to name each audio file as a pitch, for example, `C5.wav`, which is a note name with an octave number. If the pitch name contains a flat sign, it is recommended to change it to an equivalent pitch name with a sharp sign (in twelve-tone equal temperament), for example, if it is `Ab5.wav`, change it to `G#5.wav`.
+Musicpy daw currently could load a folder of audio files as an instrument for each channel, the formats of the audio files could be mixed (for example, the folder could contains a mixture of wav, mp3, ogg files and so on). It is strongly recommended to name each audio file as a pitch, for example, `C5.wav`, which is a note name with an octave number. If the pitch name contains a flat sign, it is recommended to change it to an equivalent pitch name with a sharp sign (in twelve-tone equal temperament), for example, if it is `Ab5.wav`, change it to `G#5.wav`.
 
 If the names of some audio files are not pitches, you will need to change the default mappings from musicpy note names to the file names of these audio files in order to match the pitches with the corresponding audio files you want correctly. I will talk about this later.
 
 ### MDI files
-`MDI` is a sound module format invented by myself, which could merge and combine a folder of audio files (and maybe with a settings file) into a single binary file that is more convenient to operate and store.
+`MDI` is an instrument format invented by myself, which could merge and combine a folder of audio files (and maybe with a settings file) into a single binary file that is more convenient to operate and store.
 
 You can use `make_mdi` function to make an mdi file easily:
 ```python
-make_mdi(path_of_sound_modules_folder, name_of_sound_modules_you_want_to_have)
+make_mdi(path_of_instruments_folder, name_of_instruments_you_want_to_have)
 ```
 An mdi file will be generated in the current working directory.
 
 I am planning to add support for VST (this is a very commonly used audio plugin format) in musicpy daw in the future.
 
-## Load sound modules
+## Load instruments
 
-You can load a sound module for each channel in a daw object.
+You can load an instrument for each channel in a daw object.
 ```python
-new_song.load(channel_number, path_of_sound_modules) # channel number is 0-based
+new_song.load(channel_number, path_of_instruments) # channel number is 0-based
 
-new_song.load(0, 'piano') # load a folder named 'piano' with audio files as a sound module for the first channel
+new_song.load(0, 'piano') # load a folder named 'piano' with audio files as an instrument for the first channel
 
-new_song.load(0, 'test.sf2') # load a soundfont file named 'test.sf2' as a sound module for the first channel
+new_song.load(0, 'test.sf2') # load a soundfont file named 'test.sf2' as an instrument for the first channel
 
-new_song.load(0, mdi='piano.mdi') # load an mdi file as a sound module for the first channel
+new_song.load(0, mdi='piano.mdi') # load an mdi file as an instrument for the first channel
 ```
 
 ## Play and export audio files
 
-You can convert musicpy data structures to an audio file using `export` function of the daw object, or play using loaded sound modules
+You can convert musicpy data structures to an audio file using `export` function of the daw object, or play using loaded instruments
 in the daw object using `play` function of the daw object.  
 Supported musicpy data structures to export or play include note, chord, piece and track.  
 You can also specify using which channel to play or export if the input is not a piece type. If the input is a piece type, you can specify using which channel for each track using the `daw_channels` attribute of the piece type.
@@ -165,19 +165,19 @@ export(obj,
 
 # show_msg: When set to True, it will print the current progress when rendering the audio
 
-# soundfont_args: When the sound module is SoundFont files, the dictionary of keyword arguments of rendering audio,
+# soundfont_args: When the instrument is SoundFont files, the dictionary of keyword arguments of rendering audio,
 # here the arguments are corresponding to the arguments of export_chord function of sf2_loader
 
 
 # play/export chord types examples
-new_song.play(C('C')) # play a C major chord using the daw object with loaded sound modules of channel 1
+new_song.play(C('C')) # play a C major chord using the daw object with loaded instruments of channel 1
 new_song.play(C('C'), 2) # do the same thing except using channel 2
 new_song.play(C('C'), 2, bpm=165) # do the same thing except using channel 2 with BPM 165
 
-new_song.export(C('C'), mode='wav') # export a C major chord as a wav file, using sound modules of channel 1
-new_song.export(C('C'), mode='mp3') # export a C major chord as a mp3 file, using sound modules of channel 1
+new_song.export(C('C'), mode='wav') # export a C major chord as a wav file, using instruments of channel 1
+new_song.export(C('C'), mode='mp3') # export a C major chord as a mp3 file, using instruments of channel 1
 new_song.export(C('C'), channel_num=2, mode='wav', filename='my first song.wav') # export a C major chord as
-# a wav file, using sound modules of channel 2, the name of the exported wav file is "my first song.wav"
+# a wav file, using instruments of channel 2, the name of the exported wav file is "my first song.wav"
 
 # play/export piece types examples
 rule1 = lambda x: x % (1 / 8, 1 / 8) @ [1, 2, 3, 2]
@@ -216,7 +216,7 @@ new_song.set_channel_name(1, 'Piano 2') # change the name of the first channel t
 ```
 
 You can change the channel mappings of the daw object by modifying `channel_dict` attribute.  
-Change the mapping dictionary of some of the channels will be necessary if not all of the audio files in the sound modules folder loaded for some channels are named as pitches, and you are lazy to rename them.
+Change the mapping dictionary of some of the channels will be necessary if not all of the audio files in the instruments folder loaded for some channels are named as pitches, and you are lazy to rename them.
 ```python
 # change some of the mappings of the 3rd channel of the daw object
 # note that the mappings will always be a pitch maps to a file name (without file extensions)
@@ -224,17 +224,17 @@ new_song.channel_dict[2]['C2'] = 'Kick'
 new_song.channel_dict[2]['E2'] = 'Snare'
 new_song.channel_dict[2]['F#2'] = 'CH1'
 ```
-**Please note, when you have modified the channel mappings dictionary of a channel, if the channel has loaded sound modules, then you need to reload the sound modules of the channel to make the modification of the channel mappings dictionary take effect.**
+**Please note, when you have modified the channel mappings dictionary of a channel, if the channel has loaded instruments, then you need to reload the instruments of the channel to make the modification of the channel mappings dictionary take effect.**
 
-You can change the sound modules of each channel by 2 ways:
+You can change the instruments of each channel by 2 ways:
 ```python
-# simply load new sound modules with new path for some of the channels
-new_song.load(0, new_path_of_sound_modules)
+# simply load new instruments with new path for some of the channels
+new_song.load(0, new_path_of_instruments)
 
-# or modify the path of sound modules for some of the channels
-# in 'channel_sound_modules_name' attribute of the daw object
-# and then reload for the channels which sound modules path has been modified
-new_song.channel_sound_modules_name[0] = new_path_of_sound_modules
+# or modify the path of instruments for some of the channels
+# in 'channel_instrument_names' attribute of the daw object
+# and then reload for the channels which instruments path has been modified
+new_song.channel_instrument_names[0] = new_path_of_instruments
 new_song.reload_channel_sounds(0)
 ```
 
@@ -287,12 +287,12 @@ del new_song[1] # delete the first channel
 ```
 
 To clear a channel of the daw object, use `clear_channel` method, the indexing is 0-based:  
-(clear a channel means to reset the channel's name, sound modules and other set attributes)
+(clear a channel means to reset the channel's name, instruments and other set attributes)
 ```python
 new_song.clear_channel(1) # clear the first channel
-# the name of the first channel will be reset to 'Channel 1', and the sound modules will be reset
-# to 'not loaded' and the loaded sound modules will be unloaded if the first channel has loaded
-# sound modules
+# the name of the first channel will be reset to 'Channel 1', and the instruments will be reset
+# to 'not loaded' and the loaded instruments will be unloaded if the first channel has loaded
+# instruments
 ```
 
 To clear all of the channels of the daw object, use `clear_all_channels` method:  
@@ -534,7 +534,7 @@ audio_chord([audio(C('Cmaj7') + i, new_song) for i in range(10)], 1/8, 1, 50)
 ```
 
 ### Load audio files from path into audio objects
-Loading sound modules into the daw objects might be convenient to do a play or export operation for whole musicpy data strcutures, 
+Loading instruments into the daw objects might be convenient to do a play or export operation for whole musicpy data strcutures, 
 but sometimes we need to operate on more single audio files one by one. You can use `sound` class to load an audio file from a file path 
 and could use its `sounds` attribute (which is an AudioSegment object) in a chord type or piece type as an audio clip. An AudioSegment object 
 could be used as a note in a chord type, and since piece type is built upon chord types, an AudioSegment object also works in piece types.
@@ -644,7 +644,7 @@ from pydub.generators import SignalGenerator
 write a new class that inherits SignalGenerator (which is set SignalGenerator as a parent class), and override `__init__` and `generate` methods, where `__init__` is the constructor function and `generate` is the function that yields sample data as an iterator when called each time. You can refer to [here](https://github.com/jiaaro/pydub/blob/master/pydub/generators.py) to see how to override `generate` function of SignalGenerator to use mathematical and statistical functions to generate more general waveforms.
 
 
-## Pitch shifter (make a whole sound module using only one recording audio file)
+## Pitch shifter (make a whole instrument using only one recording audio file)
 
 There is a pitch shifter written in musicpy daw module to make pitch changes of audio clips.
 
@@ -667,7 +667,7 @@ You can use `set_note` function of pitch object to reset the initial note of the
 
 You can use `play` and `stop` function of pitch object to play and stop audio clips loaded in the pitch object.
 
-To generate a whole sound module using the audio file loaded in the pitch object, you can use `export_sound_files` function 
+To generate a whole instrument using the audio file loaded in the pitch object, you can use `export_sound_files` function 
 of the pitch object, and `generate_dict` function of the pitch object will generate a dictionary with pitch names and their 
 corresponding audio clips.
 ```python
@@ -718,10 +718,10 @@ pitch_1_dict = pitch_1.generate_dict(start='A0', end='C8')
 # generate a dictionary of pitch name and pitch shifted AudioSegment objects
 
 pitch_1.export_sound_files(path='.', folder_name="someone's voice", start='A0', end='C8', format='wav')
-# export a whole sound module of pitch_1 ranges from A0 to C8 named 'someone's voice' to current working directory,
-# the audio file format for this sound module is wav, given that the initial pitch of pitch_1 is C5,
+# export a whole instrument of pitch_1 ranges from A0 to C8 named 'someone's voice' to current working directory,
+# the audio file format for this instrument is wav, given that the initial pitch of pitch_1 is C5,
 # you will have a folder of pitch shifted audio files of the audio clips in pitch_1 named 'someone's voice'
-# in the path you specified, and this folder could be loaded into the daw object as a sound module
+# in the path you specified, and this folder could be loaded into the daw object as an instrument
 
 # note that for both of generate_dict and export_sound_files methods, you can specify
 # the method to make pitch changes with mode parameter.
@@ -734,34 +734,34 @@ pitch_1.play()
 pitch_1.stop()
 ```
 
-## More about MDI sound module format
+## More about MDI instrument format
 
-MDI is a sound module format invented by myself to pack a folder of audio files (and maybe with a settings file) into a single 
+MDI is an instrument format invented by myself to pack a folder of audio files (and maybe with a settings file) into a single 
 binary file that is more convenient to operate and store. The name of MDI stands for Musicpy Daw Instrument. 
 Musicpy daw is one of my other projects, which is a whole music daw and tracker (or you can call it a simple DAW) that is fully 
-compatible with musicpy. You can use musicpy daw to load sound modules and make music with musicpy, export audio files with various of 
+compatible with musicpy. You can use musicpy daw to load instruments and make music with musicpy, export audio files with various of 
 audio file formats. Musicpy daw has GUI, so you can make music with musicpy and some helps from GUI. This project is on github (click [here](https://github.com/Rainbow-Dreamer/musicpy-daw)), you could add a star or fork if you like it.
 
 In fact, the musicpy daw module is a porting of musicpy daw in musicpy. I firstly finished the development of musicpy daw, and then 
 port the functionalities of musicpy daw to musicpy, which results in a new module in musicpy called musicpy daw. So musicpy daw module 
 is essentially a non-GUI version of musicpy daw. I almost port all of the functionalities of musicpy daw to the musicpy daw module, 
-so musicpy daw and the musicpy daw module share almost the same set of functionalities. As the name of MDI, this sound module format comes 
+so musicpy daw and the musicpy daw module share almost the same set of functionalities. As the name of MDI, this instrument format comes 
 from musicpy daw, you can make, load and unzip MDI files in musicpy daw.
 
-You can use `make_mdi` function to make MDI sound modules from a folder of audio files. Each time you make an MDI file from a folder of audio files, you will have an MDI file generated at the current file path. The MDI files contain information for unzipping sound modules files, so it could be used independently.
+You can use `make_mdi` function to make MDI instruments from a folder of audio files. Each time you make an MDI file from a folder of audio files, you will have an MDI file generated at the current file path. The MDI files contain information for unzipping instruments files, so it could be used independently.
 
-Besides audio files, you can also add a settings file in the folder to make MDI file, which is a text file (.txt) of some informations to set the mappings of the sound module's dictionary of a channel.  
+Besides audio files, you can also add a settings file in the folder to make MDI file, which is a text file (.txt) of some informations to set the mappings of the instrument's dictionary of a channel.  
 The format is very simple, you write a change of mappings with `pitch,value` on each line, note that the whitespaces will be counted into pitch and 
 value, so it is recommended to not add any whitespaces in each line.
 
 I will give an example of the format of the informations in a settings file.  
-If we want to change some of the mappings of a channel with drum sound module, for example,
+If we want to change some of the mappings of a channel with drum instrument, for example,
 ```python
 new_song.channel_dict[2]['C2'] = 'Kick'
 new_song.channel_dict[2]['E2'] = 'Snare'
 new_song.channel_dict[2]['F#2'] = 'CH1'
 ```
-Then we can write this in the settings file in the drum sound modules folder:
+Then we can write this in the settings file in the drum instruments folder:
 ```
 C2,Kick
 E2,Snare
@@ -771,7 +771,7 @@ and then use
 ```python
 new_song.load(2, mdi='drum.mdi')
 ```
-to load drum sound modules (if the name of drum's MDI file is called drum.mdi).
+to load drum instruments (if the name of drum's MDI file is called drum.mdi).
 
 You can use `unzip_mdi` function to unzip MDI files into a folder of audio files (and a settings file if it has) for further uses.  
 
@@ -791,8 +791,8 @@ unzip_mdi('drum.mdi', 'drum from mdi')
 
 1. Note that the tempo changes and pitch bends will not work for musicpy daw, but there are some ways to work out.  
    For tempo changes, with `normalize_tempo` function, you can normalize a chord type or a piece type's tempo changes as the tempo changes will straightly appear on the durations and intervals of the notes, which will result in a new chord type or piece type that is essentially the same as before but without tempo changes.  
-   For pitch bends, it works for SoundFont files, but not for the audio samples. The reason that why it is not working for audio samples in the musicpy daw is that currently the pitch of audio samples (audio files) cannot be modified primarily, so pitch bends are ignored by musicpy daw when using audio samples, but I write codes to make this works with the loaded SounFont files, so if you are using SoundFont files as sound modules on the channels, then it will work perfectly.
-   If you want to have pitch bends in the exported audio files when using audio samples, you can have audio samples that is pitch bend itself in the sound modules and set a special pitch with pitch bends audio samples in the mappings of channels.
+   For pitch bends, it works for SoundFont files, but not for the audio samples. The reason that why it is not working for audio samples in the musicpy daw is that currently the pitch of audio samples (audio files) cannot be modified primarily, so pitch bends are ignored by musicpy daw when using audio samples, but I write codes to make this works with the loaded SounFont files, so if you are using SoundFont files as instruments on the channels, then it will work perfectly.
+   If you want to have pitch bends in the exported audio files when using audio samples, you can have audio samples that is pitch bend itself in the instruments and set a special pitch with pitch bends audio samples in the mappings of channels.
    
 2. If you hear some crackles sounds when notes start or end when playing or in the exported audio files, 
    you can add some little fade effects to each note in the chord types or piece types to remove the crackles sounds, 
