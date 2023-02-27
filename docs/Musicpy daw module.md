@@ -12,20 +12,20 @@ Making new timbres using these basic waveforms with musicpy daw will probably be
 
 - [Preparation before importing](#preparation-before-importing)
 - [Initialize a daw object](#initialize-a-daw-object)
-- [Supported instruments](#supported-sound-modules)
-- [Load instruments](#load-sound-modules)
+- [Supported instruments](#supported-instruments)
+- [Load instruments](#load-instruments)
 - [Play and export audio files](#play-and-export-audio-files)
 - [Modify daw's attributes](#modify-daws-attributes)
 - [Adding, deleting and clearing channels](#adding-deleting-and-clearing-channels)
 - [Audio mixing and editing](#audio-mixing-and-editing)
 - [Generating and playing with waveforms](#generating-and-playing-with-waveforms)
-- [Pitch shifter (make a whole instrument using only one recording audio file)](#pitch-shifter-make-a-whole-sound-module-using-only-one-recording-audio-file)
-- [More about MDI instrument format](#more-about-mdi-sound-module-format)
+- [Pitch shifter (make a whole instrument using only one recording audio file)](#pitch-shifter-make-a-whole-instrument-using-only-one-recording-audio-file)
+- [More about MDI instrument format](#more-about-mdi-instrument-format)
 - [Some other reminders and thoughts](#some-other-reminders-and-thoughts)
 
 ## Preparation before importing
 
-Firstly, open cmd/terminal and run `pip install sf2_loader` to install all of the required python modules and packages to run musicpy daw. If you are using Linux or macOS, there are some necessary configuration steps for the required module sf2_loader, you can refer to [here](https://github.com/Rainbow-Dreamer/sf2_loader#installation) for details.
+Firstly, open cmd/terminal and run `pip install sf2_loader pedalboard scipy numpy` to install all of the required python modules and packages to run musicpy daw. If you are using Linux or macOS, there are some necessary configuration steps for the required module sf2_loader, you can refer to [here](https://github.com/Rainbow-Dreamer/sf2_loader#installation) for details.
 
 Next, please download `ffmpeg.zip` in [Releases](https://github.com/Rainbow-Dreamer/musicpy/releases/latest), extract the ffmpeg folder from the file, and then put the folder to `C:\` if you are on Windows or equivalent root path on macOS/Linux.
 
@@ -90,15 +90,17 @@ new_song.load(0, 'piano') # load a folder named 'piano' with audio files as an i
 
 new_song.load(0, 'test.sf2') # load a soundfont file named 'test.sf2' as an instrument for the first channel
 
-new_song.load(0, mdi='piano.mdi') # load an mdi file as an instrument for the first channel
+new_song.load(0, 'piano.mdi') # load an mdi file as an instrument for the first channel
 ```
 
 ## Play and export audio files
 
-You can convert musicpy data structures to an audio file using `export` function of the daw object, or play using loaded instruments
-in the daw object using `play` function of the daw object.  
-Supported musicpy data structures to export or play include note, chord, piece and track.  
+You can convert musicpy data structures to an audio file using `export` function of the daw object, or play using loaded instruments in the daw object using `play` function of the daw object.
+
+Supported musicpy data structures to export or play include note, chord, piece and track.
+
 You can also specify using which channel to play or export if the input is not a piece type. If the input is a piece type, you can specify using which channel for each track using the `daw_channels` attribute of the piece type.
+
 ```python
 play(current_chord,
      channel_num=0,
@@ -215,8 +217,10 @@ new_song.channel_names[0] = 'Piano 2' # change the name of the first channel to 
 new_song.set_channel_name(1, 'Piano 2') # change the name of the first channel to 'Piano 2'
 ```
 
-You can change the channel mappings of the daw object by modifying `channel_dict` attribute.  
+You can change the channel mappings of the daw object by modifying `channel_dict` attribute.
+
 Change the mapping dictionary of some of the channels will be necessary if not all of the audio files in the instruments folder loaded for some channels are named as pitches, and you are lazy to rename them.
+
 ```python
 # change some of the mappings of the 3rd channel of the daw object
 # note that the mappings will always be a pitch maps to a file name (without file extensions)
@@ -248,8 +252,10 @@ Channel 2 | not loaded
 Channel 3 | not loaded
 ```
 
-Each daw object will have a default bpm, it is used when you play or export without specifying bpm parameter.  
+Each daw object will have a default bpm, it is used when you play or export without specifying bpm parameter.
+
 The default value of the default bpm of a daw object is 120. You can modify the default bpm of a daw object by modifying `bpm` attribute.
+
 ```python
 new_song.bpm = 150 # change the default bpm of new_song to 150
 ```
@@ -286,8 +292,7 @@ new_song.delete_channel(1) # delete the first channel
 del new_song[1] # delete the first channel
 ```
 
-To clear a channel of the daw object, use `clear_channel` method, the indexing is 0-based:  
-(clear a channel means to reset the channel's name, instruments and other set attributes)
+To clear a channel of the daw object, use `clear_channel` method, the indexing is 0-based:  (clear a channel means to reset the channel's name, instruments and other set attributes)
 ```python
 new_song.clear_channel(1) # clear the first channel
 # the name of the first channel will be reset to 'Channel 1', and the instruments will be reset
@@ -295,8 +300,7 @@ new_song.clear_channel(1) # clear the first channel
 # instruments
 ```
 
-To clear all of the channels of the daw object, use `clear_all_channels` method:  
-(note that this method is to delete all of the channels of the daw object, so that the channel number of the daw object will be 0 after you use this method because there are no channels in the daw object, the name of the daw object will not be reset)
+To clear all of the channels of the daw object, use `clear_all_channels` method:  (note that this method is to delete all of the channels of the daw object, so that the channel number of the daw object will be 0 after you use this method because there are no channels in the daw object, the name of the daw object will not be reset)
 
 ```python
 new_song.clear_all_channels()
@@ -307,6 +311,7 @@ new_song.clear_all_channels()
 ## Audio mixing and editing
 
 Currently some basic audio mixing and editing functionalities are already implemented in musicpy daw. Here we will go through all of them one by one.  
+
 Note that different audio mixing effects can be combined with each other.
 
 ### General usage of audio effects on musicpy codes
@@ -380,7 +385,9 @@ parameters: [(0.2, 10), {}] unknown arguments: {}
 ### How to use effect instances on musicpy data structures
 
 you can use `set_effect` function to add a list of effects to common musicpy data structures (note, chord, track, piece).  
+
 The return value of `set_effect` function is the same musicpy data structures wrapped by it, but with an attribute `effects` which will be read when it is passed in play and export functions of the daw. The added attribute `effects` is a list of the effect instances passed in by the `set_effect` function.
+
 ```python
 set_effect(sound, *effects)
 
@@ -648,7 +655,7 @@ write a new class that inherits SignalGenerator (which is set SignalGenerator as
 
 There is a pitch shifter written in musicpy daw module to make pitch changes of audio clips.
 
-**Please note: some extra python libraries are required for using this part of functionality, you can run `pip install librosa soundfile numpy==1.20.3 numba==0.48` in cmd/terminal to install.**
+**Please note: some extra python libraries are required for using this part of functionality, you can run `pip install librosa soundfile` in cmd/terminal to install.**
 
 You can change the pitch of audio clips to higher or lower by semitones, or more microtonal unit.
 
@@ -685,23 +692,18 @@ new_pitch_1 = pitch_1.pitch_shift(1) # shift up the pitch of pitch_1 by 1 semito
 # 'pydub' using mode parameter
 new_pitch_1 = pitch_1.pitch_shift(1, mode='pydub') # shift up the pitch of pitch_1 by 1 semitone, using 'pydub' method
 ```
-The differences between 'pydub' and 'librosa' methods are that 'pydub' method make pitch changes by changing 
-the sample rates of the audio clips (or you can say frame rates), but this results in speed changes of the 
-audio clips while making the pitch changes.
+The differences between 'pydub' and 'librosa' methods are that 'pydub' method make pitch changes by changing the sample rates of the audio clips (or you can say frame rates), but this results in speed changes of the audio clips while making the pitch changes.
 
 In 'pydub' method, the higher the pitch changes to, the faster the audio clip changes to, in contrast, if the 
 pitch changes to be lower, the audio clip changes to be slower, in other words, the length of the audio clip 
-changes, which is not we want in many situations, although 'pydub' method is much more faster than 'librosa' 
-method in comparison.
+changes, which is not we want in many situations, although 'pydub' method is much more faster than 'librosa' method in comparison.
 
 In 'librosa' method, it performs a FFT to the raw audio data of the audio clips, and get a numpy array of 
 the result of FFT, and using the numpy array to make transformations in order to make pitch changes, 
 this method is slower since it performs some mathematical and statistical computations, but the speed of 
 the audio clips won't change, the length of the audio clips will remain the same before the pitch changes.
 
-Note that 'librosa' method might result in a lower audio quality after pitch changes compared to 'pydub' method, 
-especially when make pitch changes to long audio clips (several minutes for example), if it is an audio clip 
-for not more than few seconds, this is not that noticeable.
+Note that 'librosa' method might result in a lower audio quality after pitch changes compared to 'pydub' method, especially when make pitch changes to long audio clips (several minutes for example), if it is an audio clip for not more than few seconds, this is not that noticeable.
 
 The default method of pitch_shift function of the pitch object is 'librosa' method.
 ```python
@@ -769,7 +771,7 @@ F#2,CH1
 ```
 and then use
 ```python
-new_song.load(2, mdi='drum.mdi')
+new_song.load(2, 'drum.mdi')
 ```
 to load drum instruments (if the name of drum's MDI file is called drum.mdi).
 
@@ -790,13 +792,15 @@ unzip_mdi('drum.mdi', 'drum from mdi')
 ## Some other reminders and thoughts
 
 1. Note that the tempo changes and pitch bends will not work for musicpy daw, but there are some ways to work out.  
-   For tempo changes, with `normalize_tempo` function, you can normalize a chord type or a piece type's tempo changes as the tempo changes will straightly appear on the durations and intervals of the notes, which will result in a new chord type or piece type that is essentially the same as before but without tempo changes.  
-   For pitch bends, it works for SoundFont files, but not for the audio samples. The reason that why it is not working for audio samples in the musicpy daw is that currently the pitch of audio samples (audio files) cannot be modified primarily, so pitch bends are ignored by musicpy daw when using audio samples, but I write codes to make this works with the loaded SounFont files, so if you are using SoundFont files as instruments on the channels, then it will work perfectly.
+
+2. For tempo changes, with `normalize_tempo` function, you can normalize a chord type or a piece type's tempo changes as the tempo changes will straightly appear on the durations and intervals of the notes, which will result in a new chord type or piece type that is essentially the same as before but without tempo changes.  
+
+3. For pitch bends, it works for SoundFont files, but not for the audio samples. The reason that why it is not working for audio samples in the musicpy daw is that currently the pitch of audio samples (audio files) cannot be modified primarily, so pitch bends are ignored by musicpy daw when using audio samples, but I write codes to make this works with the loaded SounFont files, so if you are using SoundFont files as instruments on the channels, then it will work perfectly.
    If you want to have pitch bends in the exported audio files when using audio samples, you can have audio samples that is pitch bend itself in the instruments and set a special pitch with pitch bends audio samples in the mappings of channels.
-   
-2. If you hear some crackles sounds when notes start or end when playing or in the exported audio files, 
-   you can add some little fade effects to each note in the chord types or piece types to remove the crackles sounds, 
-   usually 20 milliseconds is enough to remove the crackles sounds entirely, and it is very effective, since the fade in and fade out time are very short that you won't be able to notice that while the crackles sounds are removed entirely. You can do list comprehensions or for loops to add little fade effects to each note in the chord types or piece types. For example:
+
+4. If you hear some crackles sounds when notes start or end when playing or in the exported audio files, 
+   you can add some little fade effects to each note in the chord types or piece types to remove the crackles sounds, usually 20 milliseconds is enough to remove the crackles sounds entirely, and it is very effective, since the fade in and fade out time are very short that you won't be able to notice that while the crackles sounds are removed entirely. You can do list comprehensions or for loops to add little fade effects to each note in the chord types or piece types. For example:
+
    ```python
    # add little fade effects to all of the notes in chord types
    piano.notes = [set_effect(i, fade(20, 20)) for i in piano.notes]
