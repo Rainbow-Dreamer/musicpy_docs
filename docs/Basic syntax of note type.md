@@ -25,11 +25,11 @@ a = note('D', 6)
 ```
 
 a is the note D6.
-Other parameters of note are duration (note length in bars), volume (note strength, corresponding to MIDI 0~127, i.e. any integer between 0 and 127 (including 0 and 127))
+Other parameters of note are duration (note length in bars), volume (note strength, corresponding to MIDI 0~127, i.e. any integer between 0 and 127 (including 0 and 127)), channel (MIDI channel number)
 For example
 
 ```python
-a = note('C', 5, 0.5, 100)
+a = note(name='C', num=5, duration=0.5, volume=100)
 ```
 
 means that a is note C5, the note length is 0.5 bars, and the note strength is 100.

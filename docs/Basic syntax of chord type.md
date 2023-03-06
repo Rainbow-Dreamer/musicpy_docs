@@ -4,9 +4,9 @@
 
 ## Contents
 
-- [Setting the interval and length of a chord](#setting-the-interval-and-length-of-a-chord)
+- [Setting the interval and duration of a chord](#setting-the-interval-and-duration-of-a-chord)
 - [Get a chord based on its root note and chord name](#get-a-chord-based-on-its-root-note-and-chord-name)
-- [Constructing chords by entering note names, note lengths and note spacing](#constructing-chords-by-entering-note-names-note-lengths-and-note-spacing)
+- [Constructing chords by entering note names, note durations and note intervals](#constructing-chords-by-entering-note-names-note-durations-and-note-intervals)
 - [Chord representation](#chord-representation)
 - [Get the inversion of a chord](#get-the-inversion-of-a-chord)
 - [Splicing of two chords](#splicing-of-two-chords)
@@ -36,13 +36,12 @@
 - [Get the negative harmony of a chord according to the set scale](#get-the-negative-harmony-of-a-chord-according-to-the-set-scale)
 - [Extracting the notes within a chord by index value, including the higher and lower octaves of the note shift](#extracting-the-notes-within-a-chord-by-index-value-including-the-higher-and-lower-octaves-of-the-note-shift)
 - [Build a set of chord processing rules for any chord type](#build-a-set-of-chord-processing-rules-for-any-chord-type)
-- [View a list of note intervals and note lengths for a chord type](#view-a-list-of-note-intervals-and-note-lengths-for-a-chord-type)
+- [View a list of note intervals and note durations for a chord type](#view-a-list-of-note-intervals-and-note-durations-for-a-chord-type)
 - [View a list of note volumes for a chord type](#view-a-list-of-note-volumes-for-a-chord-type)
 - [chord function can parse the string of notes](#chord-function-can-parse-the-string-of-notes)
 - [The to_note function can now parse strings of note names without a specified pitch number](#the-to_note-function-can-now-parse-strings-of-note-names-without-a-specified-pitch-number)
 - [How to build an empty chord](#how-to-build-an-empty-chord)
-- [Advanced syntax for setting length and volume of notes](#advanced-syntax-for-setting-length-and-volume-of-notes)
-- [Advanced syntax for chord setting note length and note interval and note volume](#advanced-syntax-for-chord-setting-note-length-and-note-interval-and-note-volume)
+- [Advanced syntax for chord setting note duration and note interval and note volume](#advanced-syntax-for-chord-setting-note-duration-and-note-interval-and-note-volume)
 - [Another way to set the volume of a chord type](#another-way-to-set-the-volume-of-a-chord-type)
 - [Get only note types of a chord type](#get-only-note-types-of-a-chord-type)
 - [Get the chord type according to the guitar's fret count and guitar tuning standard](#get-the-chord-type-according-to-the-guitars-fret-count-and-guitar-tuning-standard)
@@ -56,7 +55,7 @@
 - [Count the number of occurrences of a note name within a chord type](#count-the-number-of-occurrences-of-a-note-name-within-a-chord-type)
 - [Get the most occurrences of a chord type](#get-the-most-occurrences-of-a-chord-type)
 - [Unify all sharp and flat signs of notes of a chord type](#unify-all-sharp-and-flat-signs-of-notes-of-a-chord-type)
-- [Re-quantize the chord type with note length and note interval according to the tempo change inside](#re-quantize-the-chord-type-with-note-length-and-note-interval-according-to-the-tempo-change-inside)
+- [Re-quantize the chord type with note duration and note interval according to the tempo change inside](#re-quantize-the-chord-type-with-note-duration-and-note-interval-according-to-the-tempo-change-inside)
 - [Calculating the range of bars between two indices in a chord type](#calculating-the-range-of-bars-between-two-indices-in-a-chord-type)
 - [Extracting real-time tempo changes or pitch bends in a chord type](#extracting-real-time-tempo-changes-or-pitch-bends-in-a-chord-type)
 - [Building a chord progression](#building-a-chord-progression)
@@ -85,21 +84,21 @@
 
 
 
-## Setting the interval and length of a chord
+## Setting the interval and duration of a chord
 
-For example, if you have a chord A and you want to set the note interval to 1 bar and the note length to 1.5 bars, you can use the built-in method set of the chord class. The first parameter of set is the note length duration, and the second parameter is the note interval interval.
+For example, if you have a chord A and you want to set the note interval to 1 bar and the note duration to 1.5 bars, you can use the built-in method set of the chord class. The first parameter of set is the note duration duration, and the second parameter is the note interval interval.
 
 ```python
 A.set(1.5, 1)
 ```
 
-The result is a new chord type with all the note lengths of chord A set to 1.5 and all the note intervals set to 1. Note that instead of modifying the internal properties of chord A, a new chord is returned with the modified internal properties of chord A. If you have different settings for note length or note spacing for each note, you can pass in a list, for example
+The result is a new chord type with all the note durations of chord A set to 1.5 and all the note intervals set to 1. Note that instead of modifying the internal properties of chord A, a new chord is returned with the modified internal properties of chord A. If you have different settings for note duration or note interval for each note, you can pass in a list, for example
 
 ```python
 A.set([0.5, 0.5, 1, 1], [1, 1, 2, 2])
 ```
 
-Returns a chord with note lengths of 0.5, 0.5, 1, 1 (in bars) and note intervals of 1, 1, 2, 2 (in bars).
+Returns a chord with note durations of 0.5, 0.5, 1, 1 (in bars) and note intervals of 1, 1, 2, 2 (in bars).
 
 Advanced syntax:
 
@@ -129,7 +128,7 @@ get_chord('A4', 'm7'), and if you specify a specific pitch for the root note, fo
 Dmaj7 = get_chord('D6', 'maj7')
 ```
 
-In addition, the get_chord function has a very large number of parameters that can be used to set the chord's omission, altered notes, added notes, as well as the exact length of each note of the chord, the interval of the notes, etc. You can even enter the intervals of the notes to build the chords (you can also set the value of cummulative to determine whether you want to enter the interval of each note to the root note or the interval between each two notes). In musicpy, the name of each interval is already defined and can be used directly, for example, the value of major_third is 4, which is the number of semitones in the major third. For example, to construct a C major seventh chord according to the intervals, you can write it like this
+In addition, the get_chord function has a very large number of parameters that can be used to set the chord's omission, altered notes, added notes, as well as the exact duration of each note of the chord, the interval of the notes, etc. You can even enter the intervals of the notes to build the chords (you can also set the value of cummulative to determine whether you want to enter the interval of each note to the root note or the interval between each two notes). In musicpy, the name of each interval is already defined and can be used directly, for example, the value of major_third is 4, which is the number of semitones in the major third. For example, to construct a C major seventh chord according to the intervals, you can write it like this
 
 ```python
 get_chord('C', interval=[database.major_third, database.perfect_fifth, database.major_seventh])
@@ -143,15 +142,15 @@ chord(notes=[C5, E5, G5, B5], interval=[0, 0, 0, 0], start_time=0)
 
 When a chord has an interval of all 0s, the chord is all notes together at the same time. If an interval is 0, it means that two notes start playing together at the same time.
 
-## Constructing chords by entering note names, note lengths and note spacing
+## Constructing chords by entering note names, note durations and note intervals
 
-For example, if we want to build a major seventh chord with a root note of C5, a note spacing of one bar between each note, and a note length of two bars, then we can write it like this
+For example, if we want to build a major seventh chord with a root note of C5, a note interval of one bar between each note, and a note duration of two bars, then we can write it like this
 
 ```python
 chord(['C5','E5', 'G5', 'B5'], interval=1, duration=2)
 ```
 
-If the note spacing and note length are not the same, then you can pass a list in, e.g.
+If the note interval and note duration are not the same, then you can pass a list in, e.g.
 
 ```python
 chord(['C5','E5', 'G5', 'B5'], interval=[0.5, 0.5, 0, 2], duration=[1, 2, 0.5, 1])
@@ -266,7 +265,7 @@ You can also get the chord A in reverse order.
 
 ```python
 '''
-Note that chord A here is not necessarily just a chord in music theory, but can be a melody, or even a melody with a chord underlay. This is because the definition of a chord class in musicpy is "a collection of notes". Therefore, an instance of a chord class in musicpy can store information about a whole piece. This information includes all the notes in the piece, the length of each note, the velocity, and the interval between each two notes.
+Note that chord A here is not necessarily just a chord in music theory, but can be a melody, or even a melody with a chord underlay. This is because the definition of a chord class in musicpy is "a collection of notes". Therefore, an instance of a chord class in musicpy can store information about a whole piece. This information includes all the notes in the piece, the duration of each note, the velocity, and the interval between each two notes.
 '''
 ```
 
@@ -708,7 +707,7 @@ Regarding the current definition of rest in musicpy, rest itself is a data struc
 ## Chord name parsing structure
 
 The trans function can be used to parse the full chord name and return the corresponding chord. It supports root position chord representation, inverted chord representation, polychord representation, etc.
-The first parameter of the trans function is the chord name, the second parameter is the pitch of the root note of the chord (the default value is 4), and the third parameter is the duration (the length of the note, default is 0.25), and the fourth parameter is interval (the interval of the note, default is None, the returned chord interval is 0), or you can write `note:chord_type` to indicate the specific note octave.
+The first parameter of the trans function is the chord name, the second parameter is the pitch of the root note of the chord (the default value is 4), and the third parameter is the duration (the duration of the note, default is 0.25), and the fourth parameter is interval (the interval of the note, default is None, the returned chord interval is 0), or you can write `note:chord_type` to indicate the specific note octave.
 For example:
 
 Dmaj7 chord and Dmaj7 chord with D5 as the root note
@@ -1011,7 +1010,7 @@ A @ [1, 3, 2, 3, 1.1, 3, 2, 3]
 
 The easiest way to do this is to use the syntax of python's own lambda function, e.g.
 
-Enter a chord name and then form a new chord type (a chord accompaniment) with this chord in the order of 1st note, 2nd note, 3rd note, 1st note 1 octave higher, 2nd note 1 octave higher, 3rd note, 1st note 1 octave higher, 2nd note 1 octave higher, and then set the length of each note of the chord accompaniment to 0.5 bars and the interval of each note to 0.5 bars, and repeat the chord accompaniment twice.
+Enter a chord name and then form a new chord type (a chord accompaniment) with this chord in the order of 1st note, 2nd note, 3rd note, 1st note 1 octave higher, 2nd note 1 octave higher, 3rd note, 1st note 1 octave higher, 2nd note 1 octave higher, and then set the duration of each note of the chord accompaniment to 0.5 bars and the interval of each note to 0.5 bars, and repeat the chord accompaniment twice.
 
 ```python
 rules = lambda x: C(x) @ [1, 2, 3, 1.1, 2.1, 3, 1.1, 2.1] % (1/8, 1/8) * 2
@@ -1029,13 +1028,13 @@ Play part A at 115 BPM (speed)
 play(A, 115)
 ```
 
-Get the 1st inversion of a chord type, and then set the note lengths of the chords to 1/4, 1/2, 1/2 (in bars), respectively.
+Get the 1st inversion of a chord type, and then set the note durations of the chords to 1/4, 1/2, 1/2 (in bars), respectively.
 
 ```python
 rules = lambda x: (x / 1) % ([1/4, 1/2, 1/2], [1/4, 1/4, 1/2])
 ```
 
-## View a list of note intervals and note lengths for a chord type
+## View a list of note intervals and note durations for a chord type
 
 ```python
 a = C('Dmaj7')
@@ -1043,7 +1042,7 @@ a = C('Dmaj7')
 >>> print(a.interval)
 [0, 0, 0, 0]
 
-# View a list of note lengths for a chord type
+# View a list of note durations for a chord type
 >>> print(a.get_duration())
 [0.25, 0.25, 0.25, 0.25]
 ```
@@ -1174,73 +1173,21 @@ An empty chord can be used as an initial chord for adding new chords in a loop, 
 chord([]) | C('Am') | C('F') | C('G')
 ```
 
-## Advanced syntax for setting length and volume of notes
+## Advanced syntax for chord setting note duration and note interval and note volume
 
-When using the to_note function or the N function, it is possible to write the note length and volume in a string with a new syntax
-For example, now we want a note type with note length of 1 and volume of 80 for C5, so we can write
-
-```python
-N('C5(1;80)')
-```
-
-If you only want to set the note length, then you can write
-
-```python
-N('C5(1)')
-```
-
-Note that the symbol separating the arguments inside the brackets must be `;`.
-Then the brackets can be any of parentheses(), middle brackets[], or curly brackets{}, for example
-
-```python
-N('C5(1;80)')
-```
-
-can also be written as
-
-```python
-N('C5[1;80]')
-```
-
-or
-
-```python
-N('C5{1;80}')
-```
-
-All arguments inside the brackets can have spaces between them, except for the left bracket after the note name, which must be immediately after the note name.
-Note length and volume can be integers, decimals or fractions. I also added a syntactic sugar here, if you want to input notes like 2nd, 4th, 8th, 16th, etc.
-then you can write `.n` for nth note, which is the equivalent of 1/n note length. If it's a note length like 3/4, then you can just write 3/4, because the to_note function supports fractional representation.
-For example, now we want a D5 quarter note with no volume setting (the default is 100), so we can write
-
-```python
-N('D5(.4)')
-```
-
-In addition, it is also supported that the string indicating the name of the note without specifying the pitch is followed by these setting parameters, and the specific number of pitches can be specified with pitch, which has a default value of 4, for example
-
-```python
-N('D(.4)', pitch=5)
-```
-
-will get the note type D5, with a note length of 1/4 bar (quarter note)
-
-## Advanced syntax for chord setting note length and note interval and note volume
-
-When using the chord function, when writing a string of note names or a list of string of note names, it is possible to write the note length, note interval and volume in the string with a new syntax.
-For example, now we want to write a melody
+When using the chord function, when writing a string of note names or a list of string of note names, it is possible to write the note duration, note interval and volume in the string with a new syntax. For example, now we want to write a melody
 
 ```python
 example = chord('G5, F5, E5, F5, E5, E5, D5, E5, D5, C5, B4, G4')
 ```
 
-The list of note lengths for this melody is
+The list of note durations for this melody is
 
 ```python
 example_duration = [3/4, 1/8, 1/8, 3/4, 1/8, 1/8, 1/4, 1/4, 1/4, 1/2, 1/2, 1/2]
 ```
 
-The list of note intervals for this melody is the same as the list of note lengths
+The list of note intervals for this melody is the same as the list of note durations
 
 ```python
 example_interval = example_duration.copy()
@@ -1260,9 +1207,11 @@ example = chord('G5[3/4;3/4], F5[.8;.8], E5[.8;.8], F5[3/4;.3/4], E5[.8;.8], D5[
 chord(notes=[G5, F5, E5, F5, E5, D5, E5, D5, C5, B4, ...], interval=[0.75, 0.125, 0.125, 0.75, 0.125, 0.125, 0.25, 0.25, 0.5, 0.5, ...], start_time=0)
 ```
 
-The format and syntactic sugar of the chord function to receive the sound name string of this new syntax is the same as that of the to_note function written before, which also uses `;` as the separator between arguments, and can also use any of the parentheses, brackets, or braces, and can also have spaces between arguments, and also has `.n` for the syntactic sugar of n notes, and the order of the arguments is [note length The order of the parameters is [note length; note interval; note volume], and the parameters are also variable, so you can set only the note length, or only the note length and note interval, or all three parameters. The biggest advantage of this new syntax is that if you need to change the note length of a note or the note interval between a note and the next note when writing a melody, you can change it directly after the note name, instead of going to the note length list and the note interval list to find the position of the note you want to change. chord function also supports this new syntax for the note name string The chord function also supports this new syntax for the list of note names.
+Please note that the separator of the parameters inside the brackets must be `;`, the brackets should be square brackets, there can be spaces between parameters, the order of the parameters is [note duration; note interval; note volume], you can set only the note duration, or only the note duration and note interval, or all three parameters. The biggest advantage of this new syntax is that if you need to change the note duration of a note or the note interval between a note and the next note when writing a melody, you can change it directly after the note name instead of going to the note duration list and the note interval list to find the position of the note you want to change. The `chord` function also supports the list of note name strings with this new syntax.
 
-In addition, the new syntax of the chord function has a unique syntactic sugar, that is, when the note length and note interval are the same, the note interval can be abbreviated as `. `, and you can follow this abbreviation with any addition, subtraction, multiplication or division operation, such as `. *2`, `. /2`, and the chord function will also do the calculation. When the note interval is abbreviated as `. `, it means that the note interval takes the same value as the note length. For example
+note duration, note interval and volume can be integers, decimals or fractions. I also added a syntactic sugar here, if you want to enter notes like 2, 4, 8, 16, then you can write `.n` for n notes, which is equivalent to 1/n of the note duration. If the note duration is, for example, 3/4, then you can just write 3/4.
+
+In addition, the new syntax of the chord function has a unique syntactic sugar, that is, when the note duration and note interval are the same, the note interval can be abbreviated as `. `. For example
 
 ```python
 chord('G5[3/4;.] , F5[.8;.] , E5[.8;.]')
@@ -1282,7 +1231,7 @@ chord(notes=[G5, F5, E5, F5, E5, D5, E5, D5, C5, B4, ...], interval=[0.75, 0.125
 # You can use the set_volume method to set the volume of a chord type
 a = C('Emaj7')
 a.set_volume(80)
-# You can also use the set function or the advanced syntax % to set the volume as the third argument after the first note length and interval
+# You can also use the set function or the advanced syntax % to set the volume as the third argument after the first note duration and interval
 a = a.set(1/8,1/8,80)
 a = a % (1/8,1/8,80)
 ```
@@ -1310,7 +1259,7 @@ guitar_chord(frets,
 # frets: A list of the number of frets from the lowest to the highest note of the 6 strings of your guitar, the number of frets is an integer, if it is an empty string write 0, if it is a non-playing string write None
 # return_chord: Whether or not to return the chord type, if False it will determine what chord is played by the number of frets you pressed and return the specific chord name, default is True.
 # tuning: the tuning of the guitar, the default value is the standard tuning of a 6-string guitar, you can also customize the tuning of your guitar
-# duration: a list of note lengths for the type of chord returned
+# duration: a list of note durations for the type of chord returned
 # interval: A list of note intervals for the chord type
 # detect_args: parameters to determine the specific type of chord, i.e. parameters of the detect function, set by keyword parameters
 
@@ -1425,9 +1374,9 @@ a = a.standard_notation()
 chord(notes=[C5, D#5, G5, A#5, D#6, A#6, F5], interval=[0, 0, 0, 0, 0, 0, 0], start_time=0)
 ```
 
-## Re-quantize the chord type with note length and note interval according to the tempo change inside
+## Re-quantize the chord type with note duration and note interval according to the tempo change inside
 
-For example, now we have a chord type that holds a piece with some tempo types (tempo change types), i.e. different parts of a piece will have different tempos. If we want to unify the tempo of the whole piece, but still want to keep the different tempos of the previous parts, then we need to re-quantize the different tempos of each part in proportion to the tempo we want to unify If we want to unify the tempo of the whole piece, but still want to keep the different tempo of the previous parts, then we need to recalculate the note length and note spacing of each part in proportion to the different tempo of each part relative to the desired unified tempo. In some classical music MIDI files, there are many complex, frequent, fast and subtle tempo changes, and unifying the tempo of the whole piece can facilitate the music theory processing afterwards, because unifying the tempo is equivalent to recalculating the note lengths and note intervals of each part to the actual equivalent of the relatively unified tempo. The note lengths and note intervals of each tempo are recalculated to their actual equivalents, which facilitates algorithmic processing during the analysis of the music theory (since there is no need to consider the actual playing time changes due to tempo changes in each part)
+For example, now we have a chord type that holds a piece with some tempo types (tempo change types), i.e. different parts of a piece will have different tempos. If we want to unify the tempo of the whole piece, but still want to keep the different tempos of the previous parts, then we need to re-quantize the different tempos of each part in proportion to the tempo we want to unify If we want to unify the tempo of the whole piece, but still want to keep the different tempo of the previous parts, then we need to recalculate the note duration and note interval of each part in proportion to the different tempo of each part relative to the desired unified tempo. In some classical music MIDI files, there are many complex, frequent, fast and subtle tempo changes, and unifying the tempo of the whole piece can facilitate the music theory processing afterwards, because unifying the tempo is equivalent to recalculating the note durations and note intervals of each part to the actual equivalent of the relatively unified tempo. The note durations and note intervals of each tempo are recalculated to their actual equivalents, which facilitates algorithmic processing during the analysis of the music theory (since there is no need to consider the actual playing time changes due to tempo changes in each part)
 
 ```python
 # Use the built-in function normalize_tempo to re-quantize notes according to the tempo change type stored in a chord type.
@@ -1498,7 +1447,7 @@ chord_progression(chords,
 '''
 chords: string of chord names or a list of chord types, where chord names can also be meta-tuples of C function arguments
 
-durations: the length of each chord, either as a value or as a list
+durations: the duration of each chord, either as a value or as a list
 
 intervals: the interval of each chord, either as a value or as a list
 
@@ -1620,7 +1569,7 @@ chord(notes=[C5, Eb5, F5, Ab5, E5, D5, Db5], interval=[0, 0, 0, 0, 0, 0, 0], sta
 ## Filter the notes that meet the specified conditions in the chord type
 
 You can use the `filter` function of the chord type to filter out the notes that do not meet the conditions in the chord type by specifying conditions, and filter the notes that meet the specified conditions in the chord type.
-For example, filter notes with a volume between 20 and 80, notes with a note length between 1/16 bar and 1 bar, notes with a pitch between A0 and C8, and so on. You can also specify a function to operate on the filtered notes.
+For example, filter notes with a volume between 20 and 80, notes with a note duration between 1/16 bar and 1 bar, notes with a pitch between A0 and C8, and so on. You can also specify a function to operate on the filtered notes.
 
 ```python
 filter(self, cond, action=None, mode=0, action_mode=0)
@@ -1686,7 +1635,7 @@ get_chord_by_interval(start,
 
 # start: The starting note of the chord type, which can be a string representing a note or a note type
 # interval1: Represents a list of interval relations, the elements are integers
-# duration: the note length of the generated chord type
+# duration: the note duration of the generated chord type
 # interval: The note interval of the generated chord type
 # cummulative: If True, the interval relationship is the interval relationship with the initial note. If False, the interval relationship is the interval relationship between every two adjacent sounds. The default value is True
 
@@ -1818,7 +1767,7 @@ play(chord1 | chord2 | chord3 | chord4, 165)
 
 ## Make arpeggios quickly
 
-New in August 2021 is the function `arpeggio` to quickly create chord arpeggios. You can specify the chord type, the octave range of the chord arpeggio, the note length and the note interval, and you can choose to play either the top line arpeggio or the bottom line arpeggio, or both. You can also use `arp` as shorthand.
+New in August 2021 is the function `arpeggio` to quickly create chord arpeggios. You can specify the chord type, the octave range of the chord arpeggio, the note duration and the note interval, and you can choose to play either the top line arpeggio or the bottom line arpeggio, or both. You can also use `arp` as shorthand.
 
 ```python
 arpeggio(chord_type,
@@ -1835,7 +1784,7 @@ arpeggio(chord_type,
 
 # stop: the number of octaves the chord arpeggio ends in
 
-# durations: note length of the chord arpeggio
+# durations: note duration of the chord arpeggio
 
 # intervals: note intervals of the chord arpeggio
 
@@ -1953,9 +1902,9 @@ distribute(current_chord,
 # method: The method used to parse the chord when the string is passed in, the default value is translate, you can choose chord, translate
 
 # mode: when 0, the notes are equally distributed in proportion to their respective lengths and intervals to the specified bar length.
-# with 1, the note interval takes the same value as the note length.
+# with 1, the note interval takes the same value as the note duration.
 
-# Distribute the 5 notes of the Cmaj9 chord evenly over 1/2 bar length, with the same note length and interval for the 5 notes before distribution
+# Distribute the 5 notes of the Cmaj9 chord evenly over 1/2 bar length, with the same note duration and interval for the 5 notes before distribution
 a = distribute(C('Cmaj9') % (1/8, 1/8), 1/2)
 
 >>> a
@@ -1964,7 +1913,7 @@ chord(notes=[C4, E4, G4, B4, D5], interval=[0.1, 0.1, 0.1, 0.1, 0.1], start_time
 >>> a.get_duration()
 [0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
 
-# Distribute the note lengths of 2 notes in 2 cents, 2 notes in 4 cents respectively (repeated 2 times) evenly over 1/2 bar length
+# Distribute the note durations of 2 notes in 2 cents, 2 notes in 4 cents respectively (repeated 2 times) evenly over 1/2 bar length
 b = distribute('C[.2;.] , D[.4;.] , {2}', 1/2)
 
 >>> b
@@ -1976,7 +1925,7 @@ chord(notes=[C4, D4, C4, D4], interval=[0.16666666666666666, 0.08333333333333333
 
 ## Use translate function to write chord types according to drum syntax
 
-As mentioned in the previous section on drumming syntax, you can use the `translate` function to apply drumming syntax to notes, enabling you to write chord types in drumming syntax. Here's a more detailed explanation. One of the differences between the `translate` function and the drum type construction is that the default note spacing for the `translate` function is 0, while the default note spacing for the drum type is 1/8, and the default note length for both the `translate` function and the drum type is 1/8. The default note duration, interval and volume could be set using the same parameters when initializing the drum type. Here I will give a few examples of using the `translate` function to write chord types.
+As mentioned in the previous section on drumming syntax, you can use the `translate` function to apply drumming syntax to notes, enabling you to write chord types in drumming syntax. Here's a more detailed explanation. One of the differences between the `translate` function and the drum type construction is that the default note interval for the `translate` function is 0, while the default note interval for the drum type is 1/8, and the default note duration for both the `translate` function and the drum type is 1/8. The default note duration, interval and volume could be set using the same parameters when initializing the drum type. Here I will give a few examples of using the `translate` function to write chord types.
 
 ```python
 >>> translate('A2[l:1; i:1; r:2], i:1, D3[l:1; i:1; r:2]')
