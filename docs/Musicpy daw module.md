@@ -390,7 +390,7 @@ Here I will talk about both ways, you can use either of these ways as you would 
 
 Each daw object has a built-in mixer, where you can add effects on master and each channel.
 
-The `master_effects` attribute of the daw object is a list that could take `Synth` data structure as effect plugins. The `channel_effects` attribute of the daw object is a list of list that could take `Synth` data structure as effect plugins for each channel. There is a list for each channel of the daw object to store effect plugins.
+The `master_effects` attribute of the daw object is a list that could take `Synth` data structure as effect plugins. The `channel_effects` attribute of the daw object is a list of lists that could take `Synth` data structure as effect plugins for each channel. There is a list for each channel of the daw object to store effect plugins.
 
 You can load effects from python scripts or a VST3 plugin to master or a channel by using `load_effect` method, when you load a VST3 plugin, it will be converted to a `Synth` data structure for more convenient processing.
 
