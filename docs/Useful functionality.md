@@ -207,31 +207,21 @@ This musicpy editor has several very useful functions, which will be introduced 
 4. In the right mouse menu, you can choose to import a MIDI file, (also available in the file bar) and after selecting a MIDI file a code for the read function with default parameters is automatically generated and assigned to a variable new_midi_file.
    The variable name can be changed by yourself. Stop play is used when playing musicpy code, if you only want to listen to a section, but not the whole song, then you can stop playing immediately.
 
-5. There are many combinations of computer keyboard shortcuts built into this editor, each corresponding to a variety of different functions.
+5. The Line Col in the lower right corner shows the number of lines and columns where the current input cursor is located, so that it is easy to check the corresponding position when the code is wrong.
 
-```
-ctrl + e to stop playback  
-   
-ctrl + d import a MIDI file  
-   
-ctrl + w open file (text file)  
-   
-ctrl + s Save the current code as a text file  
-   
-ctrl + q Close the editor  
-   
-ctrl + r Run the current code  
-   
-ctrl + g Turn on/off lights  
-   
-ctrl + mouse wheel can adjust the font size, scroll up to make the font bigger, scroll down to make the font smaller, and will automatically save the changed font size settings.
-   
-The Line Col in the lower right corner shows the number of lines and columns where the current input cursor is located, so that it is easy to check the corresponding position when the code is wrong.
-   
-alt + z plays the selected musicpy code  
-   
-alt + x to play the selected musicpy code visually
-```
+6. There are many combinations of computer keyboard shortcuts built into this editor, each corresponding to a variety of different functions.
+
+| Shortcuts          | Functionality                                                |
+| ------------------ | ------------------------------------------------------------ |
+| ctrl + e           | Stop playback                                                |
+| ctrl + d           | Import a MIDI file                                           |
+| ctrl + w           | Open file (text file)                                        |
+| ctrl + s           | Save the current code as a text file                         |
+| ctrl + q           | Close the editor                                             |
+| ctrl + r           | Run the current code                                         |
+| ctrl + mouse wheel | Adjust the font size, scroll up to make the font bigger, scroll down to make the font smaller, and will automatically save the changed font size settings |
+| ctrl + b           | Play the selected musicpy code                               |
+| ctrl + g           | Play the selected musicpy code visually                      |
 
 I will improve this musicpy editor afterwards, hope you will have fun with it!
 
