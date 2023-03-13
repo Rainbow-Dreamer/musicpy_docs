@@ -1,15 +1,22 @@
 # Musicpy composition code examples part 1
 
+
+
 ## 1. Touhou Project main theme
 ```python
 play((get_chord_by_interval('D#4', [5,7,10,7,5], 1/2, 1/8)*3 + get_chord_by_interval('F4', [1,0,-4], 1/2, 1/8)) * 3, 150)
 ```
+
+
+
 ## 2. Play the A minor seventh chord followed by a rest half beat 4 times, then the B minor seventh chord followed by a rest half beat 4 times, then the C major seventh chord breaking up the chord 1 time.
 (Both of these examples are written without using advanced syntax, using advanced syntax makes the musicpy language look more compact)
 ```python
 a = C('Am7') % (1/8, 0)
 play(a * 4 | (a + 2) * 4 | get_chord(a[0] + 3, 'maj7').set(interval=1/8), bpm=80)
 ```
+
+
 
 ## 3. A short piano piece
 The 3rd example uses a lot of advanced syntax, the code looks much more compact, and the use of the separator `|` for advanced syntax that connect two chord types can also have a similar feel to bar lines, which can enhance the readability of the code.
@@ -19,11 +26,15 @@ b = chord('F#5, G5, A5, B5, G5', 1/8, 1/8)
 play(a & b, 140, instrument=1)
 ```
 
+
+
 ## 4. chromatic downward alternating major seventh and minor seventh chords
 ```python
 a = C('Amaj7') @ 2 * 4 | C('G#m7') @ 2 * 4 | C('Gmaj7') @ 2 * 4 | C('F#m7') @ 2 * 4    
 play(a | a % (1/4, 1/4), 165, instrument=9)
 ```
+
+
 
 ## 5. a piece of music with a scary atmosphere, orchestral sound
 ```python
@@ -37,6 +48,8 @@ t2 = t & adding
 play(t2 + (t2 - 3), 100, instrument=47)
 ```
 
+
+
 ## 6. very nice 6451 chord configuration, harp tone
 ```python
 q = scale('C4', 'major')
@@ -45,6 +58,8 @@ r = [i.omit(5).inversion_highest(3) for i in r]
 play(r*2, bpm=80, instrument=47)
 ```
 
+
+
 ## 7. Another great sounding 6451 chord configuration, harp tone
 ``` python
 q = scale('C4', 'major')
@@ -52,6 +67,8 @@ r = q%(6451, 0.5/4, 0.3/4, 5)
 r = [i.omit(7).inversion_highest(2) for i in r]
 play(r*2, bpm=80, instrument=47)
 ```
+
+
 
 ## 8. scary and eerie soundtrack, instruments used: steel-string acoustic guitar and orchestra
 ```python
@@ -63,6 +80,8 @@ part2.set_volume(80)
 play(P([part1, part2], [26,49], 100, [0,0]))
 ```
 
+
+
 ## 9. very nice 6451 chord configuration, electric piano sound
 ```python
 q = scale('C4', 'major')
@@ -70,6 +89,8 @@ r = q%(64516458, 1/2, 0.3/4, 5)
 r = [i.omit(7).inversion_highest(2) for i in r]
 play(r*2, bpm=80, instrument=5)
 ```
+
+
 
 ## 10. 80s hard rock or pop metal style, instruments used: piano, synthesizer tone, electric bass
 ``` python
@@ -80,6 +101,8 @@ c = (b * 3) | b2
 a2 = chord('C2',1/8,1/8)*32 + chord('Ab1',1/8,1/8)*16 + chord('Bb1',1/8,1/8)*12 + chord('G1',1/8,1/8)*4
 play(piece([a, c, a2 * 2, c * 2], [1, 81, 34, 81], 130, [0, 1/4, 8, 33/4]))
 ```
+
+
 
 ## 11. horror ambient music, orchestral tones
 ```python

@@ -1,5 +1,7 @@
 # Basic syntax of track type
 
+
+
 ## Contents
 
 - [The introduction of track type](#the-introduction-of-track-type)
@@ -10,6 +12,8 @@
 ## The introduction of track type
 
 The piece type can contain several different tracks. The new track types currently added represent the information contained in each track, including chord type, instrument type, start time, tempo (bpm), pan and volume, etc.
+
+
 
 ### The composition of track type
 
@@ -85,6 +89,8 @@ b.play()
 A track type is a type that can store information about a track individually, and can be added to a piece type, and a piece type is composed of several different tracks, although the data structure is not implemented as a collection of track types, but as a summary of the same kind of information for each of the multiple tracks, but I have implemented a track type that can be added to a music function, and a way to extract any track from a track type and rebuild it into a track type, and the track types themselves can be played separately. The build function allows you to pass any number of track types to be built into a track type.
 
 The track types represent the information contained in each track, including chord type, instrument type, start time, tempo (bpm), pan and volume, etc.
+
+
 
 ## Some new syntax for track type
 

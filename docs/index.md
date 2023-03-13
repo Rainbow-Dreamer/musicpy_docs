@@ -42,20 +42,26 @@ play(result)
 If you think this is too simple, musicpy could also produce music like [this](https://drive.google.com/file/d/1j66Ux0KYMiOW6yHGBidIhwF9zcbDG5W0/view?usp=sharing) within 30 lines of code (could be even shorter if you don't care about readability). Anyway, this is just an example of a very short piece of electronic dance music, and not for complexity.
 
 
+
 ## Contents
--------------
 
 ### Introduction
 
 * [Introduction](https://musicpy.readthedocs.io/en/latest/Introduction/)
 
-## Quickstart and Cheat Sheet
+
+
+### Quickstart and Cheat Sheet
 
 - [Musicpy Quickstart and Cheat Sheet](https://musicpy.readthedocs.io/en/latest/Musicpy%20Quickstart%20and%20Cheat%20Sheet/)
+
+
 
 ### Data structures
 
 * [Data structures of musicpy](https://musicpy.readthedocs.io/en/latest/Data%20Structures%20of%20musicpy/)
+
+
 
 ### Basic syntax
 
@@ -72,9 +78,12 @@ If you think this is too simple, musicpy could also produce music like [this](ht
 * [Basic syntax of rhythm type](https://musicpy.readthedocs.io/en/latest/Basic%20syntax%20of%20rhythm%20type/)
 
 
+
 ### Useful functionality
 
 * [Useful functionality](https://musicpy.readthedocs.io/en/latest/Useful%20functionality/)
+
+
 
 ### Musicpy composition code examples
 
@@ -82,16 +91,22 @@ If you think this is too simple, musicpy could also produce music like [this](ht
 * [Musicpy composition code examples Part 2](https://musicpy.readthedocs.io/en/latest/Musicpy%20composition%20code%20examples%20part%202/)
 * [Musicpy composition code examples Part 3](https://musicpy.readthedocs.io/en/latest/Musicpy%20composition%20code%20examples%20part%203/)
 
+
+
 ### Musicpy daw module
 
 * [Musicpy daw module](https://musicpy.readthedocs.io/en/latest/Musicpy%20daw%20module/)
 * [Musicpy daw module composition code examples](https://musicpy.readthedocs.io/en/latest/Musicpy%20daw%20module%20composition%20code%20examples/)
+
+
 
 ### Algorithms
 
 * [Introduction of musicpy algorithms module](https://musicpy.readthedocs.io/en/latest/Introduction%20of%20musicpy%20algorithms%20module/)
 * [The algorithm to split the main melody and chords from a piece of music](https://musicpy.readthedocs.io/en/latest/The%20algorithm%20to%20split%20the%20main%20melody%20and%20chords%20from%20a%20piece%20of%20music/)
 * [The algorithm to determine the chord type of any group of notes according to the logic of music theory](https://musicpy.readthedocs.io/en/latest/The%20algorithm%20to%20determine%20the%20chord%20type%20of%20any%20group%20of%20notes%20according%20to%20the%20logic%20of%20music%20theory/)
+
+
 
 ### Frequently Asked Questions
 

@@ -13,6 +13,8 @@ You can use tempo types to insert into a chord type, and you can set the exact p
 
 It is also possible to directly follow the position of the insertion as the position of the tempo change. Inserting a real-time tempo change allows you to dynamically change the tempo of your piece.
 
+
+
 ### The composition of tempo type
 ```python
 tempo(bpm, start_time=None, channel=None, track=None)
@@ -22,6 +24,8 @@ tempo(bpm, start_time=None, channel=None, track=None)
 - channel: MIDI channel number
 - track: MIDI track number
 
+
+
 ### insert the tempo type into the chord type
 Just insert the tempo type as a note type into the chord type.
 ```python
@@ -30,12 +34,16 @@ play(a, 80)
 # The chord type a will be played at 80 BPM from the beginning to E5, and 150 BPM thereafter
 ```
 
+
+
 ### Set start_time to choose where to start the tempo change
 ```python
 a = chord(['C5', 'D5', 'E5', 'F5', 'G5', 'A5', 'B5', tempo(150, 0.5)]) % (1/8,1/8)
 play(a, 80)
 # Chord type a will play at 80 BPM from the beginning to bar 0.5, and 150 BPM thereafter (starting with bar 0)
 ```
+
+
 
 ### Syntax for tempo type construction written in a string
 ```python

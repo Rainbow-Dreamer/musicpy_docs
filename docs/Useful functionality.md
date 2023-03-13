@@ -89,6 +89,8 @@ A.play(150)
 
 which is to play chord A with 150 BPM.
 
+
+
 ## Read MIDI files and convert them to piece types for various music theory operations
 
 Using the read function you can read a MIDI file and convert the contents of the MIDI file to a piece type.
@@ -109,6 +111,8 @@ read(name,
 * clear_other_channel_msg: When it is set to True, it will clear the MIDI messages that do not belong to the channel number of current track of each track returned.
 * split_channels: When reading a MIDI file that puts all the notes of all the different instruments in one MIDI track, set this parameter to True to convert to the correct piece type.
 
+
+
 ### Example of read function usage:
 
 For example, now there is a MIDI file `Clair de Lune.mid`, we can read it using the read function, convert it to piece type.
@@ -118,6 +122,8 @@ current_piece = read('Clair de Lune.mid')
 ```
 
 Now we can perform various music theory operations on piece type current_piece. The piece type current_piece stores information about the whole piece, including all the tracks, instruments, notes and note intervals. You can use many of the syntaxes mentioned in the basic syntax section to play with the music theory of piece type current_piece, such as modulation, key changes upwards and downwards, slice, invert, etc.
+
+
 
 ## Write music theory types to MIDI files for easy viewing and editing in DAW
 
@@ -163,6 +169,8 @@ write(current_chord,
 * ticks_per_beat: ticks per beat of the MIDI file, set this higher to get higher resolution
 
 * midi_args: other arguments for MIDI file, please refer to [mido documentation](https://mido.readthedocs.io/en/latest/lib.html#midi-files) for details
+
+
 
 ## I wrote an IDE specifically for musicpy for everyone to use
 
@@ -225,6 +233,8 @@ This musicpy editor has several very useful functions, which will be introduced 
 
 I will improve this musicpy editor afterwards, hope you will have fun with it!
 
+
+
 ## Storing musicpy's data structures as a separate data file
 
 You can use `write_data` function to store any of musicpy's data structures as a single binary data file, with the suggested file extension `mpb` (musicpy binary), for example
@@ -245,6 +255,8 @@ chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
 ```
 
 There are times when you don't want to store musicpy code or its generated MIDI files, storing them as binary data files is a good option.
+
+
 
 ## Conversion between notes and frequencies
 
@@ -269,6 +281,8 @@ B4
 C5
 ```
 
+
+
 ## The play function can be abbreviated when selecting an instrument
 
 When using the play function to specify an instrument to play, you can use instrument=instrument, and now add another, shorter argument, such as play a, a chord type, and you can write
@@ -282,6 +296,8 @@ is equivalent to
 ```python
 play(a, instrument=instrument)
 ```
+
+
 
 ## When reading a MIDI file with all the notes of different instruments in one MIDI track, how to convert it to a piece type
 
@@ -298,6 +314,8 @@ I was recently reading some official MIDI files from Touhou Project and found th
 
 a = read('th06_01.mid', split_channels=True)
 ```
+
+
 
 ## Added support for lowercase note names
 
@@ -326,6 +344,8 @@ g = chord('C5, Eb5, G5, A#5, D#6, Bb6, F5')
 g = chord('c5, eb5, g5, a#5, d#6, bb6, f5')
 ```
 
+
+
 ## eval_time function has been added to return time value
 
 When the parameter mode of `eval_time` is set to `number`, the value of seconds is returned, and the value type is decimal.  
@@ -336,10 +356,14 @@ Also, in addition to chord type, the `eval_time` function also works with piece 
 92.56
 ```
 
+
+
 ## Redesign of the reverse function
 
 In June 2021, the `reverse` function has been redesigned. The redesigned algorithm of the `reverse` function gives results that are essentially the same as the reverse of the audio file (except for the sound of the beginning and end of the reverse). 
 If you want to use the algorithm of the previous reverse function, you can use the `reverse_chord` function. This change is used for chord type, piece type and track type.
+
+
 
 ## Added the ability to read other types of MIDI messages
 
@@ -358,6 +382,8 @@ When using the `play` function or the `write` function, when the chord type or t
 
 If you don't want to write any `other_messages`, then you can set the `nomsg` parameter to True (the default is False), which will ignore the `other_messages` of the incoming piece type and the `other_messages` of the specified `msg` parameter.
 
+
+
 ### event type
 
 In musicpy, event types represent MIDI messages.
@@ -370,6 +396,8 @@ The `type` parameter of the event type is based on the MIDI message type of the 
 event(type, track=0, start_time=0, is_meta=False, **kwargs)
 ```
 
+
+
 ## Improvement of the function to clear tempo changes and pitch bends for chord type and piece type
 
 The `clear_tempo` function and the `clear_pitch_bend` function for chord type and piece type now have a `cond` parameter, and you can specify a conditional function (the lambda function is recommended) as a filter for the velocity change and pitch bend information you want to clear, the conditional function describes the conditions that the messages you want to clear needed to satisfy, and will be cleared if the conditional function returns True.
@@ -380,6 +408,8 @@ a.clear_tempo(cond=lambda s: s.start_time == 1 and s.bpm == 120)
 a.clear_pitch_bend(cond=lambda s: s.start_time == 1 and s.value == 0)
 ```
 
+
+
 ## Stop all currently playing sounds
 
 You can use the `stopall` function to stop all currently playing sounds, specifically the sounds played by the `play` function.
@@ -388,6 +418,8 @@ You can use the `stopall` function to stop all currently playing sounds, specifi
 play(C('C') * 8)
 stopall() # Stop the currently playing sound
 ```
+
+
 
 ## Use of interval names
 
@@ -429,6 +461,8 @@ semitone = halfstep = 1
 wholetone = wholestep = tone = 2
 ```
 
+
+
 ## Modify the properties of the music theory type and return the new music theory type
 
 The `reset` function can be used to reset any number of properties of a common music theory type and return a new music theory type, accepting only keyword arguments.
@@ -442,6 +476,8 @@ chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
 >>> a.reset(interval=[1,1,1])
 chord(notes=[C4, E4, G4], interval=[1, 1, 1], start_time=0)
 ```
+
+
 
 ## Convert music data structures to JSON format
 
@@ -471,6 +507,8 @@ read_json(file)
 ```
 
 * file: the file name of the JSON file
+
+
 
 ## Reading and writing musicxml files
 

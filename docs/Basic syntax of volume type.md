@@ -14,6 +14,8 @@ If you want to adjust the overall volume level of a given track, i.e. the angle 
 
 The volume type is used to store the overall volume level of a track.
 
+
+
 ### The composition of volume type
 
 ```python

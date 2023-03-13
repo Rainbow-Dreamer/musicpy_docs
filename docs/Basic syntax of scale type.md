@@ -7,6 +7,7 @@
 - [Construct scales according to interval relationships or key names](#construct-scales-according-to-interval-relationships-or-key-names)
 - [A concrete example of modulation](#a-concrete-example-of-modulation)
 - [Selecting the chords according to the number of steps in the scale](#selecting-the-chords-according-to-the-number-of-steps-in-the-scale)
+- [Get melody from scale degrees by numbered musical notation](#get-melody-from-scale-degrees-by-numbered-musical-notation)
 - [modulation according to the circle of fifths](#modulation-according-to-the-circle-of-fifths)
 - [Selecting chords of a scale according to the harmony function](#selecting-chords-of-a-scale-according-to-the-harmony-function)
 - [Get the relative and parallel keys of a mode](#get-the-relative-and-parallel-keys-of-a-mode)
@@ -52,6 +53,8 @@ Get the C minor scale with C5 as the root note.
 
 The scaleTypes inside database.py are all the scales that musicpy comes with, and users can also customize the scales themselves.
 
+
+
 ## A concrete example of modulation
 
 For example, if you have a music clip p in A major, and you want to convert it to A minor, you can write:
@@ -61,6 +64,8 @@ p.modulation(scale('A', 'major'), scale('A', 'minor'))
 ```
 
 This will shift the music clip p from A major to A minor.
+
+
 
 ## Selecting the chords according to the number of steps in the scale
 
@@ -104,9 +109,52 @@ a = c_major_scale(2, num=4)
 chord(notes=[E4, G4, B4, D5], interval=[0, 0, 0, 0], start_time=0)
 ```
 
+
+
+## Get melody from scale degrees by numbered musical notation
+
+You can use `get` method of scale type to obtain a melody which is derived from the scale by scale degrees. This makes writing a melody easier as you are using numbers relative to a scale instead of absolute pitches, you only need to consider scale degrees when using this method.
+
+The syntax is similar to numbered musical notation:
+
+1. Use 1 to 7 as scale degree to get a note from current scale (1-based).
+2. Add `#` and `b` after the number to raise or lower the note by 1 semitone, like `1#`.
+3. Add `.` with an integer n after the number to raise or lower the note by n octaves, like `1.1`, `2.-1`.
+4. Use `o` with a number to set current octave number, like `o5`.
+5. Use `;` to group a set of notes that plays at the same time, like `1;3;5`.
+6. Settings block like chord type is also supported, so you can set the duration and interval of each note individually.
+7. Use `r` as rest and `-` as continue symbol.
+8. Only a string is accepted, you need to write all notes in a string, use `,` to separate notes.
+
+```python
+get(current_ind,
+    default_duration=1 / 8,
+    default_interval=1 / 8,
+    default_volume=100)
+
+# current_ind: a string which contains all the notes you want to get
+# default_duration: default duration of each note
+# default_interval: default interval of each note
+# default_volume: default volume of each note
+```
+
+Here is an example of how to use `get` method of scale type.
+
+```python
+>>> S('C major').get('1,1,5,5,6,6,5,-,4,4,3,3,2,2,1,-')
+chord(notes=[C4, C4, G4, G4, A4, A4, G4, F4, F4, E4, ...], interval=[1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/4, 1/8, 1/8, 1/8, ...], start_time=0)
+
+>>> S('A#5 major').get('1,7,5,3,2,3[.16;.], o4, 1[.8.;.],7,1,-, o3, 6;3.1;1.1, 6;3.1;1.1, 5;7.1;2.1, 5;7.1;2.1, 6;3.1;1.1, -')
+chord(notes=[A#5, A5, F5, D5, C5, D5, A#4, A4, A#4, G3, ...], interval=[1/8, 1/8, 1/8, 1/8, 1/8, 1/16, 3/16, 1/8, 1/4, 0, ...], start_time=0)
+```
+
+
+
 ## Modulation according to the circle of fifths
 
 The `fifth` function transposes the current mode by a circle of fifths, where the parameter `step` is the number of steps along the circle of fifths, if step is greater than 0 then it will be clockwise, if step is less than 0 then it will be counterclockwise. `fourth` function is the same, but with a circle of fourths instead.
+
+
 
 ## Selecting chords of a scale according to the harmony function
 
@@ -136,15 +184,21 @@ A.secondary_dom(degree)
 
 where degree is the number of steps.
 
+
+
 ## Get the relative and parallel keys of a mode
 
 The relative_key function gets a relative key, such as a relative minor key for a major key or a relative major key for a minor key.
 
 The parallel_key function gets the major or minor key with the same tonic.
 
+
+
 ## The up/down transposition of a scale (overall up/down or up/down of individual notes)
 
 The up and down functions for note types, chord types and their advanced syntax are also available for scales.
+
+
 
 ## Parsing of a scale (mode) name
 
@@ -171,6 +225,8 @@ S('C major')
 ```
 
 S is the initial capitalization of the scale
+
+
 
 ## Extract chord progressions by scale degrees
 
@@ -206,6 +262,8 @@ Advanced syntax:
 S('C major') % 6451
 S('C major') % (6451, 1/2, 0)
 ```
+
+
 
 ## Get a list of all the notes of a scale according to the standard notation
 
@@ -259,6 +317,8 @@ Cb
 Fx
 ```
 
+
+
 ## Get the negative harmony of a piece of music about a key
 
 The `negative_harmony` function converts a chord type to a negative harmony in the specified key, for example, if you want to convert the chord type a to a negative harmony in C major, the syntax is
@@ -286,6 +346,8 @@ a @ S('C major')
 a @ (S('C major'), True)
 ```
 
+
+
 ## Get the retrograde and inversion of a piece of music
 
 There are two very important concepts in the twelve-tone technique, retrograde and inversion, I won't describe the specific definition here, you can go online to check, here's how to write.
@@ -299,6 +361,8 @@ a.pitch_inversion()
 a.retrograde().pitch_inversion()
 a.pitch_inversion().retrograde()
 ```
+
+
 
 ## Detecting whether a note or chord exists within a scale
 
@@ -332,6 +396,8 @@ True
 False
 ```
 
+
+
 ## Scale type extracts chords according to scale degrees expressed using Roman numerals
 
 You can use the `get_chord` function of the scale type to extract chords according to scale degrees expressed using Roman numerals.
@@ -359,6 +425,8 @@ chord(notes=[C4, E4, G4, B4], interval=[0, 0, 0, 0], start_time=0)
 chord(notes=[D4, F4, A4, C5], interval=[0, 0, 0, 0], start_time=0)
 ```
 
+
+
 ## Generate chord progressions from scale types
 
 ```python
@@ -385,12 +453,12 @@ chord_progression(chords,
 Cmajor_scale = S('C major')
 
 >>> Cmajor_scale.chord_progression(['IM7', 'Vsus', 'vi7', 'IVM7'])
-chord(notes=[C4, E4, G4, B4, G4, C5, D5, A4, C5, E5, ...], interval=[0, 0, 0, 0.25, 0, 0, 0.25, 0, 0, 0, ...], start_time=0)
+chord(notes=[C4, E4, G4, B4, G4, C5, D5, A4, C5, E5, ...], interval=[0, 0, 0, 1/4, 0, 0, 1/4, 0, 0, 0, ...], start_time=0)
 
 >>> Cmajor_scale.chord_progression([('I', 'M7'), ('V', 'sus'), ('vi', '7'), 'IV'], intervals=[1/8, [1/8,1/8,1/4], 1/8, 1/8])
-chord(notes=[C4, E4, G4, B4, G4, C5, D5, A4, C5, E5, ...], interval=[0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.25, 0.125, 0.125, 0.125, ...], start_time=0)
+chord(notes=[C4, E4, G4, B4, G4, C5, D5, A4, C5, E5, ...], interval=[1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/4, 1/8, 1/8, 1/8, ...], start_time=0)
 
 >>> Cmajor_scale.chord_progression(['1M7', '5sus', '6m7', '4M7'])
-chord(notes=[C4, E4, G4, B4, G4, C5, D5, A4, C5, E5, ...], interval=[0, 0, 0, 0.25, 0, 0, 0.25, 0, 0, 0, ...], start_time=0)
+chord(notes=[C4, E4, G4, B4, G4, C5, D5, A4, C5, E5, ...], interval=[0, 0, 0, 1/4, 0, 0, 1/4, 0, 0, 0, ...], start_time=0)
 ```
 

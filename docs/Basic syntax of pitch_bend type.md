@@ -17,6 +17,8 @@ When constructing the pitch_bend type, three different units can be selected usi
 * cent (1 semitone = 100 cents, any integer, decimal or fraction between -200 and 200, not including -200 and 200 itself, cent is the default unit)
 * MIDI pitch bend value (any integer between -8192 and 8192, not including -8192 and 8192 itself)
 
+
+
 ### The composition of pitch_bend type
 
 ```python
@@ -29,6 +31,8 @@ pitch_bend(value, start_time=None, mode='cents', channel=None, track=None)
 - channel: MIDI channel number
 - track: MIDI track number
 
+
+
 ### pitch_bend type is inserted into the chord type
 
 Just insert pitch_bend type as a note type into the chord type
@@ -39,6 +43,8 @@ play(a, 80)
 # The chord type a will be played at normal pitch from the beginning to E5, and the notes after that will be played 30 cents higher (that's 0.3 semitones)
 ```
 
+
+
 ### Set time to choose where to start changing the pitch of the notes
 
 ```python
@@ -46,6 +52,8 @@ a = chord(['C5', 'D5', 'E5', 'F5', 'G5', 'A5', 'B5', pitch_bend(30, 0.5)]) % (1/
 play(a, 80)
 # The chord type a will be played at normal pitch from the beginning to bar 0.5, and subsequent notes will be played at a pitch of 30 cents (that is, 0.3 semitone) (with bar 0 as the beginning)
 ```
+
+
 
 ### Syntax for pitch_bend type construction written in a string
 

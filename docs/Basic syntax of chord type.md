@@ -6,7 +6,11 @@
 
 - [Setting the interval and duration of a chord](#setting-the-interval-and-duration-of-a-chord)
 - [Get a chord based on its root note and chord name](#get-a-chord-based-on-its-root-note-and-chord-name)
-- [Constructing chords by entering note names, note durations and note intervals](#constructing-chords-by-entering-note-names-note-durations-and-note-intervals)
+- [Constructing chords from note names, note durations and note intervals](#constructing-chords-from-note-names-note-durations-and-note-intervals)
+- [Get a chord based on chord name](#get-a-chord-based-on-chord-name)
+- [More advanced manipulation of a chord (alterations, omissions, polychords)](#more-advanced-manipulation-of-a-chord-alterations-omissions-polychords)
+- [How to build an empty chord](#how-to-build-an-empty-chord)
+- [Generate chord types according to the interval relationship](#generate-chord-types-according-to-the-interval-relationship)
 - [Chord representation](#chord-representation)
 - [Get the inversion of a chord](#get-the-inversion-of-a-chord)
 - [Splicing of two chords](#splicing-of-two-chords)
@@ -26,8 +30,6 @@
 - [Adding a lowest note to a chord (adding a bass note)](#adding-a-lowest-note-to-a-chord-adding-a-bass-note)
 - [Find what note is the first note in a chord](#find-what-note-is-the-first-note-in-a-chord)
 - [Adding a rest to the end of a chord](#adding-a-rest-to-the-end-of-a-chord)
-- [Chord name parsing structure](#chord-name-parsing-structure)
-- [More advanced manipulation of a chord (alterations, omissions, polychords)](#more-advanced-manipulation-of-a-chord-alterations-omissions-polychords)
 - [Invert a note of a chord to the highest note](#invert-a-note-of-a-chord-to-the-highest-note)
 - [Invert a note of a chord to the lowest note](#invert-a-note-of-a-chord-to-the-lowest-note)
 - [Transpose all the notes of a chord to within one octave](#transpose-all-the-notes-of-a-chord-to-within-one-octave)
@@ -36,12 +38,8 @@
 - [Get the negative harmony of a chord according to the set scale](#get-the-negative-harmony-of-a-chord-according-to-the-set-scale)
 - [Extracting the notes within a chord by index value, including the higher and lower octaves of the note shift](#extracting-the-notes-within-a-chord-by-index-value-including-the-higher-and-lower-octaves-of-the-note-shift)
 - [Build a set of chord processing rules for any chord type](#build-a-set-of-chord-processing-rules-for-any-chord-type)
-- [View a list of note intervals and note durations for a chord type](#view-a-list-of-note-intervals-and-note-durations-for-a-chord-type)
-- [View a list of note volumes for a chord type](#view-a-list-of-note-volumes-for-a-chord-type)
-- [chord function can parse the string of notes](#chord-function-can-parse-the-string-of-notes)
-- [The to_note function can now parse strings of note names without a specified pitch number](#the-to_note-function-can-now-parse-strings-of-note-names-without-a-specified-pitch-number)
-- [How to build an empty chord](#how-to-build-an-empty-chord)
-- [Advanced syntax for chord setting note duration and note interval and note volume](#advanced-syntax-for-chord-setting-note-duration-and-note-interval-and-note-volume)
+- [View note interval list and note duration list for a chord type](#view-note-interval-list-and-note-duration-list-for-a-chord-type)
+- [View note volume list for a chord type](#view-note-volume-list-for-a-chord-type)
 - [Another way to set the volume of a chord type](#another-way-to-set-the-volume-of-a-chord-type)
 - [Get only note types of a chord type](#get-only-note-types-of-a-chord-type)
 - [Get the chord type according to the guitar's fret count and guitar tuning standard](#get-the-chord-type-according-to-the-guitars-fret-count-and-guitar-tuning-standard)
@@ -62,11 +60,9 @@
 - [View information about the musical analysis of a chord type](#view-information-about-the-musical-analysis-of-a-chord-type)
 - [Getting a chord type for a sus](#getting-a-chord-type-for-a-sus)
 - [Delay the same chord type n times or play it n times at intervals](#delay-the-same-chord-type-n-times-or-play-it-n-times-at-intervals)
-- [Input chord name parsing with new add and sus syntax](#input-chord-name-parsing-with-new-add-and-sus-syntax)
 - [Unify accidentals of chord type](#unify-accidentals-of-chord-type)
 - [Filter the notes that meet the specified conditions in the chord type](#filter-the-notes-that-meet-the-specified-conditions-in-the-chord-type)
 - [Filter the notes within the specified pitch range of the chord type](#filter-the-notes-within-the-specified-pitch-range-of-the-chord-type)
-- [Generate chord types according to the interval relationship](#generate-chord-types-according-to-the-interval-relationship)
 - [Find a certain degree of a chord type](#find-a-certain-degree-of-a-chord-type)
 - [Confirm that a note is what degree of a chord](#confirm-that-a-note-is-what-degree-of-a-chord)
 - [Obtain the chord voicing according to the degree of the chord](#obtain-the-chord-voicing-according-to-the-degree-of-the-chord)
@@ -106,6 +102,8 @@ Advanced syntax:
 A % (1.5, 1)
 ```
 
+
+
 ## Get a chord based on its root note and chord name
 
 Introducing a very handy function: get_chord. This function allows you to get the type of chord you want, simply by giving the root note of the chord and the chord type. e.g.
@@ -131,7 +129,7 @@ Dmaj7 = get_chord('D6', 'maj7')
 In addition, the get_chord function has a very large number of parameters that can be used to set the chord's omission, altered notes, added notes, as well as the exact duration of each note of the chord, the interval of the notes, etc. You can even enter the intervals of the notes to build the chords (you can also set the value of cummulative to determine whether you want to enter the interval of each note to the root note or the interval between each two notes). In musicpy, the name of each interval is already defined and can be used directly, for example, the value of major_third is 4, which is the number of semitones in the major third. For example, to construct a C major seventh chord according to the intervals, you can write it like this
 
 ```python
-get_chord('C', interval=[database.major_third, database.perfect_fifth, database.major_seventh])
+get_chord('C5', interval=[database.major_third, database.perfect_fifth, database.major_seventh])
 ```
 
 The result is
@@ -142,19 +140,370 @@ chord(notes=[C5, E5, G5, B5], interval=[0, 0, 0, 0], start_time=0)
 
 When a chord has an interval of all 0s, the chord is all notes together at the same time. If an interval is 0, it means that two notes start playing together at the same time.
 
-## Constructing chords by entering note names, note durations and note intervals
+
+
+## Constructing chords from note names, note durations and note intervals
 
 For example, if we want to build a major seventh chord with a root note of C5, a note interval of one bar between each note, and a note duration of two bars, then we can write it like this
 
 ```python
-chord(['C5','E5', 'G5', 'B5'], interval=1, duration=2)
+chord(['C5', 'E5', 'G5', 'B5'], interval=1, duration=2)
 ```
 
 If the note interval and note duration are not the same, then you can pass a list in, e.g.
 
 ```python
-chord(['C5','E5', 'G5', 'B5'], interval=[0.5, 0.5, 0, 2], duration=[1, 2, 0.5, 1])
+chord(['C5', 'E5', 'G5', 'B5'], interval=[0.5, 0.5, 0, 2], duration=[1, 2, 0.5, 1])
 ```
+
+In addition to the list of strings, you can also write all the notes in one string, for example, now we want a C major seventh chord with C5 as the root note, so we can write
+
+```python
+chord('C5, E5, G5, B5')
+```
+
+or
+
+```python
+chord('C, E, G, B', rootpitch=5)
+```
+
+The value of rootpitch defaults to 4, so if you want a C major seventh chord with C4 as the root note, you can just write
+
+```python
+chord('C, E, G, B')
+```
+
+The chord function takes a string with no pitch number at all, and normalizes the chord output according to the standardize function, which arranges the pitches of the notes in the string in the order of their names, and then forms the chord in the original position, for example
+
+```python
+chord('C, E, G, B, D')
+```
+
+will give you
+
+```python
+chord(notes=[C4, E4, G4, B4, D5], interval=[0, 0, 0, 0, 0], start_time=0)
+```
+
+Of course, it's most straightforward to receive a list of note types, like
+
+```python
+chord([N('C'), N('E'), N('G'), N('B'), N('D')])
+```
+
+However, if the chord function receives a list of note types or strings with a definite number of pitches, then no chord normalization is performed, because the pitch numbers of all notes are determined at this point. If you want to receive a string without chord normalization in the chord function, you can specify the pitch of the notes manually, for example
+
+```python
+chord(['C4', 'E4', 'G4', 'B4', 'D4'])
+```
+
+or
+
+```python
+chord('C4, E4, G4, B4, D4')
+```
+
+When using the chord function, when writing a string of note names or a list of string of note names, it is possible to write the note duration, note interval and volume in the string with a new syntax. For example, now we want to write a melody
+
+```python
+example = chord('G5, F5, E5, F5, E5, E5, D5, E5, D5, C5, B4, G4')
+```
+
+The list of note durations for this melody is
+
+```python
+example_duration = [3/4, 1/8, 1/8, 3/4, 1/8, 1/8, 1/4, 1/4, 1/4, 1/2, 1/2, 1/2]
+```
+
+The list of note intervals for this melody is the same as the list of note durations
+
+```python
+example_interval = example_duration.copy()
+```
+
+If the traditional approach is
+
+```python
+example % (example_duration, example_interval)
+```
+
+With the new syntax it can be written as
+
+```python
+example = chord('G5[3/4;3/4], F5[.8;.8], E5[.8;.8], F5[3/4;.3/4], E5[.8;.8], D5[.8;.8], E5[.4;.4], D5[.4;.4], C5[.2;.2], B4[.2;.2], G4[.2;.2]')
+>>> example
+chord(notes=[G5, F5, E5, F5, E5, D5, E5, D5, C5, B4, ...], interval=[3/4, 1/8, 1/8, 4/3, 1/8, 1/8, 1/4, 1/4, 1/2, 1/2, ...], start_time=0)
+```
+
+Please note that the separator of the parameters inside the brackets must be `;`, the brackets should be square brackets, there can be spaces between parameters, the order of the parameters is [note duration; note interval; note volume], you can set only the note duration, or only the note duration and note interval, or all three parameters. The biggest advantage of this new syntax is that if you need to change the note duration of a note or the note interval between a note and the next note when writing a melody, you can change it directly after the note name instead of going to the note duration list and the note interval list to find the position of the note you want to change. The `chord` function also supports the list of note name strings with this new syntax.
+
+note duration, note interval and volume can be integers, decimals or fractions. I also added a syntactic sugar here, if you want to enter notes like 2, 4, 8, 16, then you can write `.n` for n notes, which is equivalent to 1/n of the note duration. If the note duration is, for example, 3/4, then you can just write 3/4.
+
+In addition, the new syntax of the chord function has a unique syntactic sugar, that is, when the note duration and note interval are the same, the note interval can be abbreviated as `. `. For example
+
+```python
+chord('G5[3/4;.] , F5[.8;.] , E5[.8;.]')
+```
+
+To insert rests, you can use syntax like `r[duration]` as notes in the string, the nth note syntactic sugar is also accepted, the unit of the duration of rests is bar, the continuation symbol `-` is also supported to extend the length and interval of the previous note, for example
+
+```python
+example = chord('G5[3/4;3/4], F5[.8;.8], E5[.8;.8], F5[3/4;1/4], r[.2], E5[.8;.8], D5[.8;.8], E5[.4;.4], D5[.4;.4], C5[.2;.2], B4[.2;.2], G4[.2;.2]')
+>>> example
+chord(notes=[G5, F5, E5, F5, E5, D5, E5, D5, C5, B4, ...], interval=[3/4, 1/8, 1/8, 3/4, 1/8, 1/8, 1/4, 1/4, 1/2, 1/2, ...], start_time=0)
+```
+
+If you want multiple notes to be played at the same time, you can use `;` to join multiple notes together, for example `C5;E5;G5`.
+
+Sometimes relative pitch can be more convenient when constructing chords without considering absolute pitch, so the syntax of relative semitones is also supported. The syntax is as follows:
+
+* Use `+n` to indicate that the previous note is raised by n semitones, but the reference note used to calculate the relative pitch does not change
+* Use `++n` to indicate that the previous note is raised by n semitones and the reference note used to calculate the relative pitch becomes the current note
+* Use `+no` to indicate that the previous note is raised by n octaves, and `+nom` to indicate that the previous note is raised by m semitones and then being raised by n octaves, which also supports the `++` syntax
+* Change the above syntax to `-` to lower pitch
+* Syntax using relative pitch must be preceded by at least one absolute pitch
+
+Here are some examples:
+
+```python
+example = chord('A#4, +7, +10, +1o2, +1o3, +1o5, +1o3, +1o2', default_interval=1/8, default_duration=1/8)
+>> example
+chord(notes=[A#4, F5, G#5, C6, C#6, D#6, C#6, C6], interval=[1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8], start_time=0)
+
+example2 = chord('C5, ++2, ++2, ++1, ++2', default_interval=1/8, default_duration=1/8)
+>> example2
+chord(notes=[C5, D5, E5, F5, G5], interval=[1/8, 1/8, 1/8, 1/8, 1/8], start_time=0)
+```
+
+
+
+## Get a chord based on chord name
+
+The trans function can be used to parse the full chord name and return the corresponding chord. It supports root position chord representation, inverted chord representation, polychord representation, etc.
+The first parameter of the trans function is the chord name, the second parameter is the pitch of the root note of the chord (the default value is 4), and the third parameter is the duration (the duration of the note, default is 0.25), and the fourth parameter is interval (the interval of the note, default is None, the returned chord interval is 0), or you can write `note:chord_type` to indicate the specific note octave.
+For example:
+
+Dmaj7 chord and Dmaj7 chord with D5 as the root note
+
+```python
+>>> trans('Dmaj7')
+chord(notes=[D4, F#4, A4, C#5], interval=[0, 0, 0, 0], start_time=0)
+
+>>> trans('D5:maj7')
+chord(notes=[D5, F#5, A5, C#6], interval=[0, 0, 0, 0], start_time=0)
+```
+
+the second inversion of the F major triad
+
+```python
+>>> trans('F/C')
+chord(notes=[C5, F5, A5], interval=[0, 0, 0], start_time=0)
+```
+
+The inversion parsing can also take numbers, for example:
+
+the first inversion of the C major triad E, G, C
+
+```python
+trans('C/1')
+```
+
+the C major triad by putting the 1st note to the highest note of the chords E, G, C
+
+```python
+trans('C/-1')
+```
+
+the inversion E, C, G for a C major triad that puts the second note to the lowest note (as opposed to the traditional inversion)
+
+```python
+trans('C/1!')
+```
+
+C major triad
+
+```python
+>>> trans('C')
+chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
+```
+
+polychord with the A minor triad over the G minor triad
+
+```python
+>>> trans('Am/Gm')
+chord(notes=[G4, A#4, D5, A5, C6, E6], interval=[0, 0, 0, 0, 0, 0], start_time=0)
+```
+
+G major triad plus a C chord on the lowest note
+
+```python
+>>> trans('G/C', 6, 1, 1)
+chord(notes=[C6, G6, B6, D7], interval=[1, 1, 1, 1], start_time=0)
+```
+
+The syntax of add and sus, by entering `addN` you can add a certain number of degrees from the lowest note, and by entering `susN` you can get the previous chord type sus2 or sus4 chords.
+
+```python
+>>> print(C('C,add9'))
+chord(notes=[C4, E4, G4, D5], interval=[0, 0, 0, 0], start_time=0)
+
+>>> print(C('Cm7,add11'))
+chord(notes=[C4, D#4, G4, A#4, F5], interval=[0, 0, 0, 0, 0], start_time=0)
+
+>>> print(C('Cmaj7,sus4'))
+chord(notes=[C4, F4, G4, B4], interval=[0, 0, 0, 0], start_time=0)
+
+>>> print(C('Bb9,sus'))
+chord(notes=[Bb4, D#5, F5, G#5, C6], interval=[0, 0, 0, 0, 0], start_time=0)
+```
+
+A shortened way of writing the trans function:
+
+```python
+C(chord name, other arguments)
+```
+
+C is the initial capitalization of chord
+
+
+
+## More advanced manipulation of a chord (alterations, omissions, polychords)
+
+For example, if chord A is a C7 chord, then to get a C7#9 chord, you can write it like this
+
+```python
+A('#9')
+```
+
+The result is
+
+```python
+chord(notes=[C5, E5, G5, A#5, D#6], interval=[0, 0, 0, 0, 0], start_time=0)
+```
+
+The C7b9 chord is
+
+```python
+A('b9')
+```
+
+For example, if B is a Cmaj9 chord, then if you want to omit the third, you can write it like this
+
+```python
+B('omit3')
+```
+
+or
+
+```python
+B('no3')
+```
+
+Multiple altered and omitted notes can be separated by English commas, for example
+
+```python
+A('#5, b9, omit3')
+```
+
+If chord A is a C7 chord, then what you get is a C7#5b9 chord omitting a third.
+
+To build a polychord, you only need to join two chords with '/', except in the case of two chords stacked on top of each other
+There is also a polychord formed by adding a lowest note underneath a chord, in both cases a '/' is sufficient.
+For example
+
+```python
+C('Amaj7') / 'D'
+```
+
+The result is
+
+```python
+chord(notes=[D4, A4, C#5, E5, G#5], interval=[0, 0, 0, 0, 0], start_time=0)
+```
+
+That is, the Amaj7 chord with D as the lowest note underneath.
+The case of a polychord of two chords, e.g.
+
+```python
+C('A') / C('G')
+```
+
+yields
+
+```python
+chord(notes=[G4, B4, D5, A4, C#5, E5], interval=[0, 0, 0, 0, 0, 0], start_time=0)
+```
+
+This is a polychord of G major triad superimposed under A major triad.
+
+In the chord name parsing structure, it is possible to enter and parse the advanced operations of the chord directly by simply separating them with commas, for example, the C major 7th chord omitting the 5th
+
+```python
+C('Cmaj7,no5')
+```
+
+The result is
+
+```python
+chord(notes=[C4, E4, B4], interval=[0, 0, 0], start_time=0)
+```
+
+
+
+## How to build an empty chord
+
+If you want to build an empty chord with no notes, you can write
+
+```python
+chord([])
+```
+
+will give you
+
+```python
+chord(notes=[], interval=[], start_time=0)
+```
+
+An empty chord can be used as an initial chord for adding new chords in a loop, or as a chord type when treated as a piece (you can add new melodies or chord notes to it), for example
+
+```python
+chord([]) | C('Am') | C('F') | C('G')
+```
+
+
+
+## Generate chord types according to the interval relationship
+
+You can use the `get_chord_by_interval` function to generate chord types from a list of interval relations. You can select the interval relationship with the root note or the interval relationship between every two adjacent notes.
+The note type can also use this function, and the note type itself will be used as the starting note when used.
+
+```python
+get_chord_by_interval(start,
+                     interval1,
+                     duration=0.25,
+                     interval=0,
+                     cummulative=True)
+
+# start: The starting note of the chord type, which can be a string representing a note or a note type
+# interval1: Represents a list of interval relations, the elements are integers
+# duration: the note duration of the generated chord type
+# interval: The note interval of the generated chord type
+# cummulative: If True, the interval relationship is the interval relationship with the initial note. If False, the interval relationship is the interval relationship between every two adjacent sounds. The default value is True
+
+>>> get_chord_by_interval('C5', [database.major_third, database.perfect_fifth, database.major_seventh])
+# Obtain the chord type composed of the initial note C5, and C5 in turn to form the major third, the complete fifth and the major seventh
+chord(notes=[C5, E5, G5, B5], interval=[0, 0, 0, 0], start_time=0) # Get the C major seventh chord
+
+>>> get_chord_by_interval('C5', [database.major_third, database.minor_third, database.major_third], cummulative=False)
+# Get the chord type composed of the initial note C5 and the adjacent intervals as the major third, minor third, and major third.
+chord(notes=[C5, E5, G5, B5], interval=[0, 0, 0, 0], start_time=0) # Get the C major seventh chord
+
+a = N('C5')
+>>> a.get_chord_by_interval([database.major_third, database.perfect_fifth, database.major_seventh]) #The note type calls this function
+chord(notes=[C5, E5, G5, B5], interval=[0, 0, 0, 0], start_time=0)
+```
+
 
 
 ## Chord representation
@@ -166,6 +515,7 @@ In musicpy, a chord type is represented as
 >>> get_chord('C5', 'maj7')
 chord(notes=[C4, E4, G4, B4], interval=[0, 0, 0, 0], start_time=0)
 ```
+
 
 
 ## Get the inversion of a chord
@@ -204,6 +554,7 @@ chord(notes=[E6, G6, A6, C7], interval=[0, 0, 0, 0], start_time=0)
 Which is the second inversion of the A minor seventh chord.
 
 
+
 ## Splicing of two chords
 
 If you want to splice two chords (say a and b), then you just need
@@ -213,6 +564,8 @@ a + b
 ```
 
 and that's it. What you get is the new chord after splicing.
+
+
 
 ## Adding notes to a chord
 
@@ -224,6 +577,8 @@ A + x
 
 and that's it. What you get is a new chord with the note x added.
 
+
+
 ## Removing a note from a chord
 
 If you want to remove a note x from a chord A, then you just need
@@ -234,6 +589,8 @@ A - x
 
 and that's it. What you get is a new chord with the note x removed.
 
+
+
 ## Repeating a chord a certain number of times
 
 If you want to repeat a chord A n times, then you just need
@@ -243,6 +600,7 @@ A * n
 ```
 
 and that's it. What you get is a new chord repeated chord A n times.
+
 
 
 ## Arranging a chord in reverse order
@@ -269,6 +627,8 @@ Note that chord A here is not necessarily just a chord in music theory, but can 
 '''
 ```
 
+
+
 ## Get the interval relationship of a chord
 
 The intervalof function returns the interval relationship between the constituent notes of a chord. The parameter cumulative is set to True to return the interval between all the constituent notes of the chord (except the root note) and the root note, and False to return the interval between the lowest and highest notes of the chord. The default value is True, e.g.
@@ -292,6 +652,8 @@ get_chord('C','maj').intervalof(translate=True, cummulative=False)
 ```
 
 will get ['major third', 'minor third'], which means that a C major third chord is composed of a major third and a minor third.
+
+
 
 ## Indexing a chord, slicing (by indexing worth to a certain note of a chord, or a fragment of a range)
 
@@ -354,6 +716,8 @@ To get the last 3rd to the last 1st note of the chord B, write
 ```python
 B[-3:]
 ```
+
+
 
 ## Raise or lower a chord
 
@@ -466,6 +830,8 @@ A + [1,2,0,-1]
 means to raise the first four notes of the chord A by one semitone, raise them by two semitones, leave them unchanged, and lower them by one semitone.
 The down case goes on like that.
 
+
+
 ## Sequencing a chord
 
 If you want to sequence the constituent notes of a chord A, then just
@@ -491,6 +857,8 @@ A / [2, 3, 1, 4]
 
 Equivalent to A.sort([2, 3, 1, 4])
 
+
+
 ## Transpose a chord (or a piece)
 
 If you want to transpose a melody (including the chord underlay), then you can use the modulation function. For example, if you want to transpose a piece of music A right now, then you can
@@ -507,6 +875,8 @@ p.modulation(scale('A', 'major'), scale('A', 'minor'))
 ```
 
 This will shift the music clip p from A major to A minor.
+
+
 
 ## Get the names of all notes of a chord
 
@@ -533,6 +903,8 @@ and you get
 ```python
 ['A', 'C', 'E', 'G']
 ```
+
+
 
 ## Merge and join two chords or two musical fragments (voices merge, voices splice)
 
@@ -589,6 +961,8 @@ A | B
 A + B
 ```
 
+
+
 ## Making changes to the notes within a chord
 
 I've already talked about how to access the notes within a chord by index value, e.g. A[0] will give you the first note of chord A.
@@ -609,6 +983,8 @@ chord(notes=[C5, F5, G5, B5], interval=[0, 0, 0, 0], start_time=0)
 You will see that the second note of chord A has changed from E5 to F5.
 Note that the changed note can be either a note type (note('A', 5) as obtained by the note initialization function) or a string representing the note.
 But it must have an octave, not just the note name, like 'F' can't be used here, it must have an octave, like 'F5'.
+
+
 
 ## Deleting some notes of a chord, or inserting a new note in a certain position
 
@@ -646,6 +1022,8 @@ A - 'B5'
 
 If the chord A has the note B5, a new chord with the note B5 removed is returned, if not, the unmodified chord A is returned.
 
+
+
 ## Adding a lowest note to a chord (adding a bass note)
 
 For example, if chord A is a G major chord (G major triad) with the notes G5, B5, D6, and we want to add a C note as the lowest note to the chord A.
@@ -668,6 +1046,8 @@ Advanced syntax:
 A % 'C5'
 ```
 
+
+
 ## Find what note is the first note in a chord
 
 For example, if the chord A is an Fmaj9 chord with the root note F5, in the original position, and you want to find what note 'E6' is in, then you can write
@@ -685,6 +1065,8 @@ A.index('G')
 ```
 
 The result is 4, which means that the note G is the fifth note of the Fmaj9 chord.
+
+
 
 ## Adding a rest to the end of a chord
 
@@ -704,158 +1086,7 @@ A | n
 
 Regarding the current definition of rest in musicpy, rest itself is a data structure that can be constructed with `rest(duration)` and can be added to chord types, but it is only reflected in the note interval and does not exist in the note list of the chord type itself; rests are only meaningful when constructing chord types.
 
-## Chord name parsing structure
 
-The trans function can be used to parse the full chord name and return the corresponding chord. It supports root position chord representation, inverted chord representation, polychord representation, etc.
-The first parameter of the trans function is the chord name, the second parameter is the pitch of the root note of the chord (the default value is 4), and the third parameter is the duration (the duration of the note, default is 0.25), and the fourth parameter is interval (the interval of the note, default is None, the returned chord interval is 0), or you can write `note:chord_type` to indicate the specific note octave.
-For example:
-
-Dmaj7 chord and Dmaj7 chord with D5 as the root note
-
-```python
->>> trans('Dmaj7')
-chord(notes=[D4, F#4, A4, C#5], interval=[0, 0, 0, 0], start_time=0)
-
->>> trans('D5:maj7')
-chord(notes=[D5, F#5, A5, C#6], interval=[0, 0, 0, 0], start_time=0)
-```
-
-the second inversion of the F major triad
-
-```python
->>> trans('F/C')
-chord(notes=[C5, F5, A5], interval=[0, 0, 0], start_time=0)
-```
-
-The inversion parsing can also take numbers, for example:
-
-the first inversion of the C major triad E, G, C
-
-```python
-trans('C/1')
-```
-
-the C major triad by putting the 1st note to the highest note of the chords E, G, C
-
-```python
-trans('C/-1')
-```
-
-the inversion E, C, G for a C major triad that puts the second note to the lowest note (as opposed to the traditional inversion)
-
-```python
-trans('C/1!')
-```
-
-C major triad
-
-```python
->>> trans('C')
-chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
-```
-
-polychord with the A minor triad over the G minor triad
-
-```python
->>> trans('Am/Gm')
-chord(notes=[G4, A#4, D5, A5, C6, E6], interval=[0, 0, 0, 0, 0, 0], start_time=0)
-```
-
-G major triad plus a C chord on the lowest note
-
-```python
->>> trans('G/C', 6, 1, 1)
-chord(notes=[C6, G6, B6, D7], interval=[1, 1, 1, 1], start_time=0)
-```
-
-A shortened way of writing the trans function:
-
-```python
-C(chord name, other arguments)
-```
-
-C is the initial capitalization of chord
-
-## More advanced manipulation of a chord (alterations, omissions, polychords)
-
-For example, if chord A is a C7 chord, then to get a C7#9 chord, you can write it like this
-
-```python
-A('#9')
-```
-
-The result is
-
-```python
-chord(notes=[C5, E5, G5, A#5, D#6], interval=[0, 0, 0, 0, 0], start_time=0)
-```
-
-The C7b9 chord is
-
-```python
-A('b9')
-```
-
-For example, if B is a Cmaj9 chord, then if you want to omit the third, you can write it like this
-
-```python
-B('omit3')
-```
-
-or
-
-```python
-B('no3')
-```
-
-Multiple altered and omitted notes can be separated by English commas, for example
-
-```python
-A('#5, b9, omit3')
-```
-
-If chord A is a C7 chord, then what you get is a C7#5b9 chord omitting a third.
-
-To build a polychord, you only need to join two chords with '/', except in the case of two chords stacked on top of each other
-There is also a polychord formed by adding a lowest note underneath a chord, in both cases a '/' is sufficient.
-For example
-
-```python
-C('Amaj7') / 'D'
-```
-
-The result is
-
-```python
-chord(notes=[D4, A4, C#5, E5, G#5], interval=[0, 0, 0, 0, 0], start_time=0)
-```
-
-That is, the Amaj7 chord with D as the lowest note underneath.
-The case of a polychord of two chords, e.g.
-
-```python
-C('A') / C('G')
-```
-
-yields
-
-```python
-chord(notes=[G4, B4, D5, A4, C#5, E5], interval=[0, 0, 0, 0, 0, 0], start_time=0)
-```
-
-This is a polychord of G major triad superimposed under A major triad.
-
-In the chord name parsing structure, it is possible to enter and parse the advanced operations of the chord directly by simply separating them with commas, for example, the C major 7th chord omitting the 5th
-
-```python
-C('Cmaj7,no5')
-```
-
-The result is
-
-```python
-chord(notes=[C4, E4, B4], interval=[0, 0, 0], start_time=0)
-```
 
 ## Invert a note of a chord to the highest note
 
@@ -880,6 +1111,8 @@ A ^ 2
 ```
 
 (A / -n means invert the nth note of chord A to the highest note)
+
+
 
 ## Invert a note of a chord to the lowest note
 
@@ -912,6 +1145,8 @@ A @ 2
 A @ 'E'
 ```
 
+
+
 ## Transpose all the notes of a chord to within one octave
 
 For example, if chord A has 5 notes, and the highest ones are distributed in octaves higher than the lower ones, then
@@ -921,6 +1156,8 @@ A.inoctave()
 ```
 
 will return a chord type that puts all the notes of chord A into the same octave, with the number of octaves being the number of octaves of the first note of chord A.
+
+
 
 ## Normalizing a chord
 
@@ -944,6 +1181,8 @@ The definition of standardization here is
 
 After standardization, the pitch of the lowest note of the chord is the same as before standardization. The chord returned is the new chord after the chord A has been normalized.
 
+
+
 ## Sorting a chord by pitch number
 
 If the notes in a chord are not sorted by pitch, for example, if the notes of chord A are E5, C5, G5, then you can write
@@ -953,6 +1192,8 @@ A.sortchord()
 ```
 
 The return is a new chord with the notes of chord A sorted from lowest to highest in pitch.
+
+
 
 ## Get the negative harmony of a chord according to the set scale
 
@@ -982,6 +1223,8 @@ scale notes: [C4, D4, D#4, F4, G4, G#4, A#4, C5]
 
 There is also a parameter `sort`, which, when True, will sort the notes by pitch from lowest to highest after converting the chord a to a negative harmonic version. The default value is True.
 
+
+
 ## Extracting the notes within a chord by index value, including the higher and lower octaves of the note shift
 
 For example, if chord A is a C major triad with C5, E5, G5, we want to get a string of Alberti basses, i.e. a left-hand arpeggio accompaniment of a triad played in alternating root, fifth, third and fifth, we want to get a string of notes C5, G5, E5, G5, C6, G5, E5, G5 ( Note that the fifth note is C6, an octave above the root note, which is a typical left-hand arpeggio accompaniment of Alberti's bass. This string of notes can be easily extracted from chord A using the get function of the chord type.
@@ -1005,6 +1248,8 @@ Advanced syntax:
 ```python
 A @ [1, 3, 2, 3, 1.1, 3, 2, 3]
 ```
+
+
 
 ## Build a set of chord processing rules for any chord type
 
@@ -1034,10 +1279,13 @@ Get the 1st inversion of a chord type, and then set the note durations of the ch
 rules = lambda x: (x / 1) % ([1/4, 1/2, 1/2], [1/4, 1/4, 1/2])
 ```
 
-## View a list of note intervals and note durations for a chord type
+
+
+## View note interval list and note duration list for a chord type
 
 ```python
 a = C('Dmaj7')
+
 ## View a list of note intervals for a chord type
 >>> print(a.interval)
 [0, 0, 0, 0]
@@ -1047,183 +1295,20 @@ a = C('Dmaj7')
 [0.25, 0.25, 0.25, 0.25]
 ```
 
-## View a list of note volumes for a chord type
+
+
+## View note volume list for a chord type
 
 ```python
 a = C('Dmaj7')
 a.set_volume([80,80,100,100])
+
 # View a list of note volumes for a chord type
 >>> print(a.get_volume())
 [80, 80, 100, 100]
 ```
 
-## chord function can parse the string of notes
 
-For example, now we want a C major seventh chord with C5 as the root note, so we can write
-
-```python
-chord('C5, E5, G5, B5')
-```
-
-or
-
-```python
-chord('C, E, G, B', rootpitch=5)
-```
-
-The value of rootpitch defaults to 4, so if you want a C major seventh chord with C4 as the root note, you can just write
-
-```python
-chord('C, E, G, B')
-```
-
-The chord function takes a string with no pitch number at all, and normalizes the chord output according to the standardize function.
-That is, it arranges the pitches of the notes in the string in the order of their names, and then forms the chord in the original position, for example
-
-```python
-chord('C, E, G, B, D')
-```
-
-will give you
-
-```python
-chord(notes=[C4, E4, G4, B4, D5], interval=[0, 0, 0, 0, 0], start_time=0)
-```
-
-The chord function can take either a string of sound names or a list of strings of sound names, for example
-
-```python
-chord(['C', 'E', 'G', 'B', 'D'])
-```
-
-will get
-
-```python
-chord(notes=[C4, E4, G4, B4, D5], interval=[0, 0, 0, 0, 0], start_time=0)
-```
-
-Of course, it's most straightforward to receive a list of note types, like
-
-```python
-chord([N('C'), N('E'), N('G'), N('B'), N('D')])
-```
-
-Note, however, that if the chord function receives a list of note types or strings with a definite number of pitches  
-then no chord normalization is performed, because the pitch numbers of all notes are determined at this point.  
-If you want to receive a string without chord normalization in the chord function, you can specify the pitch of the notes manually, for example
-
-```python
-chord(['C4', 'E4', 'G4', 'B4', 'D4'])
-```
-
-or
-
-```python
-chord('C4, E4, G4, B4, D4')
-```
-
-In addition, the chord function can take strings or lists of strings that are a mixture of notes without a specified pitch number and notes with a specified pitch number.
-
-## The to_note function can now parse strings of note names without a specified pitch number
-
-Previously, the string received by the to_note function (or by the N function) for a note name had to specify a pitch number, for example
-
-```python
-N('C5')
-```
-
-Now, with my modification, you can enter a string that does not specify a pitch number, and then you can specify the pitch number using the pitch parameter.
-The default value of pitch is 4, and you can choose to set it or not, for example
-
-```python
-N('B')
-```
-
-will get the note type B4, and
-
-```python
-N('B5')
-```
-
-and
-
-```python
-N('B', pitch=5)
-```
-
-will both get the note type B5.
-
-## How to build an empty chord
-
-If you want to build an empty chord with no notes, you can write
-
-```python
-chord([])
-```
-
-will give you
-
-```python
-chord(notes=[], interval=[], start_time=0)
-```
-
-An empty chord can be used as an initial chord for adding new chords in a loop, or as a chord type when treated as a piece (you can add new melodies or chord notes to it), for example
-
-```python
-chord([]) | C('Am') | C('F') | C('G')
-```
-
-## Advanced syntax for chord setting note duration and note interval and note volume
-
-When using the chord function, when writing a string of note names or a list of string of note names, it is possible to write the note duration, note interval and volume in the string with a new syntax. For example, now we want to write a melody
-
-```python
-example = chord('G5, F5, E5, F5, E5, E5, D5, E5, D5, C5, B4, G4')
-```
-
-The list of note durations for this melody is
-
-```python
-example_duration = [3/4, 1/8, 1/8, 3/4, 1/8, 1/8, 1/4, 1/4, 1/4, 1/2, 1/2, 1/2]
-```
-
-The list of note intervals for this melody is the same as the list of note durations
-
-```python
-example_interval = example_duration.copy()
-```
-
-If the traditional approach is
-
-```python
-example % (example_duration, example_interval)
-```
-
-With the new syntax it can be written as
-
-```python
-example = chord('G5[3/4;3/4], F5[.8;.8], E5[.8;.8], F5[3/4;.3/4], E5[.8;.8], D5[.8;.8], E5[.4;.4], D5[.4;.4], C5[.2;.2], B4[.2;.2], G4[.2;.2]')
->>> example
-chord(notes=[G5, F5, E5, F5, E5, D5, E5, D5, C5, B4, ...], interval=[0.75, 0.125, 0.125, 0.75, 0.125, 0.125, 0.25, 0.25, 0.5, 0.5, ...], start_time=0)
-```
-
-Please note that the separator of the parameters inside the brackets must be `;`, the brackets should be square brackets, there can be spaces between parameters, the order of the parameters is [note duration; note interval; note volume], you can set only the note duration, or only the note duration and note interval, or all three parameters. The biggest advantage of this new syntax is that if you need to change the note duration of a note or the note interval between a note and the next note when writing a melody, you can change it directly after the note name instead of going to the note duration list and the note interval list to find the position of the note you want to change. The `chord` function also supports the list of note name strings with this new syntax.
-
-note duration, note interval and volume can be integers, decimals or fractions. I also added a syntactic sugar here, if you want to enter notes like 2, 4, 8, 16, then you can write `.n` for n notes, which is equivalent to 1/n of the note duration. If the note duration is, for example, 3/4, then you can just write 3/4.
-
-In addition, the new syntax of the chord function has a unique syntactic sugar, that is, when the note duration and note interval are the same, the note interval can be abbreviated as `. `. For example
-
-```python
-chord('G5[3/4;.] , F5[.8;.] , E5[.8;.]')
-```
-
-To insert rests, you can use syntax like `r[duration]` as notes in the string, the nth note syntactic sugar is also accepted, the unit of the duration of rests is bar, for example
-
-```python
-example = chord('G5[3/4;3/4], F5[.8;.8], E5[.8;.8], F5[3/4;1/4], r[.2], E5[.8;.8], D5[.8;.8], E5[.4;.4], D5[.4;.4], C5[.2;.2], B4[.2;.2], G4[.2;.2]')
->>> example
-chord(notes=[G5, F5, E5, F5, E5, D5, E5, D5, C5, B4, ...], interval=[0.75, 0.125, 0.125, 0.75, 0.125, 0.125, 0.25, 0.25, 0.5, 0.5, ...], start_time=0)
-```
 
 ## Another way to set the volume of a chord type
 
@@ -1236,6 +1321,8 @@ a = a.set(1/8,1/8,80)
 a = a % (1/8,1/8,80)
 ```
 
+
+
 ## Get only note types of a chord type
 
 If you want to keep only the note types of a chord type and remove all other types (such as tempo types, pitch_bend types, etc.), then you can use the built-in function `only_notes`.
@@ -1244,6 +1331,8 @@ If you want to keep only the note types of a chord type and remove all other typ
 a, bpm, start_time = read('example.mid').merge()
 a = a.only_notes()
 ```
+
+
 
 ## Get the chord type according to the guitar's fret count and guitar tuning standard
 
@@ -1270,6 +1359,8 @@ chord(notes=[C3, E3, G3, C4, E4], interval=[0, 0, 0, 0, 0], start_time=0)
 'Cmajor'
 ```
 
+
+
 ## Calculate the actual playing time of a chord type according to the specified BPM
 
 You can use the built-in function `eval_time` to calculate the actual playing time of a chord type by specifying a BPM
@@ -1291,6 +1382,8 @@ eval_time(bpm, ind1=None, ind2=None, mode='seconds', start_time=0)
 # start_time: the start time of the chord
 ```
 
+
+
 ## Slicing chord types by range of bars
 
 If we want to extract a slice of a chord type from bar 6 to bar 8, we can use the built-in function ``cut``
@@ -1304,6 +1397,8 @@ a.cut(6, 8)
 # Extracts the part of the chord type a from the 6th bar to the 8th bar (from the beginning of the 6th bar to the beginning of the 8th bar)
 ```
 
+
+
 ## Calculate the total number of bars of a chord type
 
 Use the built-in function ``bars`` to get the total number of bars of a chord type
@@ -1313,6 +1408,8 @@ a = C('Cmaj7') | C('Dm7') | C('E9sus') | C('Amaj9', 3)
 >>> a.bars()
 1.0
 ```
+
+
 
 ## Slice chord types according to the range of realistic playing times
 
@@ -1324,17 +1421,23 @@ a.cut_time(100, 10, 20)
 # If the right side of the range is not set, then it will extract to the end by default, and the left side will default to extract from the very beginning
 ```
 
+
+
 ## Extract the first n bars of a chord type
 
 ```python
 a.firstnbars(n)
 ```
 
+
+
 ## Extract the part of a chord type for a particular bar
 
 ```python
 a.get_bar(n)
 ```
+
+
 
 ## Extract the contents of each bar of a chord type
 
@@ -1343,21 +1446,33 @@ a.split_bars()
 # You can get a list of chord types consisting of parts of each bar of the chord type a
 ```
 
+
+
 ## Count the number of occurrences of a note name within a chord type
 
 ```python
+
+
+
 ## If you want to get the number of occurrences of the note named F# in chord type a, you can write
 a.count('F#')
 # You can also specify the number of octaves and count only the notes with the same name and octave
 a.count('F#5')
 ```
 
+
+
 ## Get the most occurrences of a chord type
 
 ```python
 a.most_appear()
+
+
+
 ## The choices parameter sets which notes to select from, if not it defaults to all 12 notes
 ```
+
+
 
 ## Unify all sharp and flat signs of notes of a chord type
 
@@ -1374,6 +1489,8 @@ a = a.standard_notation()
 chord(notes=[C5, D#5, G5, A#5, D#6, A#6, F5], interval=[0, 0, 0, 0, 0, 0, 0], start_time=0)
 ```
 
+
+
 ## Re-quantize the chord type with note duration and note interval according to the tempo change inside
 
 For example, now we have a chord type that holds a piece with some tempo types (tempo change types), i.e. different parts of a piece will have different tempos. If we want to unify the tempo of the whole piece, but still want to keep the different tempos of the previous parts, then we need to re-quantize the different tempos of each part in proportion to the tempo we want to unify If we want to unify the tempo of the whole piece, but still want to keep the different tempo of the previous parts, then we need to recalculate the note duration and note interval of each part in proportion to the different tempo of each part relative to the desired unified tempo. In some classical music MIDI files, there are many complex, frequent, fast and subtle tempo changes, and unifying the tempo of the whole piece can facilitate the music theory processing afterwards, because unifying the tempo is equivalent to recalculating the note durations and note intervals of each part to the actual equivalent of the relatively unified tempo. The note durations and note intervals of each tempo are recalculated to their actual equivalents, which facilitates algorithmic processing during the analysis of the music theory (since there is no need to consider the actual playing time changes due to tempo changes in each part)
@@ -1389,6 +1506,8 @@ b, bpm, start_time = read('example.mid').merge() # b is the chord type after rea
 b.normalize_tempo(bpm=100, start_time=0) # The bpm parameter is the tempo you want to normalize, and the start_time parameter is the time in bars when the chord type starts playing, the default is 0
 # Here we unify the speed of the chord type b to 100 BPM
 ```
+
+
 
 ## Calculating the range of bars between two indices in a chord type
 
@@ -1411,6 +1530,8 @@ bar_length = a.count_bars(2, 10, False)
 # The values here are for example only
 ```
 
+
+
 ## Extracting real-time tempo changes or pitch bends in a chord type
 
 Using the built-in function `split` of a chord type, you can extract any music theory type contained in a chord type, i.e. from the list of notes of the chord type.  
@@ -1430,6 +1551,8 @@ chord(notes=[pitch_bend(value=2048, start_time=None, channel=None, track=None, c
 chord(notes=[A5, B5, C5, D5, E5, F5], interval=[0, 0, 0, 0, 0, 0], start_time=0)
 # The chord type returned is the set of music types you want to extract and can be used as a list.
 ```
+
+
 
 ## Building a chord progression
 
@@ -1466,10 +1589,12 @@ chord_progression_example = chord_progression(['F', 'G', 'Am', 'Em'])
 chord_progression_example = chord_progression([('F',4), ('G',4), ('C',5), ('Am',4)])
 chord_progression_example = chord_progression([C('F')^2, C('G')^2, C('Am')^2, C('Em')^2])
 >>> print(chord_progression_example)
-chord(notes=[F4, C5, A5, G4, D5, B5, A4, E5, C6, E4, ...], interval=[0, 0, 0.25, 0, 0, 0.25, 0, 0, 0.25, 0, ...], start_time=0)
+chord(notes=[F4, C5, A5, G4, D5, B5, A4, E5, C6, E4, ...], interval=[0, 0, 1/4, 0, 0, 1/4, 0, 0, 1/4, 0, ...], start_time=0)
 # If there is a higher requirement for the arrangement of the notes of each chord (such as inversion or playing in a certain pattern of note arrangement, etc.), it is recommended to pass in the chord type, and the chord type can also be written directly to the melody.
 # If it is a string it is limited to the range that the C function can parse.
 ```
+
+
 
 ## View information about the musical analysis of a chord type
 
@@ -1477,32 +1602,16 @@ Using the built-in function `info` for chord types, you can view the chord type,
 
 ```python
 >>> print(chord('A,C,F').info())
-chord name: Fmajor/A
-root position: Fmajor
-root: F
-chord type: major
-chord speciality: inverted chord
-inversion: 1 inversion
+chord_type(root='F', chord_type='major', chord_speciality='inverted chord', inversion=1, omit=None, altered=None, non_chord_bass_note=None, voicing=None, type='chord', note_name=None, interval_name=None, polychords=None, order=[2])
 
 >>> print(chord('A').info())
-note name: A4
+chord_type(root=None, chord_type=None, chord_speciality='root position', inversion=None, omit=None, altered=None, non_chord_bass_note=None, voicing=None, type='note', note_name='A4', interval_name=None, polychords=None, order=None)
 
 >>> print(chord('C,E').info())
-interval name: major third
-root: C4
-
-# you can set `get_dict=True` to get a chord info dictionary,
-# the `other` key contains another dictionary which contains the info of
-# omitted notes, altered notes, non-chord bass note and voicings
->>> print(C('Cmaj9,omit3').info(get_dict=True))
-{'type': 'chord', 'chord name': 'Cmaj9 omit 3', 'root position': 'Cmaj9', 'root': 'C', 'chord type': 'maj9', 'chord speciality': 'root position', 'inversion': None, 'other': {'omit': [3], 'altered': None, 'non-chord bass note': None, 'voicing': None}}
-
->>> print(chord('A').info(get_dict=True))
-{'type': 'note', 'note name': 'A4', 'whole name': 'note A4'}
-
->>> print(chord('C,E').info(get_dict=True))
-{'type': 'interval', 'interval name': 'major third', 'root': 'C4', 'whole name': 'C with major third'}
+chord_type(root='C', chord_type=None, chord_speciality='root position', inversion=None, omit=None, altered=None, non_chord_bass_note=None, voicing=None, type='interval', note_name=None, interval_name='major third', polychords=None, order=None)
 ```
+
+
 
 ## Getting a chord type for a sus
 
@@ -1518,6 +1627,8 @@ chord(notes=[C4, D4, G4], interval=[0, 0, 0], start_time=0)
 # Not only for triads, but also for more complex chords such as 7th, 9th, 11th, etc.
 ```
 
+
+
 ## Delay the same chord type n times or play it n times at intervals
 
 Recently, the syntax to delay a chord type n times and play it n times at intervals has been added, using the `&` and `|` symbols, respectively.
@@ -1526,33 +1637,13 @@ These two symbols are used to play a chord type simultaneously or sequentially w
 ```python
 a1 = chord('C, E, G')
 >>> print(a1 & (3, 1/8)) # Play the chord type a1 3 times, each time with 1/8 more bars of delay than the beginning
-chord(notes=[C4, E4, G4, C4, E4, G4, C4, E4, G4], interval=[0, 0, 0.125, 0.0, 0.0, 0.125, 0.0, 0.0, 0.25], start_time=0)
+chord(notes=[C4, E4, G4, C4, E4, G4, C4, E4, G4], interval=[0, 0, 1/8, 0, 0, 1/8, 0, 0, 1/4], start_time=0)
 
 >>> print(a1 | (3, 1/8)) plays the chord type a1 3 times, each time after the other, but with an interval of 1/8 of a bar first
-chord(notes=[C4, E4, G4, C4, E4, G4, C4, E4, G4], interval=[0, 0, 0.375, 0, 0, 0.375, 0, 0, 0], start_time=0)
+chord(notes=[C4, E4, G4, C4, E4, G4, C4, E4, G4], interval=[0, 0, 3/8, 0, 0, 3/8, 0, 0, 0], start_time=0)
 ```
 
-## Input chord name parsing with new add and sus syntax
 
-You can use the `C` function to parse a string of chord names to get the corresponding chord type, by adding parentheses to the chord type and entering the chord name.  
-
-You can also use the C function to input the chord name and then input advanced music theory operations such as alteration, omission, etc. with `,` as interval.  
-
-The syntax of add and sus has been added, so that by entering `addN` you can add a certain number of degrees from the lowest note, and by entering `susN` you can get the previous chord type sus2 or sus4 chords.
-
-```python
->>> print(C('C,add9'))
-chord(notes=[C4, E4, G4, D5], interval=[0, 0, 0, 0], start_time=0)
-
->>> print(C('Cm7,add11'))
-chord(notes=[C4, D#4, G4, A#4, F5], interval=[0, 0, 0, 0, 0], start_time=0)
-
->>> print(C(Cmaj7,sus4))
-chord(notes=[C4, F4, G4, B4], interval=[0, 0, 0, 0], start_time=0)
-
->>> print(C('Bb9,sus'))
-chord(notes=[Bb4, D#5, F5, G#5, C6], interval=[0, 0, 0, 0, 0], start_time=0)
-```
 
 ## Unify accidentals of chord type
 
@@ -1565,6 +1656,8 @@ chord(notes=[C5, D#5, F5, G#5, E5, D5, C#5], interval=[0, 0, 0, 0, 0, 0, 0], sta
 >>> a.same_accidentals('b')
 chord(notes=[C5, Eb5, F5, Ab5, E5, D5, Db5], interval=[0, 0, 0, 0, 0, 0, 0], start_time=0)
 ```
+
+
 
 ## Filter the notes that meet the specified conditions in the chord type
 
@@ -1596,6 +1689,8 @@ chord(notes=[C4, E4, G4, B4], interval=[0, 0, 0, 0], start_time=0) # Return the 
 [10, 50, 50, 90] # The volume of the notes between 20 and 80 are now 50
 ```
 
+
+
 ## Filter the notes within the specified pitch range of the chord type
 
 You can use the `pitch_filter` function of the chord type to filter the notes within the specified pitch range of the chord type. This function is very important in many occasions, such as when you read a MIDI file,
@@ -1621,36 +1716,7 @@ b = chord('Ab0, C5, E5, G5, A5, C7, G10')
 # Return the chord type composed of the filtered notes within the specified pitch range, and the start time of the first filtered note
 ```
 
-## Generate chord types according to the interval relationship
 
-You can use the `get_chord_by_interval` function to generate chord types from a list of interval relations. You can select the interval relationship with the root note or the interval relationship between every two adjacent notes.
-The note type can also use this function, and the note type itself will be used as the starting note when used.
-
-```python
-get_chord_by_interval(start,
-                     interval1,
-                     duration=0.25,
-                     interval=0,
-                     cummulative=True)
-
-# start: The starting note of the chord type, which can be a string representing a note or a note type
-# interval1: Represents a list of interval relations, the elements are integers
-# duration: the note duration of the generated chord type
-# interval: The note interval of the generated chord type
-# cummulative: If True, the interval relationship is the interval relationship with the initial note. If False, the interval relationship is the interval relationship between every two adjacent sounds. The default value is True
-
->>> get_chord_by_interval('C5', [database.major_third, database.perfect_fifth, database.major_seventh])
-# Obtain the chord type composed of the initial note C5, and C5 in turn to form the major third, the complete fifth and the major seventh
-chord(notes=[C5, E5, G5, B5], interval=[0, 0, 0, 0], start_time=0) # Get the C major seventh chord
-
->>> get_chord_by_interval('C5', [database.major_third, database.minor_third, database.major_third], cummulative=False)
-# Get the chord type composed of the initial note C5 and the adjacent intervals as the major third, minor third, and major third.
-chord(notes=[C5, E5, G5, B5], interval=[0, 0, 0, 0], start_time=0) # Get the C major seventh chord
-
-a = N('C5')
->>> a.get_chord_by_interval([database.major_third, database.perfect_fifth, database.major_seventh]) #The note type calls this function
-chord(notes=[C5, E5, G5, B5], interval=[0, 0, 0, 0], start_time=0)
-```
 
 ## Find a certain degree of a chord type
 
@@ -1677,6 +1743,8 @@ D5 # Returns the 9th degree of the C minor eleventh chord
 # Note that the degree here cannot be a string, because the note type plus the string will be interpreted as forming a chord type
 F#4 # Return to the first note of the C minor eleventh chord with a 5th falling pitch (here, strictly speaking, it should be Gb4, for the same reason as before)
 ```
+
+
 
 ## Confirm that a note is what degree of a chord
 
@@ -1706,6 +1774,8 @@ chord(notes=[C4, D#4, G4, A#4, D5, F5], interval=[0, 0, 0, 0, 0, 0], start_time=
 'major ninth'
 ```
 
+
+
 ## Obtain the chord voicing according to the degree of the chord
 
 There are many ways to arrange and combine the notes of a chord. Each unique combination is a kind of voicing. By placing the notes of the chord in different orders and octaves, a chord can have various voicings, each kind of voicing has a unique sense of hearing, whether it is columnar chords, split chords or arpeggios, you can hear different tastes. For example, a Cm11 chord can be played in the order of 1, 3, 5, 7, 9, and 11th degree in the original position.
@@ -1725,6 +1795,8 @@ chord(notes=[C4, G4, D5, D#5, F5, A#5], interval=[0, 0, 0, 0, 0, 0], start_time=
 
 play(C('Cm11').get_voicing([1,5,9,3,11,7])% (1, 1/8), 150) # Play with fast arpeggios
 ```
+
+
 
 ## Adjust the notes of the current chord type to a place closer to the notes of another chord type
 
@@ -1765,6 +1837,8 @@ chord4 = C('Am7, omit5', 4).near_voicing(chord1, keep_root=True)% (1,[1/4,1/4,1/
 play(chord1 | chord2 | chord3 | chord4, 165)
 ```
 
+
+
 ## Make arpeggios quickly
 
 New in August 2021 is the function `arpeggio` to quickly create chord arpeggios. You can specify the chord type, the octave range of the chord arpeggio, the note duration and the note interval, and you can choose to play either the top line arpeggio or the bottom line arpeggio, or both. You can also use `arp` as shorthand.
@@ -1795,13 +1869,15 @@ arpeggio(chord_type,
 Cmaj7_arpeggio = arpeggio('Cmaj7')
 
 >>> Cmaj7_arpeggio
-chord(notes=[C3, E3, G3, B3, C4, E4, G4, B4, C5, E5, ...], interval=[0.03125, 0.03125, 0.03125, 0.03125, 0.03125, 0.03125, 0.03125, 0.03125, 0.03125, 0.03125, ...], start_time=0)
+chord(notes=[C3, E3, G3, B3, C4, E4, G4, B4, C5, E5, ...], interval=[1/32, 1/32, 1/32, 1/32, 1/32, 1/32, 1/32, 1/32, 1/32, 1/32, ...], start_time=0)
 
 Cmaj7_arpeggio = arp('Cmaj7', 3, 6)
 
 >>> Cmaj7_arpeggio
-chord(notes=[C3, E3, G3, B3, C4, E4, G4, B4, C5, E5, ...], interval=[0.03125, 0.03125, 0.03125, 0.03125, 0.03125, 0.03125, 0.03125, 0.03125, 0.03125, 0.03125, ...], start_time=0)
+chord(notes=[C3, E3, G3, B3, C4, E4, G4, B4, C5, E5, ...], interval=[1/32, 1/32, 1/32, 1/32, 1/32, 1/32, 1/32, 1/32, 1/32, 1/32, ...], start_time=0)
 ```
+
+
 
 ## Reset the overall octave of chord type
 
@@ -1819,6 +1895,8 @@ b = a.reset_octave(3)
 chord(notes=[C3, E3, G3, B3], interval=[0, 0, 0, 0], start_time=0)
 ```
 
+
+
 ## Construct chord types with other MIDI messages
 
 Generally, you can pass in the `other_messages` attribute to add other MIDI messages when building a chord type, but if you want to add other MIDI messages after the chord type is built, you can either set the `other_messages` attribute of the chord type directly, or you can use the chord type's `with_other _messages` function to get a new chord type with additional MIDI messages. Note that `other_messages` is a list of other MIDI messages.
@@ -1832,6 +1910,8 @@ b = a.with_other_messages([event('control_change', control=1, value=50)])
 
 [event(type=control_change, track=0, start_time=0, control=1, value=50)]
 ```
+
+
 
 ## Write chord types by polyphony
 
@@ -1851,8 +1931,10 @@ a = multi_voice(chord('C2') % (1, 1) * 2,
                 C('G') % (1/8, 1/8) * 4)
 
 >>> a
-chord(notes=[C2, G4, B4, D5, G4, B4, D5, G4, B4, C2, ...], interval=[0, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.0, ...], start_time=0)
+chord(notes=[C2, G4, B4, D5, G4, B4, D5, G4, B4, C2, ...], interval=[0, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 0, ...], start_time=0)
 ```
+
+
 
 ## Concatenate chord types in a list
 
@@ -1876,8 +1958,10 @@ chord_list = [C('C'), C('D'), C('E')]
 combined_chord = concat(chord_list, '|')
 
 >>> combined_chord
-chord(notes=[C4, E4, G4, D4, F#4, A4, E4, G#4, B4], interval=[0, 0, 0.25, 0, 0, 0.25, 0, 0, 0], start_time=0)
+chord(notes=[C4, E4, G4, D4, F#4, A4, E4, G#4, B4], interval=[0, 0, 1/4, 0, 0, 1/4, 0, 0, 0], start_time=0)
 ```
+
+
 
 ## Distribute multiple notes evenly in proportion to their length to the specified bar length
 
@@ -1908,35 +1992,39 @@ distribute(current_chord,
 a = distribute(C('Cmaj9') % (1/8, 1/8), 1/2)
 
 >>> a
-chord(notes=[C4, E4, G4, B4, D5], interval=[0.1, 0.1, 0.1, 0.1, 0.1], start_time=0)
+chord(notes=[C4, E4, G4, B4, D5], interval=[1/10, 1/10, 1/10, 1/10, 1/10], start_time=0)
 
 >>> a.get_duration()
 [0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
 
 # Distribute the note durations of 2 notes in 2 cents, 2 notes in 4 cents respectively (repeated 2 times) evenly over 1/2 bar length
-b = distribute('C[.2;.] , D[.4;.] , {2}', 1/2)
+b = distribute('C[.2;.] , D[.4;.] , r:2', 1/2)
 
 >>> b
-chord(notes=[C4, D4, C4, D4], interval=[0.16666666666666666, 0.08333333333333333, 0.16666666666666666, 0.08333333333333333], start_time=0)
+chord(notes=[C4, D4, C4, D4], interval=[1/6, 1/12, 1/6, 1/12], start_time=0)
 
 >>> b.get_duration()
 [0.16666666666666666666666, 0.08333333333333333, 0.16666666666666666666666, 0.0833333333333333333]
 ````
 
+
+
 ## Use translate function to write chord types according to drum syntax
 
-As mentioned in the previous section on drumming syntax, you can use the `translate` function to apply drumming syntax to notes, enabling you to write chord types in drumming syntax. Here's a more detailed explanation. One of the differences between the `translate` function and the drum type construction is that the default note interval for the `translate` function is 0, while the default note interval for the drum type is 1/8, and the default note duration for both the `translate` function and the drum type is 1/8. The default note duration, interval and volume could be set using the same parameters when initializing the drum type. Here I will give a few examples of using the `translate` function to write chord types.
+As mentioned in the chapter of drum type, you can use the `translate` function to apply drumming syntax to notes, enabling you to write chord types in drumming syntax. Here's a more detailed explanation. One of the differences between the `translate` function and the drum type construction is that the default note interval for the `translate` function is 0, while the default note interval for the drum type is 1/8, and the default note duration for both the `translate` function and the drum type is 1/8. The default note duration, interval and volume could be set using the same parameters when initializing the drum type. The relative pitch syntax is also supported. Here I will give a few examples of using the `translate` function to write chord types.
 
 ```python
 >>> translate('A2[l:1; i:1; r:2], i:1, D3[l:1; i:1; r:2]')
 chord(notes=[A2, A2, D3, D3], interval=[1, 2, 1, 1], start_time=0)
 
 >>> translate('C5[l:.8; i:.; r:3], D5[l:.16; i:.; r:2], E5[l:.8; i:.], r:2')
-chord(notes=[C5, C5, C5, D5, D5, E5, C5, C5, C5, D5, ...], interval=[0.125, 0.125, 0.125, 0.0625, 0.0625, 0.125, 0.125, 0.125, 0.125, 0.0625, ...], start_time=0)
+chord(notes=[C5, C5, C5, D5, D5, E5, C5, C5, C5, D5, ...], interval=[1/8, 1/8, 1/8, 1/16, 1/16, 1/8, 1/8, 1/8, 1/8, 1/16, ...], start_time=0)
 
 >>> translate('C5, E5, G5')
 chord(notes=[C5, E5, G5], interval=[0, 0, 0], start_time=0)
 ```
+
+
 
 ## Reset the overall pitch of chord types
 
@@ -1955,6 +2043,8 @@ chord(notes=[E4, G#4, B4, D#5], interval=[0, 0, 0, 0], start_time=0)
 chord(notes=[E3, G#3, B3, D#4], interval=[0, 0, 0, 0], start_time=0)
 ```
 
+
+
 ## Chord type extracts notes from the index list to form a new chord type
 
 When you have picked some notes from the chord type by index and want to take them out, but still want to keep the distance relationship between the original notes, then you can use the `pick` function of the chord type, which returns a new chord type composed of the extracted notes.
@@ -1964,6 +2054,8 @@ pick(indlist)
 
 # indlist: a list of the indices of the notes
 ```
+
+
 
 ## Replace notes and chords in a chord type
 
@@ -1986,12 +2078,12 @@ replace_chord(ind1, ind2=None, value=None, mode=0)
 a = chord('C5, D5, E5, F5, G5, A5, B5', interval=1/8)
 
 >>> a
-chord(notes=[C5, D5, E5, F5, G5, A5, B5], interval=[0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125], start_time=0)
+chord(notes=[C5, D5, E5, F5, G5, A5, B5], interval=[1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8], start_time=0)
 
 a.replace_chord(ind1=1, value=C('A', duration=2))
 
 >>> a
-chord(notes=[C5, A4, C#5, E5, G5, A5, B5], interval=[0.125, 0, 0, 0, 0.125, 0.125, 0.125], start_time=0)
+chord(notes=[C5, A4, C#5, E5, G5, A5, B5], interval=[1/8, 0, 0, 0, 1/8, 1/8, 1/8], start_time=0)
 
 >>> a.get_duration()
 [0.25, 2, 2, 2, 0.25, 0.25, 0.25]
@@ -1999,12 +2091,12 @@ chord(notes=[C5, A4, C#5, E5, G5, A5, B5], interval=[0.125, 0, 0, 0, 0.125, 0.12
 b = chord('C5, D5, E5, F5, G5, A5, B5', interval=1/8)
 
 >>> b
-chord(notes=[C5, D5, E5, F5, G5, A5, B5], interval=[0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125], start_time=0)
+chord(notes=[C5, D5, E5, F5, G5, A5, B5], interval=[1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8], start_time=0)
 
 b.replace_chord(ind1=1, value=C('A'), mode=1)
 
 >>> b
-chord(notes=[C5, A4, C#5, E5, G5, A5, B5], interval=[0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125], start_time=0)
+chord(notes=[C5, A4, C#5, E5, G5, A5, B5], interval=[1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8], start_time=0)
 
 >>> b.get_duration()
 [0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25]

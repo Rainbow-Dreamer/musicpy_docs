@@ -4,7 +4,8 @@ Musicpy is a language that allows you to express the notes, rhythms, etc. of a p
 
 **Special reminder: In musicpy, except some music theory functions, the indexing of the music theory types starts from 0 (0-based), such as chord type, scale type, piece type, etc.**
 
-In musicpy, the most basic data structures are note, chord and scale. These classes are the basis of music code. musicpy has a lot of music theory functions, so let's start with the most basic ones.  
+In musicpy, the most basic data structures are note, chord and scale. These classes are the basis of music code. musicpy has a lot of music theory functions, so let's start with the most basic ones.
+
 First of all, we need to declare that all note lengths and note intervals in musicpy are in 4/4 time signature, which can be integers, floats or fractions. The tempo is in BPM, which is the number of beats you can play in 1 minute. In 4/4 time signature, 1 bar is 4 beats, 1 beat is 1/4 bar, that is, the number of bars played per minute is BPM/4, the time length of 1 bar in seconds is 240/BPM. All bars in musicpy are treated as 4/4 time signature.
 
 In this chapter, we will introduce some of the most important and most commonly used data structures of musicpy.
@@ -50,6 +51,8 @@ A5
 represents the note name and the octave number, which together determine the pitch.
 
 When you use `note` to construct note types, the octave number could be omitted, the default value is 4.
+
+
 
 ### The composition of note type
 
@@ -121,6 +124,8 @@ You can play this melody, for example, at 80 BPM
 play(melody, bpm=80)
 ```
 
+
+
 ### The composition of chord type
 
 ```python
@@ -129,20 +134,27 @@ chord(notes,
       interval=None,
       rootpitch=4,
       other_messages=[],
-      start_time=None)
+      start_time=None,
+      default_duration=1 / 4,
+      default_interval=0,
+      default_volume=100)
 ```
 
 - notes: a list of all the notes of the chord (or piece)
 
 - duration: The length of each note of the chord, the default value is None, or the length of the note itself if it is None, or the length of the note if it is an integer, a float or a list
 
-- interval: The interval between each two consecutive notes, in bars, as a list of note intervals (if initialized as an integer or a float, set all intervals to this integer or float) The default value is None, if the interval is not specified, all of the intervals of notes are 0 by default.  
-  **Please note, the definition of the interval of notes here is the interval from the beginning of current note to the beginning of the next note.**
-
+- interval: The interval between each two consecutive notes, in bars, as a list of note intervals (if initialized as an integer or a float, set all intervals to this integer or float) The default value is None, if the interval is not specified, all of the intervals of notes are 0 by default. **Please note, the definition of the interval of notes here is the interval from the beginning of current note to the beginning of the next note.**
+  
 - rootpitch: If the element of the note list is not a note type, but a string representing a note, it will be converted to a note type using the to_note function. If the note string does not have an octave, but only the name of the note, the rootpitch will be used as the octave of the note, with a default value of 4
 
-- start_time: The start time of the chord type in bars, you can understand it as the rest from the beginning to the beginning of the first note, the default value is 0  
-  **Please note that when a chord type is placed as a track in the track list of a piece type, the `start_time` property is ignored and the start time of each track's chord type is based on the `start_times` list of the piece type, except when the chord type is merged (e.g. the piece type itself is merged into a chord type) or when the chord type is played separately from the track list, the `start_time` will still work. It is recommended that the `start_time` be set to 0 for all chord types placed as tracks in the piece type, to avoid possible conflicts between the start time of the chord type and the piece type.**
+- start_time: The start time of the chord type in bars, you can understand it as the rest from the beginning to the beginning of the first note, the default value is 0
+
+- default_duration: the default duration for each note
+
+- default_interval: the default interval for each note
+
+- default_volume: the default volume for each note
 
 
 
@@ -195,6 +207,8 @@ scale notes: [C5, D5, D#5, F5, G5, G#5, A#5, C6]
 
 etc.
 The scaleTypes in database.py are all musicpy's own scales, but users can also customize their own scales.
+
+
 
 ### The composition of scale type
 
@@ -277,6 +291,8 @@ There are detailed introductions of volume type in `Basic syntax of volume type`
 
 Currently, the definition of a rest in musicpy is a data structure that can be passed in during chord type construction and merging, but does not exist as a note in the note list of the chord type, because the interval between adjacent notes is already defined by the list of note intervals of the chord type, so there is not much need for rests to exist in the chord type at this time. When you pass in rests when building a chord type, the rests are reflected in the list of note intervals, but the rests themselves are not added to the note list of the chord type. Currently the note list of chord types can contain only three data structures: note type, tempo type, and pitch_bend type.
 
+
+
 ### The composition of rest type
 
 ```python
@@ -286,6 +302,8 @@ rest(duration=1/4, dotted=None)
 - duration: The duration of the rest in bars
 - dotted: The number of dotted notes of the rest, the default value is None, which is not a dotted note
 
+
+
 ### Use rest when constructing chord types
 
 ```python
@@ -293,8 +311,10 @@ rest(duration=1/4, dotted=None)
 C1 = chord(['C', 'D', rest(1/2), 'E'])
 
 >>> C1
-chord(notes=[C4, D4, E4], interval=[0, 0.5, 0], start_time=0)
+chord(notes=[C4, D4, E4], interval=[0, 1/2, 0], start_time=0)
 ```
+
+
 
 ### Use rest when merging chord types
 
@@ -307,7 +327,7 @@ C3 = C1 | rest(1/2) | C2
 # C3 = C1 | 1/2 | C2
 
 >>> C3
-chord(notes=[C4, E4, G4, B4, D4, F#4, A4, C#5], interval=[0, 0, 0, 0.75, 0, 0, 0, 0], start_time=0)
+chord(notes=[C4, E4, G4, B4, D4, F#4, A4, C#5], interval=[0, 0, 0, 3/4, 0, 0, 0, 0], start_time=0)
 ```
 
 
@@ -319,6 +339,8 @@ This is a data structure that represents meter in music theory, which is used in
 A beat instance holds a single beat with a duration and a dotted number (in case it is a dotted beat).
 
 You can form a complete rhythm with a list of beat instances.
+
+
 
 ### The composition of beat type
 

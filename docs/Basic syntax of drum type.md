@@ -17,6 +17,8 @@ I have designed a new syntax for writing drum beats, and have successfully writt
 
 First of all, you can define your own dictionary of numbers or letters or special characters to map to different MIDI drum notes, I have defined a default drum mapping dictionary in the database.
 
+Note that here the string that maps to value -1 (`0` as default) will be interpreted as rest symbol, which adds extra interval to the previous note, the string that maps to value -2 (`-` as default) will be interpreted as continue symbol, which adds interval and extend the duration of the previous note.
+
 Here the length of numbers, letters and special characters can be greater than 1, which means you can write multiple digits, words and multiple special characters as a whole for mapping.
 
 This is the current default drum mapping dictionary, there are two sets of templates you can choose to use, or you can customize the drum mapping dictionary.
@@ -55,13 +57,13 @@ drum_mapping2 = {
 
 Here the different strings of numbers map to values that are MIDI drum notes. The different values represent different pitches, and in the case of drums represent different kinds of drums. Now we can write a music theory type drum, whose 1st argument is a string, and in this string you can write drums according to the drum syntax I designed, which can represent complex drums relatively concisely.  
 
-Single drums, spaced by `,`, indicate sequential playing (e.g. big drum, hihat, snare drum, hihat, big drum, hihat, snare drum, hihat).
+Single drum beats, spaced by `,`, indicate sequential playing (e.g. big drum, hihat, snare drum, hihat, big drum, hihat, snare drum, hihat).
 
 ```python
 'K, H, S, H, K, H, S, H'  
 ```
 
-Multiple different drums played at the same time, spaced by `;`, indicating simultaneous playing, using comma-separated notes or sequential playing.
+Multiple different drum beats played at the same time, spaced by `;`, indicating simultaneous playing. The drum beats combined in this way could be called `note group`.
 
 ```python
 'K, K;H, S, H, K, K;H;PH H;S, H'
@@ -73,7 +75,7 @@ If there is an interval between two drums (drums can be monophonic or polyphonic
 'K, i:1, S, H, i:1, K, S, H'
 ```
 
-Set the length, interval and volume for each drum beat, each drum beat can be followed by a settings block like `[l:length;i:interval;v:volume]`, also including drums played at the same time (drums concatenated with `;`), if the second argument is the same as the first, then it can also be omitted by writing `.` to omit it, the default volume is 100.
+Each drum beat can be followed by a settings block, also including drum beats played at the same time (drums concatenated with `;`). The settings block only apply to the note or note group it attaches.
 
 ```python
 'K[l:1/4]'
@@ -91,54 +93,42 @@ Note that if drums that are played simultaneously (drums that are joined with ;)
 'H;S[l:1/4;i:1/8]'
 ```
 
-Keyword headers can perform a variety of different functions on the drums within their range of action. The drums are segmented by keyword headers or bar lines `|`, and each keyword headers acts on the drums between the previous keyword headers or bar lines and it.
+Keyword headers can perform a variety of different functions on the drums within their range of action. The drums are segmented by keyword headers or bar lines `|`, and each keyword headers acts on the drums between the previous keyword headers or bar lines and it. For example, `K, H, S, H, r:2`, here `r:2` repeats the previous part twice.
 
 Some of the keyword header can be placed in the settings block, separated by `;`.
 
 Here is a description of the function of each keyword header:
 
-```python
-r:n  Repeat the drum beats n times, also in the setup block, the lengths and intervals of each note in the setup block are divided equally according to the number of repetitions when there is a fixed length assigned to it
+| Keyword  | Functionality at outside                                     | Functionality in settings block                              |
+| -------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| r:n      | repeat the drum beats n times                                | repeat the drum beats n times, lengths and intervals of each note in the settings block are divided equally according to the number of repetitions when there is a fixed length assigned to it |
+| R:n      |                                                              | repeats the drum beats n times, and when there is a fixed length assigned to it, the lengths and intervals of each note is not divided equally |
+| d:l;i;v  | set the default length l, interval i, volume v, or you can use dl, di, dv respectively |                                                              |
+| a:l;i;v  | set all uniform lengths l, interval i, volume v, or use al, ai, av respectively |                                                              |
+| t:n      | set the total length of the interval to n. The length of each note in the interval is the total length divided by the number of notes in the region, and can be occupied using empty notes (characters with a value of -1 in the drum mapping) and continuation notes (characters with a value of -2 in the drum mapping), for example `K, H, S, H, 0, K, S, H, K, -, S, H, K, K, S, H, t:2` This is a section where each note takes up 1/8 of a measure, the `0` is rest symbol, and the `- ` is the continuation of the previous note | same as outside                                              |
+| b:n      | when the total length is set, set the number of beats in the region to n beats, this will assign a unit duration to each drum beat unit | if set in the settings block, set the duration to unit duration * n |
+| B:n      |                                                              | works the same as the global case of b, valid when there is a set total length in the settings block |
+| i:n      | insert interval of n bars in the middle of the note          | set the interval of the note to n bars                       |
+| l:n      |                                                              | set the note length to n bars                                |
+| v:n      |                                                              | set the note volume to n                                     |
+| n:name   | set the name of the drum beat in the region                  |                                                              |
+| u:name   | use the drum region with the name                            |                                                              |
+| s:T      |                                                              | whether the note group are played simultaneously or not (T/F), if not, the drums will be divided equally by the length of one drum when the total length is fixed |
+| cm:n     |                                                              | use for single continue symbol only, set the continue mode to n, the value could be 0 or 1, if value is 0, only extend the duration of the last note, if value is 1, when the previous note is a group, extend the duration of all notes in the group; if the continue mode is not set, the default action of continue symbol is extending only last note except when the previous note is a group that set to playing at the same time, which in case extending all notes in the group |
+| cs:T     |                                                              | when you use chord types as a drum beat, whether the notes of chord are played simultaneously or not (T/F) |
+| !keyword | Use ! in combination with the keyword header means to set all the current notes in batch, for example: K, H, S, H \| K, K, S, H, !r:2 |                                                              |
 
-R:n  In the set block, repeats the drum beats n times, and when there is a fixed length assigned to it, the lengths and intervals of each note is not divided equally
+When there are no keywords specified in the settings block, the values are the same as the settings block when initializing a chord, which is `[duration;interval;volume]`.
 
-d:l;i;v  set the default length l, interval i, volume v, or you can use dl, di, dv respectively
 
-a:l;i;v  set all uniform lengths l, interval i, volume v, or use al, ai, av respectively
-
-t:n  set the total length of the interval to n. The length of each note in the interval is the total length divided by the number of notes in the region, and can be occupied using empty notes (characters with a value of -1 in the drum mapping) and continuation notes (characters with a value of -2 in the drum mapping), for example
-K, H, S, H, 0, K, S, H, K, -, S, H, K, K, S, H, t:2
-This is a section where each note takes up 1/8 of a measure, the 0 is the empty beat, and the - is the continuation of the previous note
-
-b:n  when the total length is set, set the number of beats in the region to n beats, this will assign a unit duration to each drum beat unit; if set in the settings block, set the duration to unit duration * n
-
-B:n used in the settings block, works the same as the global case of b, valid when there is a set total length in the settings block
-
-i:n  insert interval of n bars in the middle of the note, in the setting block this is to set the interval of the note to n bars
-
-l:n  set the note length to n bars in the settings block
-
-v:n  set the note volume to n in the settings block
-
-n:name  set the name of the drum beat in the region
-
-u:name  use the drum region with the name
-
-s:T  whether the connected drums are played simultaneously or not (T/F), if not, the drums will be divided equally by the length of one drum when the total length is fixed
-
-cm:n  use for single continue symbol only, set the continue mode to n, the value could be 0 or 1, if value is 0, only extend the duration of the last note, if value is 1, when the previous note is a group, extend the duration of all notes in the group; if the continue mode is not set, the default action of continue symbol is extending only last note except when the previous note is a group that set to playing at the same time, which in case extending all notes in the group
-
-cs:T when you use chord types as a drum beat, whether the notes of chord are played simultaneously or not (T/F)
-
-Use ! in combination with the keyword header means to set all the current notes in batch,
-for example: K, H, S, H | K, K, S, H, !r:2
-```
 
 ## Caution
 
 1. Please note that in the settings block, when the parameter is a list, you need to set a separate settings block, use `;` to separate the elements of the list, you can put multiple settings blocks together.
 2. you can place any spaces and newlines, they will not affect the content after parser conversion, so you can write the drum code more beautiful and hierarchical.  
 3. Note length and spacing can also be set using syntactic sugar, using `.n` for `1/n`, which is an nth note.
+
+
 
 ## Introduction to the construction and usage of drum types
 
@@ -152,6 +142,8 @@ You can use the `i` keywordword parameter to set the timbre of the drum kit, see
 
 Also, for chord types you can use the translate function, which uses the same set of syntax as writing drums to write chord types or a tune, just replace the custom characters with note names.
 
+
+
 ### The composition of drum type
 
 ```python
@@ -163,7 +155,8 @@ drum(pattern='',
      start_time=None,
      default_duration=1 / 8,
      default_interval=1 / 8,
-     default_volume=100)
+     default_volume=100,
+     translate_mode=0)
 ```
 
 - pattern: the string to be parsed to drum beats
@@ -175,6 +168,7 @@ drum(pattern='',
 - default_duration: default duration of drum beat
 - default_interval: default interval of drum beat
 - default_volume: default volume of drum beat
+- translate_mode: set to 0 to translate as drum, set to 1 to translate as chord
 
 ```python
 drum_example = drum('K, H, S, H, K;H, K;H, S, H, r:2')
@@ -183,7 +177,7 @@ drum_example = drum('K, H, S, H, K;H, K;H, S, H, r:2')
 play(drum_example, 150) # Play the drums at 150bpm
 >>> print(drum_example)
 [drum] 
-chord(notes=[C2, F#2, E2, F#2, C2, F#2, C2, F#2, E2, F#2, ...], interval=[0.125, 0.125, 0.125, 0.125, 0, 0.125, 0, 0.125, 0.125, 0.125, ...], start_time=0)
+chord(notes=[C2, F#2, E2, F#2, C2, F#2, C2, F#2, E2, F#2, ...], interval=[1/8, 1/8, 1/8, 1/8, 0, 1/8, 0, 1/8, 1/8, 1/8, ...], start_time=0)
 
 # If you use drum type as track in a piece type, you must use the notes attribute of the drum type as chord type,
 # and set the corresponding channel number to 9

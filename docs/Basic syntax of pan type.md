@@ -18,6 +18,8 @@ At this point you can use the built-in function `add_pan` of type piece to set t
 
 The pan type is a special type used to store the left and right channel mix positions.
 
+
+
 ### The composition of pan type
 
 ```python

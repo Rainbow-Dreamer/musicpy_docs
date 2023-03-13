@@ -1,5 +1,7 @@
 # Musicpy composition code examples part 2
 
+
+
 ## 1. Non-functional harmony game bgm (normal speed, 165BPM)
 ```python
 a = C('Cm7',4,1,1/8) @ [1,3,4,2.1,4.1] | 3/8
@@ -8,6 +10,8 @@ bass = (chord('C2, C2, G2, C2, A#2, C2, C3, C2') * 4) % (1/8, 1/8)
 bass += (bass - 3)
 play(P([piano, bass], [1, 34], 165, [0, 0]) * 2)
 ```
+
+
 
 ## 2. Non-functional harmonic game bgm (speedcore, 500BPM)
 ```python
@@ -20,6 +24,8 @@ drum = concat([chord(random.choice(['D2','E2','G2'])) for i in range(64)]) % (1/
 play(P([piano, bass, drum], [1, 34, 1], 500, [0, 0, 0], channels=[1,2,9]) * 2)
 ```
 
+
+
 ## 3. Non-functional harmony game bgm (doom metal, 25BPM)
 ```python
 a = C('Cm9',2,1/4,1/8) @ [1,3,5,2.1,4.1] | 3/8
@@ -30,6 +36,8 @@ import random
 drum = concat([chord(random.choice(['D2','E2','G2'])) for i in range(64)]) % (1/8, 1/8)
 play(P([piano, bass, drum], [31, 34, 1], 25, [0, 0, 0], channels=[1,2,9]) * 8)
 ```
+
+
 
 ## 4. Scary atmosphere soundtrack
 ```python
@@ -42,11 +50,15 @@ string.set_volume(60)
 play(P([piano, bass, string * 4], [9, 34, 49], 80, [0, 0, 0]))
 ```
 
+
+
 ## 5. Guitar breakup chord play (nylon string)
 ```python
 guitar = C('CM7',4, 1)^2 | C('G7sus', 3, 1)^2 | C('A7sus', 3, 1)^2 | C('FM7', 3, 1)^2
 play((guitar%(1/4, 1/8) * 2)-database.octave, 100, instrument=25)
 ```
+
+
 
 ## 6. Guitar breakup chords to play another chord progression (nylon string)
 ```python
@@ -56,6 +68,8 @@ C('FM7', 3, 1/4, 1/8)^2 | C('CM7', 4, 1/4, 1/8)@1 |
 C('AbM7', 3, 1/4, 1/8)^2 | C('G7sus', 3, 1/4, 1/8)^2)
 play((guitar * 2)-database.octave, 100, instrument=25)
 ```
+
+
 
 ## 7. Electric pianos play chord progressions, playing intra-chord notes according to certain rules
 ```python
@@ -72,6 +86,8 @@ a = (rule(C('Cmaj7',4)) |
 play(a * 2, 150, instrument=5)
 ```
 
+
+
 ## 8. Chord progressions in major keys borrowed from the lydian mode
 ```python
 a = (C('Cmaj7') | C('D7') | C('Fmaj7',3) | C('Cmaj7/-3')) % (1, 1/4) * 4
@@ -84,6 +100,8 @@ song = build([a, 5, 0],
              bpm=165)
 play(song)
 ```
+
+
 
 ## 9. Chord progressions in major keys borrowed from lydian modes (with accompanying harmonies, second melodic line)
 ```python
@@ -106,6 +124,8 @@ song = build([a, 5, 0],
 play(song)
 ```
 
+
+
 ## 10. Advanced writeup of example 8 (a more concise writeup, a new advanced syntax I recently added)
 ```python
 a = (C('Cmaj7') | C('D7') | C('Fmaj7',3) | C('Cmaj7/-3')) % (1, 1/4) * 4
@@ -115,6 +135,8 @@ song = build([a, 5, 0],
              bpm=165)
 play(song)
 ```
+
+
 
 ## 11. Relaxing ambient music
 ```python
@@ -127,6 +149,8 @@ string.set_volume(50)
 play(P([piano, bass, string * 4], [9, 34, 49], 80, [0, 0, 0]))
 ```
 
+
+
 ## 12. Super nice 6451 chord configuration (advanced writing)
 ```python
 q = S('C major', 4)
@@ -134,6 +158,8 @@ r = q % (64516458, 1/2, 0.3/4, 5)
 r = [i('omit7')^2 for i in r]
 play(r*2, bpm=80, instrument=5)
 ```
+
+
 
 ## 13. Relaxed urban style ambient music (with transposition)
 ```python
@@ -151,6 +177,9 @@ part1 = P([piano | piano-4, bass | bass-4, string | string-4, oboe1 | oboe1-4],
           [0, 0, 0, 3+7/8])
 play(part1)
 ```
+
+
+
 ## 14. Video game 8-bit song style
 ```python
 chord_part1 = (C('Cm', 5, 1/8) | 1/4 | C('Bb', 4, 1/8) | 1/4 |
@@ -178,6 +207,8 @@ bass_part5 = (chord('Ab1')*8 + chord('Bb1')*8 + chord('C2')*8 +
 bass_part = bass_part1 | bass_part2 | bass_part3 | bass_part4 | bass_part5
 play(piece([bass_part, chord_part], [81, 81], 130, [0, 1/4]))
 ```
+
+
 
 ## 15. J-rock intro
 ```python

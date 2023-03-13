@@ -15,6 +15,7 @@
 - [Note type adds the function of generating chords according to the interval relationship](#note-type-adds-the-function-of-generating-chords-according-to-the-interval-relationship)
 - [Usage of dotted notes](#usage-of-dotted-notes)
 - [Reset note pitch](#reset-note-pitch)
+- [Comparing two notes](#comparing-two-notes)
 
 
 
@@ -34,6 +35,8 @@ a = note(name='C', num=5, duration=0.5, volume=100)
 
 means that a is note C5, the note length is 0.5 bars, and the note strength is 100.
 
+
+
 ## Construct a note by entering the note name directly (note name + number of octaves)
 
 We can use the to_note function
@@ -52,6 +55,8 @@ N('E5')
 
 N is the initial capitalization of the note note
 
+
+
 ## Set the note length and volume for existing notes
 
 ```python
@@ -63,6 +68,8 @@ a = a % (duration, volume) # Write it this way if you want to replace the origin
 duration is the note length in bars, volume is the note strength, corresponding to MIDI 0~127, any integer between 0 and 127 (including 0 and 127)
 
 You can set only one of these parameters, (you can leave it blank if you don't set it) or you can set both of them. Using the built-in function set for note types returns a new note type with modified parameters. It is completely independent from the previous note type, because when writing musicpy code, you can build blocks to write parameters such as pitch, note interval, note duration, volume level, etc. in one sentence. This is also one of my requirements for the syntax design of musicpy. The set methods for other music types such as chord types are similar to this, I will explain this in more detail when I talk about chord types.
+
+
 
 ## Converting pitch numbers of notes to note types and getting pitch numbers from note types
 
@@ -82,6 +89,7 @@ a.degree
 ```
 
 and that's it
+
 
 
 ## To raise or lower a note
@@ -108,6 +116,8 @@ a - n #(note a lowered by n semitones)
 ```
 
 (analogous to the rising and falling notes of the chord class)
+
+
 
 ## The sharp and flat signs of notes are converted into each other
 
@@ -136,6 +146,7 @@ D#
 ```
 
 
+
 ## Combining multiple notes to form a chord
 
 For example, if you have four notes a, b, c, and d, you can join them with a + sign to form a chord with the notes a, b, c, and d in that order.
@@ -145,6 +156,8 @@ A = a + b + c + d
 ```
 
 The chord A is composed of the notes a, b, c, d
+
+
 
 ## Note types have a new music theory function that allows you to add chord names to get chord types
 
@@ -157,6 +170,8 @@ chord(notes=[A3, D4, E4], interval=[0, 0, 0], start_time=0)
 # Also supports inversion, polychords, and other C functions that support the syntax of parsed chord names
 ```
 
+
+
 ## Note type adds the function of generating chords according to the interval relationship
 
 You can use the `with_interval` function of the note type to specify an interval to form a chord type with two notes. The two notes are the current note type and the note type that forms the specified interval relationship with this note type.
@@ -166,6 +181,8 @@ a = N('C5')
 >>> a.with_interval(database.major_seventh) # form a chord representing the major seventh interval of C5
 chord(notes=[C5, B5], interval=[0, 0], start_time=0)
 ```
+
+
 
 ## Usage of dotted notes
 
@@ -224,6 +241,8 @@ a = translate('C5[.8.;.] , D5[.8;.] , E5[.8.;.] , F5[.8;.]') # Same as above, us
 a = drum('0[.8.;.] , 1, 2[.8.;.] , 1') # Same as above, drum type
 ```
 
+
+
 ## Reset note pitch
 
 You can use `reset_pitch` function of the note type to reset the note name of a note type, while the octave remains unchanged, `reset_octave` function to reset the octave of a note type, while the note name remains unchanged, `reset_name` function to reset the note name along with the octave by a note name string like `C5`. All of these functions return a new note instance with the new note pitch, while other attributes remain unchanged.
@@ -248,5 +267,34 @@ d = a.reset_octave(3)
 
 >>> d
 C3
+```
+
+
+
+## Comparing two notes
+
+When comparing two notes, if the two notes are equal, it means that the two notes correspond to the same pitch in twelve equal temperament, independent of the note name and other attributes. If one note is smaller than the other, it means that it has a lower pitch than the other note.
+
+```python
+a = N('C#5')
+b = N('Db5')
+
+>>> a == b
+True
+
+a = N('C5')
+b = N('c5')
+
+>>> a == b
+True
+
+a = N('C5')
+b = N('D3')
+
+>>> a == b
+False
+
+>>> a > b
+True
 ```
 

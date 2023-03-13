@@ -93,10 +93,10 @@ new_piece = piece(tracks=[C1, C2, C3, C4],
 >>> new_piece
 [piece] 
 BPM: 120
-track 1 piano | instrument: Acoustic Grand Piano | start time: 0 | chord(notes=[G4, D5, B5, F#5, G4, D5, B5, F#5, G4, D5, ...], interval=[0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, ...], start_time=0)
+track 1 piano | instrument: Acoustic Grand Piano | start time: 0 | chord(notes=[G4, D5, B5, F#5, G4, D5, B5, F#5, G4, D5, ...], interval=[1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, ...], start_time=0)
 track 2 bass | instrument: Electric Bass (finger) | start time: 2 | chord(notes=[C2, C2, G1, G1, C2, C2, G1, G1], interval=[1, 1, 1, 1, 1, 1, 1, 1], start_time=0)
-track 3 harp | instrument: Orchestral Harp | start time: 2 | chord(notes=[F#6, G6, F#6, G6, F#6, G6, F#6, G6, F#6, G6, ...], interval=[0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, ...], start_time=0)
-track 4 drum | instrument: Synth Drum | start time: 6 | chord(notes=[G3, G3, G3, G3, G3, G3, G3, G3, G3, G3, ...], interval=[0.375, 0.125, 0.25, 0.25, 0.375, 0.125, 0.25, 0.25, 0.375, 0.125, ...], start_time=0)
+track 3 harp | instrument: Orchestral Harp | start time: 2 | chord(notes=[F#6, G6, F#6, G6, F#6, G6, F#6, G6, F#6, G6, ...], interval=[1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, ...], start_time=0)
+track 4 drum | instrument: Synth Drum | start time: 6 | chord(notes=[G3, G3, G3, G3, G3, G3, G3, G3, G3, G3, ...], interval=[3/8, 1/8, 1/4, 1/4, 3/8, 1/8, 1/4, 1/4, 3/8, 1/8, ...], start_time=0)
 ```
 
 If there are drum tracks, you can set its corresponding channel to 9, so that the instrument can choose the type of drums specialized in General Midi, such as Standard, Room, Electronic, etc.
@@ -125,6 +125,8 @@ The play and write functions will check if what you pass in is a piece class, an
 piece(...) could be written in simplified form as
 P(...)
 ```
+
+
 
 ## Constructing a piece type can be done using an alternative syntax that is a bit more intuitive
 
@@ -176,6 +178,8 @@ new_piece = build([track(A1, instrument='Acoustic Grand Piano', start_time=0, ch
                   track(D1, instrument='Synth Drum', start_time=4, channel=4, track_name='drum')],
                   bpm=150)
 ```
+
+
 
 ## List of piece type editing operations
 
@@ -259,6 +263,8 @@ new_piece = build(track(A1, instrument=1, start_time=0, channel=0, track_name='p
 # which has nothing to do with the BPM of the track types you pass in
 ```
 
+
+
 ## Merge a piece type into a chord type
 
 Sometimes we need to merge all the notes of a piece type, i.e. a music theory type with many 
@@ -292,11 +298,17 @@ b, bpm, start_time = a.merge()
 # (merged chord type, bpm, start time), with the start time in bars
 ```
 
+
+
 ## New attribute of piece name and BPM display for piece type
 
 When building a piece type, you can use the `name` parameter to set the name of the piece type, that is, the piece name. When the piece type is printed, the piece name will be shown at the first line (if it is None then it is not shown). In the second line, the BPM of the piece will be displayed.
 
+
+
 ## Some new syntax for piece type
+
+
 
 ### Replace a track in a piece type
 
@@ -304,11 +316,15 @@ When building a piece type, you can use the `name` parameter to set the name of 
 a[i] = new_track # Replace the i-th track (starting from 0) of a track type a with new_track, where new_track is the track type
 ```
 
+
+
 ### Delete a track from a piece type
 
 ```python
 del a[i] # Delete the i-th track (starting from 0) of track type a
 ```
+
+
 
 ### Mute a track of a piece type
 
@@ -319,6 +335,8 @@ a.mute(i=None) # mute all tracks if i is not specified, or mute the ith track (s
 a.unmute(i=None) # unmute, the use of parameters and mute function is the same
 ```
 
+
+
 ## Clear pan and volume of piece type
 
 You can use the `clear_pan` function of the track type to clear the pan information of the track type (left and right channel mix position) and the `clear_volume` function of the track type to clear the volume information of the track type (overall volume level of the track).
@@ -327,6 +345,8 @@ You can use the `clear_pan` function of the track type to clear the pan informat
 a.clear_pan()
 a.clear_volume()
 ```
+
+
 
 ## Clear MIDI messages of program changes
 
@@ -347,6 +367,8 @@ b = a.tracks[0] # extracts the first track of track type a, which is a chord typ
 b.clear_program_change() # clear program_change messages for chord types
 ```
 
+
+
 ## Clear other MIDI messages
 
 You can use the `clear_other_messages` function to clear all other MIDI messages for a chord type or a track type, or to filter the clearing by MIDI message type.  
@@ -363,6 +385,8 @@ a.clear_other_messages('program_change') # clear other MIDI messages of type pro
 # When a is a piece type, similar to the clear_program_change function, there is an apply_tracks argument
 # The usage is similar, and the default value is True
 ```
+
+
 
 ## Quickly change the instruments of tracks of the piece type
 
@@ -405,6 +429,8 @@ track 2 | instrument: Orchestral Harp | start time: 0 | chord(notes=[D4, F#4, A4
 piece1.change_instruments('Electric Piano 1', 0)
 ```
 
+
+
 ## Move the position of tracks of the piece type by bar length
 
 You can use the `move` function of a track type to move the entire track of the track type or a specified track to the right or left by a specified measure length. The return value is a new piece type.
@@ -430,6 +456,8 @@ c = a.move(2, 1) # the length of the 1st track of the piece type a moved 2 bars 
 [2, 2, 3]
 ```
 
+
+
 ## Filtering a type of MIDI message in chord type and piece type
 
 You can use the `get_msg` function to filter for a type of MIDI message in a chord type, which returns a list of MIDI messages, for example
@@ -444,6 +472,8 @@ The piece type also has the `get_msg` function, which you can use to extract a t
 a.get_msg('program_change', ind=0) # Filter program_change messages in the first track
 ```
 
+
+
 ## Transpose the whole piece type
 
 You can use the `modulation` function of a piece type to transpose the entire piece type, returning the new piece type after transposition.
@@ -456,6 +486,8 @@ modulation(old_scale, new_scale, mode=1, inds='all')
 # mode: when mode is 1, tracks with channel number 9 (drum tracks) will not be transposed
 # inds: when inds is 'all', convert all tracks, also can be a list of indexes, convert the indexes in the list corresponding to the tracks
 ```
+
+
 
 ## Apply function to the piece type as a whole
 
@@ -472,6 +504,8 @@ apply(func, inds='all', mode=0, new=True)
 
 # new: when new is True, the new track type is returned, when new is False, the track type is modified directly on the original one
 ```
+
+
 
 ## Reset MIDI channel number and track number
 
@@ -520,6 +554,8 @@ reset_track(tracks,
 # reset_pan_volume: whether to reset the MIDI track numbers of all the sound phases and track volumes
 ```
 
+
+
 ## Get the total number of notes in a piece instance
 
 You can use `total` function of the piece type to get the total number of notes in a piece instance. This is useful when you want to count the total number of notes in a MIDI file, you can read the MIDI file into a piece instance and use this function. This function will calculate the sum of the number of notes of all tracks in the piece instance.
@@ -535,6 +571,8 @@ a = P([C('C'), C('Cmaj7')])
 7
 ```
 
+
+
 ## Exclude the drum tracks of a piece type
 
 You can use `get_off_drums` function of the piece type to exclude the drum tracks of a piece type. This function works when the channels attribute is not None.
@@ -546,7 +584,7 @@ a = P([C('C'), drum('0,1,2,1').notes], channels=[0, 9])
 [piece] 
 BPM: 120
 track 1 channel 0 | instrument: Acoustic Grand Piano | start time: 0 | chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
-track 2 channel 9 | instrument: Acoustic Grand Piano | start time: 0 | chord(notes=[C2, F#2, E2, F#2], interval=[0.125, 0.125, 0.125, 0.125], start_time=0)
+track 2 channel 9 | instrument: Acoustic Grand Piano | start time: 0 | chord(notes=[C2, F#2, E2, F#2], interval=[1/8, 1/8, 1/8, 1/8], start_time=0)
 
 >>> a.get_off_drums()
 >>> a
