@@ -126,7 +126,7 @@ get_chord('A4', 'm7'), and if you specify a specific pitch for the root note, fo
 Dmaj7 = get_chord('D6', 'maj7')
 ```
 
-In addition, the get_chord function has a very large number of parameters that can be used to set the chord's omission, altered notes, added notes, as well as the exact duration of each note of the chord, the interval of the notes, etc. You can even enter the intervals of the notes to build the chords (you can also set the value of cummulative to determine whether you want to enter the interval of each note to the root note or the interval between each two notes). In musicpy, the name of each interval is already defined and can be used directly, for example, the value of major_third is 4, which is the number of semitones in the major third. For example, to construct a C major seventh chord according to the intervals, you can write it like this
+In addition, the get_chord function has a very large number of parameters that can be used to set the chord's omission, altered notes, added notes, as well as the exact duration of each note of the chord, the interval of the notes, etc. You can even enter the intervals of the notes to build the chords (you can also set the value of cumulative to determine whether you want to enter the interval of each note to the root note or the interval between each two notes). In musicpy, the name of each interval is already defined and can be used directly, for example, the value of major_third is 4, which is the number of semitones in the major third. For example, to construct a C major seventh chord according to the intervals, you can write it like this
 
 ```python
 get_chord('C5', interval=[database.major_third, database.perfect_fifth, database.major_seventh])
@@ -483,19 +483,19 @@ get_chord_by_interval(start,
                      interval1,
                      duration=0.25,
                      interval=0,
-                     cummulative=True)
+                     cumulative=True)
 
 # start: The starting note of the chord type, which can be a string representing a note or a note type
 # interval1: Represents a list of interval relations, the elements are integers
 # duration: the note duration of the generated chord type
 # interval: The note interval of the generated chord type
-# cummulative: If True, the interval relationship is the interval relationship with the initial note. If False, the interval relationship is the interval relationship between every two adjacent sounds. The default value is True
+# cumulative: If True, the interval relationship is the interval relationship with the initial note. If False, the interval relationship is the interval relationship between every two adjacent sounds. The default value is True
 
 >>> get_chord_by_interval('C5', [database.major_third, database.perfect_fifth, database.major_seventh])
 # Obtain the chord type composed of the initial note C5, and C5 in turn to form the major third, the complete fifth and the major seventh
 chord(notes=[C5, E5, G5, B5], interval=[0, 0, 0, 0], start_time=0) # Get the C major seventh chord
 
->>> get_chord_by_interval('C5', [database.major_third, database.minor_third, database.major_third], cummulative=False)
+>>> get_chord_by_interval('C5', [database.major_third, database.minor_third, database.major_third], cumulative=False)
 # Get the chord type composed of the initial note C5 and the adjacent intervals as the major third, minor third, and major third.
 chord(notes=[C5, E5, G5, B5], interval=[0, 0, 0, 0], start_time=0) # Get the C major seventh chord
 
@@ -631,7 +631,7 @@ Note that chord A here is not necessarily just a chord in music theory, but can 
 
 ## Get the interval relationship of a chord
 
-The intervalof function returns the interval relationship between the constituent notes of a chord. The parameter cumulative is set to True to return the interval between all the constituent notes of the chord (except the root note) and the root note, and False to return the interval between the lowest and highest notes of the chord. The default value is True, e.g.
+The intervalof function returns the interval relationship between the constituent notes of a chord. When the parameter cumulative is set to True, return the interval between each note and the root note, False to return the interval between every two adjacent notes. The default value is True, e.g.
 
 ```python
 get_chord('C','maj').intervalof()
@@ -645,10 +645,10 @@ get_chord('C','maj').intervalof(translate=True)
 
 will get ['major third', 'perfect fifth'], which means major third and perfect fifth.
 
-When cummulative is set to False returns the interval between every two notes of the chord from low to high, e.g.
+When cumulative is set to False returns the interval between every two notes of the chord from low to high, e.g.
 
 ```python
-get_chord('C','maj').intervalof(translate=True, cummulative=False)
+get_chord('C','maj').intervalof(translate=True, cumulative=False)
 ```
 
 will get ['major third', 'minor third'], which means that a C major third chord is composed of a major third and a minor third.
