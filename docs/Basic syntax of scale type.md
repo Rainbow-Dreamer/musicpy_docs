@@ -5,13 +5,15 @@
 ## Contents
 
 - [Construct scales according to interval relationships or key names](#construct-scales-according-to-interval-relationships-or-key-names)
-- [A concrete example of modulation](#a-concrete-example-of-modulation)
+- [Modulation](#modulation)
 - [Selecting the chords according to the number of steps in the scale](#selecting-the-chords-according-to-the-number-of-steps-in-the-scale)
 - [Get melody from scale degrees by numbered musical notation](#get-melody-from-scale-degrees-by-numbered-musical-notation)
 - [modulation according to the circle of fifths](#modulation-according-to-the-circle-of-fifths)
 - [Selecting chords of a scale according to the harmony function](#selecting-chords-of-a-scale-according-to-the-harmony-function)
 - [Get the relative and parallel keys of a mode](#get-the-relative-and-parallel-keys-of-a-mode)
 - [The up/down transposition of a scale (overall up/down or up/down of individual notes)](#the-updown-transposition-of-a-scale-overall-updown-or-updown-of-individual-notes)
+- [Get the mode of a scale](#get-the-mode-of-a-scale)
+- [Get the reverse of a scale](#get-the-reverse-of-a-scale)
 - [Parsing of a scale (mode) name](#parsing-of-a-scale-mode-name)
 - [Extract chord progressions by scale degrees](#extract-chord-progressions-by-scale-degrees)
 - [Get a list of all the notes of a scale according to the standard notation](#get-a-list-of-all-the-notes-of-a-scale-according-to-the-standard-notation)
@@ -20,12 +22,16 @@
 - [Detecting whether a note or chord exists within a scale](#detecting-whether-a-note-or-chord-exists-within-a-scale)
 - [Scale type extracts chords according to scale degrees expressed using Roman numerals](#scale-type-extracts-chords-according-to-scale-degrees-expressed-using-Roman-numerals)
 - [Generate chord progressions from scale types](#generate-chord-progressions-from-scale-types)
+- [Get note from scale degree](#get-note-from-scale-degree)
+- [Find the scale degree of a note in a scale](#find-the-scale-degree-of-a-note-in-a-scale)
+- [Find the standard note name of a note in a scale](#find-the-standard-note-name-of-a-note-in-a-scale)
+- [Get the note with a interval from a note in a scale](#get-the-note-with-a-interval-from-a-note-in-a-scale)
 
 
 
 ## Construct scales according to interval relationships or key names
 
-scale class (scale class), this class can represent a specific scale.
+Scale type can represent a specific scale.
 
 Using this class, you can quickly build a scale according to the interval of the notes, for example, the arrangement of notes in a major key is all-all-half-all-all-half (all for whole notes, half for semitones).
 
@@ -55,15 +61,21 @@ The scaleTypes inside database.py are all the scales that musicpy comes with, an
 
 
 
-## A concrete example of modulation
+## Modulation
 
-For example, if you have a music clip p in A major, and you want to convert it to A minor, you can write:
+You can use `modulation` method of scale type to convert a chord type from a scale into another scale. For example, if you have a chord type in A major, and you want to convert it to A minor, you can write:
 
 ```python
-p.modulation(scale('A', 'major'), scale('A', 'minor'))
-```
+current_chord = chord('A,B,C#,D,E') % (1/8, 1/8)
 
-This will shift the music clip p from A major to A minor.
+>>> current_chord
+chord(notes=[A4, B4, C#5, D5, E5], interval=[1/8, 1/8, 1/8, 1/8, 1/8], start_time=0)
+
+new_chord = current_chord.modulation(scale('A', 'major'), scale('A', 'minor'))
+
+>>> new_chord
+chord(notes=[A4, B4, C5, D5, E5], interval=[1/8, 1/8, 1/8, 1/8, 1/8], start_time=0)
+```
 
 
 
@@ -188,23 +200,57 @@ where degree is the number of steps.
 
 ## Get the relative and parallel keys of a mode
 
-The relative_key function gets a relative key, such as a relative minor key for a major key or a relative major key for a minor key.
+The `relative_key` function gets a relative key, such as a relative minor key for a major key or a relative major key for a minor key.
 
-The parallel_key function gets the major or minor key with the same tonic.
+The `parallel_key` function gets the major or minor key with the same tonic.
 
 
 
 ## The up/down transposition of a scale (overall up/down or up/down of individual notes)
 
-The up and down functions for note types, chord types and their advanced syntax are also available for scales.
+The `up` and `down` functions for note types, chord types and their advanced syntax are also available for scales.
+
+
+
+## Get the mode of a scale
+
+Use `a.inversion(n)` or `a / n` to get the nth mode of a scale type `a`.
+
+```python
+current_scale = S('C major')
+>>> current_scale.inversion(2)
+[scale]
+scale name: D4 dorian scale
+scale intervals: [2, 1, 2, 2, 2, 1, 2]
+scale notes: [D4, E4, F4, G4, A4, B4, C5, D5]
+
+>>> current_scale / 3
+[scale]
+scale name: E4 phrygian scale
+scale intervals: [1, 2, 2, 2, 1, 2, 2]
+scale notes: [E4, F4, G4, A4, B4, C5, D5, E5]
+```
+
+
+
+## Get the reverse of a scale
+
+Use `a.reverse()` or `~a` to get the scale from the reverse of a scale type `a`.
+
+```python
+current_scale = S('C major')
+>>> ~current_scale
+[scale]
+scale name: C4 phrygian scale
+scale intervals: [1, 2, 2, 2, 1, 2, 2]
+scale notes: [C4, C#4, D#4, F4, G4, G#4, A#4, C5]
+```
 
 
 
 ## Parsing of a scale (mode) name
 
-The to_scale function allows you to parse a scale (mode) by entering its name directly, returning the type of scale corresponding to the entered scale (mode) name, the octave of the tonic (also the octave of the scale)
-
-is determined by the second parameter pitch, the default value is 4. For example
+The `to_scale` function allows you to parse a scale (mode) by entering its name directly, returning the type of scale corresponding to the entered scale (mode) name, the octave of the tonic (also the octave of the scale) is determined by the second parameter pitch, the default value is 4. For example
 
 ```python
 to_scale('C major')
@@ -230,7 +276,7 @@ S is the initial capitalization of the scale
 
 ## Extract chord progressions by scale degrees
 
-Using the built-in pattern function of the scale type, you can extract the chord progression of a mode by entering a string or integer representing the chord scale, for example
+Using the built-in `pattern` function of the scale type, you can extract the chord progression of a mode by entering a string or integer representing the chord scale, for example
 
 ```python
 S('C major').pattern(6451)
@@ -244,17 +290,15 @@ It is also possible to write
 S('C major').pattern('6451')
 ```
 
-Other parameters of the pattern function (in order of precedence).
+Other parameters of the `pattern` function (in order of precedence):
 
-duration is the length of each note of the chord in the chord progression, the default value is 0.25, which means that the notes are 1 bar long.
+* duration: the length of each note of the chord in the chord progression, the default value is 0.25, which means that the notes are 1 bar long.
 
-interval is the interval between the notes of each chord in the chord progression, the default value is 0, i.e. the notes of each chord are played together.
+* interval: the interval between the notes of each chord in the chord progression, the default value is 0, i.e. the notes of each chord are played together.
 
-num is the number of notes extracted for each chord in the mode by step, e.g. num = 3 is a triad, num = 4 is a 7th chord, etc.
+* num: the number of notes extracted for each chord in the mode by step, e.g. num = 3 is a triad, num = 4 is a 7th chord, etc.
 
-The default value of step is 2, which means that 2 notes of the scale are skipped each time (count one note by yourself), for example, the natural triad C E G of the C major scale at step 1.
-
-Each time it skips two notes in the scale, C, two notes to E, then two notes to G. (Here, skipping a few notes means taking a few steps forward, each step is to the next note in the scale)
+* step: how many notes in the scale are skipped in each step of the chord extraction, the default value is 2, for example, the 1st natural triad C E G of C major scale, each time two notes in the scale are skipped, C, two notes to E, then two notes to G. (Here, skipping a few notes means taking a few steps forward, each step is to go to the next note in the scale)
 
 Advanced syntax:
 
@@ -267,9 +311,7 @@ S('C major') % (6451, 1/2, 0)
 
 ## Get a list of all the notes of a scale according to the standard notation
 
-When we represent a scale, most commonly the major and minor scales, we usually prefer to use the standard notation to represent each note of the scale, which is a seven-note scale in which  C, D, E, F, G, A, B, all seven letters of the alphabet must appear once, and can be preceded by sharp signs, flat signs, double sharp signs, double flat signs, natural signs, etc., as long as they are equivalent to the corresponding notes in the scale.
-
-It doesn't matter if it's not a natural note like `A#`, `Eb`. For example, the notes of the Eb major scale is represented by the standard notation
+When we represent a scale, most commonly the major and minor scales, we usually prefer to use the standard notation to represent each note of the scale, which is a seven-note scale in which  C, D, E, F, G, A, B, all seven letters of the alphabet must appear once, and can be preceded by sharp signs, flat signs, double sharp signs, double flat signs, natural signs, etc., as long as they are equivalent to the corresponding notes in the scale. It doesn't matter if it's not a natural note like `A#`, `Eb`. For example, the notes of the Eb major scale is represented by the standard notation
 
 ```
 Eb, F, G, Ab, Bb, C, D
@@ -285,7 +327,7 @@ In musicpy, if you just use the scale function or the S function to build a scal
 
 For example, if you type `S('D# major')` the first note is `D#`, and if you type `S('Eb major')` the first note is `Eb`, then all subsequent notes are sharp signed notes only.
 
-For example, the sound of `S('D# major')` is `scale notes: [D#4, F4, G4, G#4, A#4, C5, D5, D#5]`,  `S('Gb major')` is `scale notes: [Gb4, G#4, A#4, B4, C#5, D#5, F5, F#5]`. This representation is intended to minimize the amount of arithmetic involved in processing note types, and to try to keep  note names have one and only one, making the arithmetic logic more concise. However, if you want to get the scale's notes according to the standard notation of note names, you can use the built-in function standard for the scale type, for example
+For example, the sound of `S('D# major')` is `scale notes: [D#4, F4, G4, G#4, A#4, C5, D5, D#5]`,  `S('Gb major')` is `scale notes: [Gb4, G#4, A#4, B4, C#5, D#5, F5, F#5]`. This representation is intended to minimize the amount of arithmetic involved in processing note types, and to try to keep  note names have one and only one, making the arithmetic logic more concise. However, if you want to get the scale's notes according to the standard notation of note names, you can use the built-in function `standard` for the scale type, for example
 
 ```python
 >>> S('Gb major').standard()
@@ -302,7 +344,7 @@ For example, the sound of `S('D# major')` is `scale notes: [D#4, F4, G4, G#4, A#
 ['C', 'D', 'Eb', 'F', 'G', 'Ab', 'Bb']
 ```
 
-There is also the relative_note function, which takes two arguments, both of which are strings that represent the sound name, and can return the name of the subsequent sound using the standard sound name notation for the preceding sound name. For example
+There is also the `relative_note` function, which takes two arguments, both of which are strings that represent the sound name, and can return the name of the subsequent sound using the standard sound name notation for the preceding sound name. For example
 
 ```python
 >>> relative_note('C', 'D')
@@ -460,5 +502,80 @@ chord(notes=[C4, E4, G4, B4, G4, C5, D5, A4, C5, E5, ...], interval=[1/8, 1/8, 1
 
 >>> Cmajor_scale.chord_progression(['1M7', '5sus', '6m7', '4M7'])
 chord(notes=[C4, E4, G4, B4, G4, C5, D5, A4, C5, E5, ...], interval=[0, 0, 0, 1/4, 0, 0, 1/4, 0, 0, 0, ...], start_time=0)
+```
+
+
+
+## Get note from scale degree
+
+You can use the scale type method `get_note_from_degree` to get note by scale degree, and the returned value is note type.
+
+```python
+get_note_from_degree(degree, pitch=None)
+
+# degree: the degree of the scale, starting from 1, if it is higher than 7 then it will be counted as a higher octave
+# pitch: initial number of octaves, if not set then the octave of the scale itself is used
+
+current_scale = S('C major')
+
+>>> current_scale.get_note_from_degree(1)
+C4
+
+>>> current_scale.get_note_from_degree(9)
+D5
+
+>>> current_scale.get_note_from_degree(5, pitch=5)
+G5
+```
+
+
+
+## Find the scale degree of a note in a scale
+
+You can use the scale type method `get_scale_degree` to find the scale degree of a note in a scale, the note can be a string or a note type.
+
+```python
+current_scale = S('C major')
+
+>>> current_scale.get_scale_degree('G')
+5
+```
+
+
+
+## Find the standard note name of a note in a scale
+
+```python
+current_scale = S('G# major')
+
+>>> current_scale.get_standard_notation('G')
+'Fx'
+```
+
+
+
+## Get the note with a interval from a note in a scale
+
+You can use the method `get_note_with_interval` of the scale type to get a note in a scale with a interval from a note.
+
+```python
+get_note_with_interval(current_note, interval, standard=False)
+
+# current_note: the note to be counted, can be a string or a note type
+
+# interval: the number of notes, starting from 1, 1 being one degree
+
+# standard: whether or not the returned note name corresponds to the standard name of the scale
+
+current_scale = S('C major')
+
+>>> current_scale.get_note_with_interval('C4', 3)
+E4
+
+>>> current_scale.get_note_with_interval('C4', 9)
+D5
+
+>>> current_scale.get_note_with_interval('C4', -5)
+F3
 ```
 
