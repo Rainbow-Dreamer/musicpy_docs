@@ -237,8 +237,6 @@ a = chord('C5[.8.;.] , D5[.8;.] , E5[.8.;.] , F5[.8;.]')
 # The first and third notes are dotted eighth notes, the second and fourth notes are normal eighth notes
 
 a = translate('C5[.8.;.] , D5[.8;.] , E5[.8.;.] , F5[.8;.]') # Same as above, using the translate function
-
-a = drum('0[.8.;.] , 1, 2[.8.;.] , 1') # Same as above, drum type
 ```
 
 

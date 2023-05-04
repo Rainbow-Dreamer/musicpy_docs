@@ -142,7 +142,10 @@ write(current_chord,
       save_as_file=True,
       msg=None,
       nomsg=False,
-      ticks_per_beat=960,
+      ticks_per_beat=None,
+      ignore_instrument=False,
+      ignore_bpm=False,
+      ignore_track_names=False,
       **midi_args)
 ```
 
@@ -166,7 +169,13 @@ write(current_chord,
 
 * nomsg: set whether write other MIDI messages to MIDI file or not, if set to True, then not written
 
-* ticks_per_beat: ticks per beat of the MIDI file, set this higher to get higher resolution
+* ticks_per_beat: ticks per beat of the MIDI file, set this higher to get higher resolution, if set to None, use default value 960
+
+* ignore_instrument: ignore the self-contained instruments, do not add additional program change events
+
+* ignore_bpm: ignore the self-contained bpm, do not add additional tempo change events
+
+* ignore_track_names: ignore the self-contained track names, do not add additional track name change events
 
 * midi_args: other arguments for MIDI file, please refer to [mido documentation](https://mido.readthedocs.io/en/latest/lib.html#midi-files) for details
 

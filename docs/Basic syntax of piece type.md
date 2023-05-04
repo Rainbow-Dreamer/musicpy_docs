@@ -93,10 +93,10 @@ new_piece = piece(tracks=[C1, C2, C3, C4],
 >>> new_piece
 [piece] 
 BPM: 120
-track 1 piano | instrument: Acoustic Grand Piano | start time: 0 | chord(notes=[G4, D5, B5, F#5, G4, D5, B5, F#5, G4, D5, ...], interval=[1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, ...], start_time=0)
-track 2 bass | instrument: Electric Bass (finger) | start time: 2 | chord(notes=[C2, C2, G1, G1, C2, C2, G1, G1], interval=[1, 1, 1, 1, 1, 1, 1, 1], start_time=0)
-track 3 harp | instrument: Orchestral Harp | start time: 2 | chord(notes=[F#6, G6, F#6, G6, F#6, G6, F#6, G6, F#6, G6, ...], interval=[1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, ...], start_time=0)
-track 4 drum | instrument: Synth Drum | start time: 6 | chord(notes=[G3, G3, G3, G3, G3, G3, G3, G3, G3, G3, ...], interval=[3/8, 1/8, 1/4, 1/4, 3/8, 1/8, 1/4, 1/4, 3/8, 1/8, ...], start_time=0)
+track 0 | channel: None | track name: piano | instrument: Acoustic Grand Piano | start time: 0 | content: chord(notes=[G4, D5, B5, F#5, G4, D5, B5, F#5, G4, D5, ...], interval=[1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, ...], start_time=0)
+track 1 | channel: None | track name: bass | instrument: Electric Bass (finger) | start time: 2 | content: chord(notes=[C2, C2, G1, G1, C2, C2, G1, G1], interval=[1, 1, 1, 1, 1, 1, 1, 1], start_time=0)
+track 2 | channel: None | track name: harp | instrument: Orchestral Harp | start time: 2 | content: chord(notes=[F#6, G6, F#6, G6, F#6, G6, F#6, G6, F#6, G6, ...], interval=[1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, ...], start_time=0)
+track 3 | channel: None | track name: drum | instrument: Synth Drum | start time: 6 | content: chord(notes=[G3, G3, G3, G3, G3, G3, G3, G3, G3, G3, ...], interval=[3/8, 1/8, 1/4, 1/4, 3/8, 1/8, 1/4, 1/4, 3/8, 1/8, ...], start_time=0)
 ```
 
 If there are drum tracks, you can set its corresponding channel to 9, so that the instrument can choose the type of drums specialized in General Midi, such as Standard, Room, Electronic, etc.
@@ -206,7 +206,7 @@ b = a * n
 >>> a[0]
 [track] 
 BPM: 150
-channel 0 piano | instrument: Acoustic Grand Piano | start time: 0 | chord(notes=[C4, E4, G4, B4], interval=[0, 0, 0, 0], start_time=0)
+channel: None | track name: None | instrument: Acoustic Grand Piano | start time: 0 | content: chord(notes=[C4, E4, G4, B4], interval=[0, 0, 0, 0], start_time=0)
 
 # Use the syntax of a(n) to get the chord type of the nth track
 >>> a(0)
@@ -390,7 +390,7 @@ a.clear_other_messages('program_change') # clear other MIDI messages of type pro
 
 ## Quickly change the instruments of tracks of the piece type
 
-You can use the `change_instruments` function of a track type to quickly change the instruments of each track of the track type as a whole or the instruments of a single track without having to modify the `instruments` and `instruments_numbers` properties to make changes to the instruments of the track. You can pass in the instrument name or the MIDI number of the instrument, and you can do the replacement of instruments for all tracks as a whole, or specify the replacement of instruments for a particular track. Note: If you want to change the instrument of a track by modifying the attributes, you have to change the MIDI numbers in `instruments_numbers`, because they are the real valid messages when writing to the MIDI file, and changes to `instruments` only affect the instrument names when the track type is displayed.
+You can use the `change_instruments` function of a track type to quickly change the instruments of each track of the track type as a whole or the instruments of a single track without having to modify the `instruments` properties to make changes to the instruments of the track. You can pass in the instrument name or the MIDI number of the instrument, and you can do the replacement of instruments for all tracks as a whole, or specify the replacement of instruments for a particular track.
 
 ```python
 change_instruments(instruments, ind=None)
@@ -405,15 +405,15 @@ piece1 = P([C('C'), C('D')], [1, 49])
 >>> piece1
 [piece] 
 BPM: 120
-track 1 | instrument: Acoustic Grand Piano | start time: 0 | chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
-track 2 | instrument: String Ensemble 1 | start time: 0 | chord(notes=[D4, F#4, A4], interval=[0, 0, 0], start_time=0)
+track 0 | channel: None | track name: None | instrument: Acoustic Grand Piano | start time: 0 | content: chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
+track 1 | channel: None | track name: None | instrument: String Ensemble 1 | start time: 0 | content: chord(notes=[D4, F#4, A4], interval=[0, 0, 0], start_time=0)
 
 piece1.change_instruments([2, 47]) # Change the instrument of the overall track
 >>> piece1
 [piece] 
 BPM: 120
-track 1 | instrument: Bright Acoustic Piano | start time: 0 | chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
-track 2 | instrument: Orchestral Harp | start time: 0 | chord(notes=[D4, F#4, A4], interval=[0, 0, 0], start_time=0)
+track 0 | channel: None | track name: None | instrument: Bright Acoustic Piano | start time: 0 | content: chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
+track 1 | channel: None | track name: None | instrument: Orchestral Harp | start time: 0 | content: chord(notes=[D4, F#4, A4], interval=[0, 0, 0], start_time=0)
 
 # Or you can write
 piece1.change_instruments(['Bright Acoustic Piano', 'Orchestral Harp'])
@@ -422,8 +422,8 @@ piece1.change_instruments(5, 0) # Change the instrument on track 1 to the MIDI n
 >>> piece1
 [piece] 
 BPM: 120
-track 1 | instrument: Electric Piano 1 | start time: 0 | chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
-track 2 | instrument: Orchestral Harp | start time: 0 | chord(notes=[D4, F#4, A4], interval=[0, 0, 0], start_time=0)
+track 0 | channel: None | track name: None | instrument: Electric Piano 1 | start time: 0 | content: chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
+track 1 | channel: None | track name: None | instrument: Orchestral Harp | start time: 0 | content: chord(notes=[D4, F#4, A4], interval=[0, 0, 0], start_time=0)
 
 # Or you can write
 piece1.change_instruments('Electric Piano 1', 0)
@@ -578,17 +578,17 @@ a = P([C('C'), C('Cmaj7')])
 You can use `get_off_drums` function of the piece type to exclude the drum tracks of a piece type. This function works when the channels attribute is not None.
 
 ```python
-a = P([C('C'), drum('0,1,2,1').notes], channels=[0, 9])
+a = P([C('C'), drum('K,H,S,H').notes], channels=[0, 9])
 
 >>> a
 [piece] 
 BPM: 120
-track 1 channel 0 | instrument: Acoustic Grand Piano | start time: 0 | chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
-track 2 channel 9 | instrument: Acoustic Grand Piano | start time: 0 | chord(notes=[C2, F#2, E2, F#2], interval=[1/8, 1/8, 1/8, 1/8], start_time=0)
+track 0 | channel: 0 | track name: None | instrument: Acoustic Grand Piano | start time: 0 | content: chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
+track 1 | channel: 9 | track name: None | instrument: Acoustic Grand Piano | start time: 0 | content: chord(notes=[C2, F#2, E2, F#2], interval=[1/8, 1/8, 1/8, 1/8], start_time=0)
 
 >>> a.get_off_drums()
 >>> a
 [piece] 
 BPM: 120
-track 1 channel 0 | instrument: Acoustic Grand Piano | start time: 0 | chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
+track 0 | channel: 0 | track name: None | instrument: Acoustic Grand Piano | start time: 0 | content: chord(notes=[C4, E4, G4], interval=[0, 0, 0], start_time=0)
 ```
