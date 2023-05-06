@@ -1376,11 +1376,24 @@ eval_time(bpm, ind1=None, ind2=None, mode='seconds', start_time=0)
 If we want to extract a slice of a chord type from bar 6 to bar 8, we can use the built-in function ``cut``
 
 ```python
-cut(ind1=0, ind2=None, start_time=0)
-# ind1, ind2: the range of the number of bars to extract, ind2 if not set, then extract to the end, ind1 default value is 0, that is, from the beginning of bar 0 to extract.
+cut(ind1=0,
+    ind2=None,
+    start_time=0,
+    return_inds=False,
+    mode=0)
+
+# ind1, ind2: the range of the number of bars to extract, ind2 if not set, then extract to the end, ind1 default value is 0, that is, from the beginning of bar 0 to extract
+
 # start_time: When reading a MIDI file, the notes of a MIDI channel will have their own start time, which can be set here as a chord type delay, the unit here is bars
+
+# return_inds: If set to True, returns the indexes of the notes that start and end in the extracted bar range
+
+# mode: the cut function by default includes all notes that start within the specified bar range (excluding the right endpoint), independent of note length, so there may be cases where the note length exceeds the bar range, if mode is 1, then the note length of notes that exceed the bar range will be adjusted
+
 # The cut function returns a new chord type with a slice in the range of the specified number of bars
+
 a.cut(6, 8)
+
 # Extracts the part of the chord type a from the 6th bar to the 8th bar (from the beginning of the 6th bar to the beginning of the 8th bar)
 ```
 
@@ -1391,6 +1404,19 @@ a.cut(6, 8)
 Use the built-in function ``bars`` to get the total number of bars of a chord type
 
 ```python
+bars(start_time=0,
+     mode=1,
+     audio_mode=0,
+     bpm=None)
+
+# start_time: additional start time
+
+# mode: if 0, calculated as the sum of all note intervals; if 1, calculated as the maximum distance the notes in the chord can reach, taking note duration into account (without taking the last note interval into account); if 2, taking the last note interval into account in the case of 1
+
+# audio_mode: if 1, the time length of the pydub AudioSegment instance in the note list is converted to the note length
+
+# bpm: bpm when calculating the note length corresponding to the time length of the pydub AudioSegment instance
+
 a = C('Cmaj7') | C('Dm7') | C('E9sus') | C('Amaj9', 3)
 >>> a.bars()
 1.0
