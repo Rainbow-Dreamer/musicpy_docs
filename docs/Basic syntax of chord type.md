@@ -13,7 +13,6 @@
 - [Generate chord types according to the interval relationship](#generate-chord-types-according-to-the-interval-relationship)
 - [Chord representation](#chord-representation)
 - [Get the inversion of a chord](#get-the-inversion-of-a-chord)
-- [Splicing of two chords](#splicing-of-two-chords)
 - [Adding notes to a chord](#adding-notes-to-a-chord)
 - [Removing a note from a chord](#removing-a-note-from-a-chord)
 - [Repeating a chord a certain number of times](#repeating-a-chord-a-certain-number-of-times)
@@ -24,7 +23,7 @@
 - [Sequencing a chord](#sequencing-a-chord)
 - [Transpose a chord (or a piece)](#transpose-a-chord-or-a-piece)
 - [Get the names of all notes of a chord](#get-the-names-of-all-notes-of-a-chord)
-- [Merge and join two chords or two musical fragments (voices merge, voices splice)](#merge-and-join-two-chords-or-two-musical-fragments-voices-merge-voices-splice)
+- [Merge and join two chords or two musical fragments (voices merge, voices concatenate)](#merge-and-join-two-chords-or-two-musical-fragments-voices-merge-voices-concatenate)
 - [Making changes to the notes within a chord](#making-changes-to-the-notes-within-a-chord)
 - [Deleting some notes of a chord, or inserting a new note in a certain position](#deleting-some-notes-of-a-chord-or-inserting-a-new-note-in-a-certain-position)
 - [Adding a lowest note to a chord (adding a bass note)](#adding-a-lowest-note-to-a-chord-adding-a-bass-note)
@@ -555,18 +554,6 @@ Which is the second inversion of the A minor seventh chord.
 
 
 
-## Splicing of two chords
-
-If you want to splice two chords (say a and b), then you just need
-
-```python
-a + b
-```
-
-and that's it. What you get is the new chord after splicing.
-
-
-
 ## Adding notes to a chord
 
 If you want to add a note x to chord A, then just
@@ -906,9 +893,9 @@ and you get
 
 
 
-## Merge and join two chords or two musical fragments (voices merge, voices splice)
+## Merge and join two chords or two musical fragments (voices merge, voices concatenate)
 
-The built-in function add of the chord type can merge two chords (or two music fragments).
+The built-in function `add` of the chord type can merge two chords (or two music fragments).
 For example, there are two pieces of music (the chord type itself can also be a piece of music) A and B.
 
 The parameter mode can be used to select the mode of merging.
