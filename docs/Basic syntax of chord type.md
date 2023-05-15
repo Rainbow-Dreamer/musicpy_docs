@@ -54,7 +54,6 @@
 - [Unify all sharp and flat signs of notes of a chord type](#unify-all-sharp-and-flat-signs-of-notes-of-a-chord-type)
 - [Re-quantize the chord type with note duration and note interval according to the tempo change inside](#re-quantize-the-chord-type-with-note-duration-and-note-interval-according-to-the-tempo-change-inside)
 - [Calculating the range of bars between two indices in a chord type](#calculating-the-range-of-bars-between-two-indices-in-a-chord-type)
-- [Extracting real-time tempo changes or pitch bends in a chord type](#extracting-real-time-tempo-changes-or-pitch-bends-in-a-chord-type)
 - [Building a chord progression](#building-a-chord-progression)
 - [View information about the musical analysis of a chord type](#view-information-about-the-musical-analysis-of-a-chord-type)
 - [Getting a chord type for a sus](#getting-a-chord-type-for-a-sus)
@@ -1357,7 +1356,14 @@ a = C('Cmaj7') | C('Dm7') | C('E9sus') | C('Amaj9', 3)
 >>> a.eval_time(80)
 '3.0s'
 
-eval_time(bpm, ind1=None, ind2=None, mode='seconds', start_time=0)
+eval_time(bpm,
+          ind1=None,
+          ind2=None,
+          mode='seconds',
+          start_time=0,
+          normalize_tempo=False,
+          audio_mode=0)
+
 # bpm: the specified speed BPM
 
 # ind1, ind2: select the bar interval, 0 as the first bar, if not set then default to the whole song
@@ -1367,6 +1373,10 @@ eval_time(bpm, ind1=None, ind2=None, mode='seconds', start_time=0)
 # or 'number' to return the float of time in seconds
 
 # start_time: the start time of the chord
+
+# normalize_tempo: whether to normalize tempo changes or not
+
+# audio_mode: refer to the parameter of bars function
 ```
 
 
@@ -1379,16 +1389,19 @@ If we want to extract a slice of a chord type from bar 6 to bar 8, we can use th
 cut(ind1=0,
     ind2=None,
     start_time=0,
-    return_inds=False,
-    mode=0)
+    cut_extra_duration=False,
+    cut_extra_interval=False,
+    round_duration=False)
 
 # ind1, ind2: the range of the number of bars to extract, ind2 if not set, then extract to the end, ind1 default value is 0, that is, from the beginning of bar 0 to extract
 
 # start_time: When reading a MIDI file, the notes of a MIDI channel will have their own start time, which can be set here as a chord type delay, the unit here is bars
 
-# return_inds: If set to True, returns the indexes of the notes that start and end in the extracted bar range
+# cut_extra_duration: the cut function by default includes all notes that start within the specified bar range (excluding the right endpoint), independent of note length, so there may be cases where the note length exceeds the bar range, if set to True, then the note length of notes that exceed the bar range will be adjusted
 
-# mode: the cut function by default includes all notes that start within the specified bar range (excluding the right endpoint), independent of note length, so there may be cases where the note length exceeds the bar range, if mode is 1, then the note length of notes that exceed the bar range will be adjusted
+# cut_extra_interval: if set to True, adjust the note intervals that exceed the bar range
+
+# round_duration: if set to True, remove the note when the adjusted note duration has a very small value
 
 # The cut function returns a new chord type with a slice in the range of the specified number of bars
 
@@ -1541,28 +1554,6 @@ bar_length = a.count_bars(2, 10, False)
 >>> print(bar_length)
 6
 # The values here are for example only
-```
-
-
-
-## Extracting real-time tempo changes or pitch bends in a chord type
-
-Using the built-in function `split` of a chord type, you can extract any music theory type contained in a chord type, i.e. from the list of notes of the chord type.  
-This function makes it easy to extract note types, tempo types, pitch_bend types, and other musical types from a chord type by passing in the type name.
-
-```python
-split(return_type, get_time=False, sort=False)
-# return_type is the musicpy data structure you want to extract, and the return value is the chord type consisting of this music theory type contained in the list of notes in the specified chord type.
-# get_time is True to calculate the start time for a tempo type or a pitch_bend type that does not have a specified start time, and to specify the start time.
-# sort is True to sort the tempo types or pitch_bend types in order of their start times.
-a = chord(['A5', 'B5', 'C5', tempo(150), 'D5', pitch_bend(50), 'E5', 'F5', tempo(170)])
->>> print(a.split(tempo))
-chord(notes=[tempo(bpm=150, start_time=None, channel=None, track=None), tempo(bpm=170, start_time=None, channel=None, track=None)], interval=[0, 0], start_time=0)
->>> print(a.split(pitch_bend))
-chord(notes=[pitch_bend(value=2048, start_time=None, channel=None, track=None, cents=50)], interval=[0], start_time=0)
->>> print(a.split(note))
-chord(notes=[A5, B5, C5, D5, E5, F5], interval=[0, 0, 0, 0, 0, 0], start_time=0)
-# The chord type returned is the set of music types you want to extract and can be used as a list.
 ```
 
 

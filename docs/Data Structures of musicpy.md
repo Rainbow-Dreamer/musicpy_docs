@@ -257,7 +257,7 @@ There are detailed introductions of drum type in `Basic syntax of drum type`.
 
 ## tempo
 
-The tempo type can be used to change the tempo of the current piece in real time (BPM). Instances of the tempo type can be inserted as note types into chord types, and the tempo of the current piece can be changed between any two note types, or you can set your own start time in bars, so that you can set a more precise start time for the tempo change. The tempo types can be applied to chord types, piece types and track types, and are also stored as MIDI events in the MIDI file after being written to it.
+The tempo type can be used to change the tempo (BPM) of the current piece in real time. Instances of the tempo type must be placed in the `tempos` list of the chord type, setting the time in bars at which the change begins. The tempo type can act on chord types, piece types and track types, and is also stored as a MIDI event in the MIDI file after it has been written to it.
 
 There are detailed introductions of tempo type in `Basic syntax of tempo type`.
 
@@ -265,7 +265,7 @@ There are detailed introductions of tempo type in `Basic syntax of tempo type`.
 
 ## pitch_bend
 
-The pitch_bend type can be used to change the pitch of notes of a fragment in real time, allowing very subtle pitch changes. Like the tempo type, the pitch_bend type can be inserted into a chord type as a note type, or you can set your own time, in bars, when the pitch change begins. The pitch_bend types can be applied to chord types, piece types and track types, and are also stored as MIDI events in the MIDI file after being written to it.
+The pitch_bend type can be used to change the pitch of the notes of a segment in real time, which can be very subtle. Instances of the velocity type must be placed in the `pitch_bends` list of the chord type, setting the time in bars at which the change begins. pitch_bend types can act on chord types, piece types and track types, and is also stored as a MIDI event in the MIDI file after it has been written to it.
 
 There are detailed introductions of pitch_bend type in `Basic syntax of pitch_bend type`.
 

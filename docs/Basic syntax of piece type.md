@@ -228,21 +228,18 @@ b = a - 2
 b = a.up(mode=1)
 
 # You can add a real-time speed change to the specified position
-a.add_tempo_change(bpm=100, start_time=None, ind=None, track_ind=None)
+a.add_tempo_change(bpm=100, start_time=0, track_ind=0)
 # bpm: the speed you want to change to, in BPM
-# start_time: time when the speed change occurs, in bars, if not set then ind prevails
-# ind: the position where the tempo change message is inserted, needs to be used with track_ind
+# start_time: time when the speed change occurs, in bars
 # track_ind: you can choose how many MIDI channels to insert the tempo change message, with 0 as the first MIDI channel, ind is the selected MIDI channel in the first position
-# If ind and track_ind are not set, then by default the tempo change message is added to the end of the first MIDI channel
 
 # You can add real-time pitch bend to the specified position (pitch bend can simulate the effect of note bend, glissando, vibrato, etc.)
-a.add_pitch_bend(value, start_time=0, channel='all', track=0, mode='cents', ind=None)
-# value: the amount of pitch change of the note
+a.add_pitch_bend(value, start_time=0, channel='all', track=0, mode='cents')
+# value: the value of pitch change of the note
 # start_time: the time at which the pitch change of the note occurs, in bars
 # channel: select the channel to insert the pitch bend message into, 0 is the first MIDI channel, if 'all' then the same pitch bend message is inserted into all MIDI channels
-# track: MIDI track, normally no need to set it
+# track: MIDI track
 # mode: the unit of the pitch bend messages, as explained in detail before
-# ind: the position where the pitch bend messages is inserted, if start_time is set, then the position of start_time is used
 
 # View the number of MIDI channels of the piece type
 >>> len(a)
