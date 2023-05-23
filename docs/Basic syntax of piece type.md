@@ -147,7 +147,7 @@ new_piece = piece([A1, B1, C1, D1],
 
 Using the `build` function, it is possible to construct piece types with an alternative syntax, one that puts all the information for one track in a list as track 1, all the information for the next track in the next list as track 2 and so on, with the order of the parameters for each track's information being:  
 
-`[chord type, instrument (optional), start time (in bars) (optional), track number (optional), track name (optional), pan (optional), volume (optional)]`  
+`[chord type, instrument (optional), start time (in bars) (optional), channel number (optional), track name (optional), pan (optional), volume (optional), daw channel number (optional)]`  
 
 The build function can receive a list of any number of tracks. The default value for the speed of the track (BPM) is 120. To specify the tempo of the piece, you must use the keyword argument `bpm`, other parameters of the piece type could also be specified using the keyword arguments, which can be written, for example, as
 
