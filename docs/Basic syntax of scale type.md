@@ -142,12 +142,18 @@ The syntax is similar to numbered musical notation:
 get(current_ind,
     default_duration=1 / 8,
     default_interval=1 / 8,
-    default_volume=100)
+    default_volume=100,
+    pitch_mode=0)
 
 # current_ind: a string which contains all the notes you want to get
+
 # default_duration: default duration of each note
+
 # default_interval: default interval of each note
+
 # default_volume: default volume of each note
+
+# pitch_mode: if set to 0, when choose scale degree from 1 to 7, the octave number is fixed, so there are cases that higher scale degree has lower pitch than lower scale degree in some scales; if set to 1, only the 1st scale degree's octave number is fixed, the higher scale degree's pitch will be calculated from the scale intervals
 ```
 
 Here is an example of how to use `get` method of scale type.
