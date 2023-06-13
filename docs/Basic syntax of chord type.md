@@ -1391,7 +1391,8 @@ cut(ind1=0,
     start_time=0,
     cut_extra_duration=False,
     cut_extra_interval=False,
-    round_duration=False)
+    round_duration=False,
+    round_cut_interval=False)
 
 # ind1, ind2: the range of the number of bars to extract, ind2 if not set, then extract to the end, ind1 default value is 0, that is, from the beginning of bar 0 to extract
 
@@ -1402,6 +1403,8 @@ cut(ind1=0,
 # cut_extra_interval: if set to True, adjust the note intervals that exceed the bar range
 
 # round_duration: if set to True, remove the note when the adjusted note duration has a very small value
+
+# round_cut_interval: if set to True, when calculating the interval, if it is very close to ind2, round the interval to ind2
 
 # The cut function returns a new chord type with a slice in the range of the specified number of bars
 
