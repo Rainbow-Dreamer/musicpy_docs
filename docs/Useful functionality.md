@@ -22,6 +22,8 @@
 - [Modify the properties of the music theory type and return the new piece type](#modify-the-properties-of-the-music-theory-type-and-return-the-new-music-theory-type)
 - [Convert music data structures to JSON format](#convert-music-data-structures-to-json-format)
 - [Reading and writing musicxml files](#reading-and-writing-musicxml-files)
+- [Convert music data structures to yaml format](#convert-music-data-structures-to-yaml-format)
+- [Serialize music data structures to a dictionary](#serialize-music-data-structures-to-a-dictionary)
 
 
 
@@ -501,9 +503,7 @@ write_json(current_chord,
            start_time=None,
            filename='untitled.json',
            instrument=None,
-           i=None,
-           msg=None,
-           nomsg=False)
+           i=None)
 ```
 
 * filename: the file name of the converted JSON file
@@ -542,4 +542,29 @@ write_musicxml(current_chord, filename, save_musicxml_args={})
 * current_chord: the music data structure you want to write
 * filename: the file name of the musicxml file
 * save_musicxml_args: the dictionary of keyword arguments passed to `partitura.save_musicxml` function
+
+
+
+## Convert music data structures to yaml format
+
+You can convert music data structures to yaml files as a more portable storage method, and read from the yaml files to get the music data structures stored in them.
+
+Use `write_yaml` function to convert a music data structure into a yaml file. The parameters and their usages are the same as `write_json` function. 
+
+Use `read_yaml` function  to read a yaml file that is exported by `write_yaml` function and extract the music data structure stored in it. The return value is a piece instance.
+
+
+
+## Serialize music data structures to a dictionary
+
+You can use `to_dict` function to serialize music data structures to a dictionary, which could be used to output as JSON, yaml and other portable formats. The parameters and usages are similar to `write` function, the supported data structures including note, chord, piece, track, drum. During the conversion, all of the data structures will be converted to piece instances for brevity. The return value is a dictionary.
+
+```python
+to_dict(current_chord,
+        bpm=120,
+        channel=0,
+        start_time=None,
+        instrument=None,
+        i=None)
+```
 
