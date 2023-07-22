@@ -29,6 +29,8 @@ In this chapter, we will introduce some of the most important and most commonly 
   - [rest_symbol](#rest_symbol)
   - [continue_symbol](#continue_symbol)
   - [rhythm](#rhythm)
+  - [Interval](#interval)
+  - [chord_type](#chord_type)
 
 
 
@@ -393,4 +395,112 @@ A rhythm instance can be applied to a chord instance to change the intervals and
 You can think of this data structure as a higher level abstraction of the drum type.
 
 There are detailed introductions of rhythm type in `Basic syntax of rhythm type`.
+
+
+
+## Interval
+
+This is a data structure that represents a pitch interval, such as major third, perfect fifth in music theory.
+
+These pitch intervals are stored in `database` module, each pitch interval has several ways to retrieve, such as abbreviation like `P5, M3, m7` (perefect fifth, major third, minor seventh), or full name like `perfect_fifth, major_third, minor_seventh`.
+
+You can add or subtract pitch interval from a note or a chord, which will raise or lower the note or chord by the given pitch interval, for example:
+
+```python
+note1 = N('C4')
+
+>>> note1 + database.m3
+Eb4
+
+>> note1 - database.m3
+A3
+
+chord1 = C('Cmaj7', pitch=4)
+
+>>> chord1 + database.m3
+chord(notes=[Eb4, G4, Bb4, D5], interval=[0, 0, 0, 0], start_time=0)
+
+>>> chord1 - database.m3
+chord(notes=[A3, C#4, E4, G#4], interval=[0, 0, 0, 0], start_time=0)
+```
+
+### The composition of Interval type
+
+```python
+Interval(number, quality, name=None, direction=1)
+```
+
+* number: the interval number, should be an integer between 1 and 17
+* quality: the interval quality, should be one of` ['P', 'M', 'm', 'd', 'A', 'dd', 'AA'] ` or multiples of each
+* name: the name of the pitch interval
+* direction: the direction of the pitch interval, set to 1 to be positive, -1 to be negative
+
+You can initialize a pitch interval instance like this:
+
+```python
+interval1 = database.Interval(number=3, quality='M')
+>>> interval1
+M3
+```
+
+
+
+## chord_type
+
+This is a data structure that represents how a chord is derived in details, include the root note, chord type, inversions, omissions, alternations, chord voicings, compound chords and so on. This data structure is currently used mainly in the chord analysis functions in algorithm module, which helps to store the informations and procedures of how a set of notes turn into a chord in the desired order.
+
+### The composition of chord_type type
+
+```python
+root: str = None
+chord_type: str = None
+chord_speciality: str = 'root position'
+inversion: int = None
+omit: list = None
+altered: list = None
+non_chord_bass_note: str = None
+voicing: list = None
+type: str = 'chord'
+note_name: str = None
+interval_name: str = None
+polychords: list = None
+order: list = None
+```
+
+* root: the root note of the chord
+
+* chord_type: the chord type of the chord, such as `maj7`, `maj9`
+
+* chord_speciality: the speciality of the chord, could be one of `root position`, `inverted chord`, `altered chord`, `chord voicings`, `polychord`
+
+* inversion: the inversion number of the chord if it is a inverted chord
+
+* omit: the omitted notes of the chord
+
+* altered: the altered notes of the chord
+
+* non_chord_bass_note: the non-chord bass note of the chord
+
+* voicing: the voicing of the chord
+
+* type: the type to differentiate a single note, pitch interval and chord
+
+* note_name: the note name if type is a single note
+
+* interval_name: the interval name if type is a pitch interval
+
+* polychords: the list of chord_type instances if it is a polychord
+
+* order: a list of integers that represents the derivation order of the chord, the meanings of the integers are:
+
+  ```
+  0: omit some notes
+  1: alter some notes
+  2: inversion
+  3: chord voicing
+  4: add a non-chord bass note
+  ```
+
+
+Use `to_text` method of a chord_type instance to get the full chord name, `to_chord` method to get the chord derived from the stored information, `get_root_position` to get the root position chord name.
 

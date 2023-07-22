@@ -617,27 +617,27 @@ Note that chord A here is not necessarily just a chord in music theory, but can 
 
 ## Get the interval relationship of a chord
 
-The intervalof function returns the interval relationship between the constituent notes of a chord. When the parameter cumulative is set to True, return the interval between each note and the root note, False to return the interval between every two adjacent notes. The default value is True, e.g.
+The `intervalof` function returns the interval relationship between the notes of a chord. When the parameter `cumulative` is set to `True`, return the interval between each note and the root note, `False` to return the interval between every two adjacent notes. The default value is `True`, e.g.
 
 ```python
 get_chord('C','maj').intervalof()
 ```
 
-You will get [4,7], which means that there are four semitones between the second note and the root note inside the C major triad (C,E,G) (major third), and seven semitones between the third note and the root note (perfect fifth). If you want to see the names of the intervals in music theory, then you can set the parameter translate to True, then you can see the names of the corresponding intervals. For example.
+You will get `[4, 7]`, which means that there are four semitones between the second note and the root note inside the C major triad (C,E,G) (major third), and seven semitones between the third note and the root note (perfect fifth). If you want to see the names of the intervals in music theory, then you can set the parameter `translate` to `True`, then you can see the names of the corresponding intervals. For example.
 
 ```python
 get_chord('C','maj').intervalof(translate=True)
 ```
 
-will get ['major third', 'perfect fifth'], which means major third and perfect fifth.
+will get `[M3, P5]`, which means major third and perfect fifth.
 
-When cumulative is set to False returns the interval between every two notes of the chord from low to high, e.g.
+When `cumulative` is set to `False`, returns the interval between every two notes of the chord from low to high, e.g.
 
 ```python
 get_chord('C','maj').intervalof(translate=True, cumulative=False)
 ```
 
-will get ['major third', 'minor third'], which means that a C major third chord is composed of a major third and a minor third.
+will get `[M3, m3]`, which means that a C major triad is composed of a major third and a minor third.
 
 
 

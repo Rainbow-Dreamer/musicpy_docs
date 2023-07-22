@@ -18,7 +18,6 @@
 - [Added the ability to read other types of MIDI messages](#added-the-ability-to-read-other-types-of-midi-messages)
 - [Improvement of the function to clear tempo changes and pitch bends for chord type and piece type](#improvement-of-the-function-to-clear-tempo-changes-and-pitch-bends-for-chord-type-and-piece-type)
 - [Stop all currently playing sounds](#stop-all-currently-playing-sounds)
-- [Use of interval names](#use-of-interval-names)
 - [Modify the properties of the music theory type and return the new piece type](#modify-the-properties-of-the-music-theory-type-and-return-the-new-music-theory-type)
 - [Convert music data structures to JSON format](#convert-music-data-structures-to-json-format)
 - [Reading and writing musicxml files](#reading-and-writing-musicxml-files)
@@ -428,48 +427,6 @@ You can use the `stopall` function to stop all currently playing sounds, specifi
 ```python
 play(C('C') * 8)
 stopall() # Stop the currently playing sound
-```
-
-
-
-## Use of interval names
-
-There is a complete definition of interval names from database module in musicpy. For example, the value of `major_third` (major third) is 4 (semitones), and the value of `perfect_eleventh` (complete elevenths) is 17 (semitones) ).
-In addition, the definition of abbreviated interval names has recently been added. For example, you can use `M3` instead of `major_third` (major third), `m3` instead of `minor_third` (small third),
-`M7` instead of `major_seventh` (major_seventh) and so on. Here I will show the complete definition of interval names in musicpy, where all interval names can be used like `database.major_third`.
-
-```python
-perfect_unison = diminished_second = P1 = d2 = 0
-minor_second = augmented_unison = m2 = A1 = 1
-major_second = diminished_third = M2 = d3 = 2
-minor_third = augmented_second = m3 = A2 = 3
-major_third = diminished_fourth = M3 = d4 = 4
-perfect_fourth = augmented_third = P4 = A3 = 5
-diminished_fifth = augmented_fourth = tritone = d5 = A4 = 6
-perfect_fifth = diminished_sixth = P5 = d6 = 7
-minor_sixth = augmented_fifth = m6 = A5 = 8
-major_sixth = diminished_seventh = M6 = d7 = 9
-minor_seventh = augmented_sixth = m7 = A6 = 10
-major_seventh = diminished_octave = M7 = d8 = 11
-perfect_octave = octave = augmented_seventh = diminished_ninth = P8 = A7 = d9 = 12
-minor_ninth = augmented_octave = m9 = A8 = 13
-major_ninth = diminished_tenth = M9 = d10 = 14
-minor_tenth = augmented_ninth = m10 = A9 = 15
-major_tenth = diminished_eleventh = M10 = d11 = 16
-perfect_eleventh = augmented_tenth = P11 = A10 = 17
-diminished_twelfth = augmented_eleventh = d12 = A11 = 18
-perfect_twelfth = tritave = diminished_thirteenth = P12 = d13 = 19
-minor_thirteenth = augmented_twelfth = m13 = A12 = 20
-major_thirteenth = diminished_fourteenth = M13 = d14 = 21
-minor_fourteenth = augmented_thirteenth = m14 = A13 = 22
-major_fourteenth = diminished_fifteenth = M14 = d15 = 23
-perfect_fifteenth = double_octave = augmented_fourteenth = P15 = A14 = 24
-minor_sixteenth = augmented_fifteenth = m16 = A15 = 25
-major_sixteenth = diminished_seventeenth = M16 = d17 = 26
-minor_seventeenth = augmented_sixteenth = m17 = A16 = 27
-major_seventeenth = M17 = 28
-semitone = halfstep = 1
-wholetone = wholestep = tone = 2
 ```
 
 
