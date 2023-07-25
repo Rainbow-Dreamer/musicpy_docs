@@ -79,7 +79,7 @@ You can convert an integer to a note using the degree_to_note function, for exam
 degree_to_note(60)
 ```
 
-Gets a note type C5.
+get a note type C4.
 
 
 To get the number of pitches of a note type a, you just need
