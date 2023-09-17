@@ -35,4 +35,4 @@ nav:
     - Frequently Asked Questions:
       - Frequently Asked Questions: Frequently Asked Questions.md
 theme:
-  name: readthedocs
+  name: mkdocs
