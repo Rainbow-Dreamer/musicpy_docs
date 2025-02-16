@@ -201,6 +201,59 @@ a = piece(tracks=[A1, B1, C1, D1],
 # If you want to repeat this track type exactly n times, then you can write
 b = a * n
 
+# If you want to repeat the piece type exactly n times with an additional interval of i bars, then you can write
+b = a * (n, i)
+
+# Add an i-bar interval to the end of the song type.
+a = a | i
+
+# Splice the two music types back and forth
+c = a | b
+
+# Splice two piece types forward and backward and add an additional i-bar interval
+c = a | (b, i)
+
+# Stack two music types up and down, starting from the top
+c = a & b
+
+# Stack two music types on top of each other, starting at measure i of the stacked music type.
+c = a & (b, i)
+
+# Stack the same music type up and down n times, each time delayed by i bars
+b = a & (n, i)
+
+# Function to merge two track types
+merge_track(n,
+            mode='after',
+            start_time=0,
+            ind_mode=1,
+            include_last_interval=False,
+            ignore_last_duration=False,
+            extra_interval=0)
+# n: the type of music to merge
+# mode: splice the music types if it's 'after', and overlay the music types if it's 'head'
+# start_time: the starting bar of the overlay when mode is 'head'
+# ind_mode: When merging music types, when the instrument of the current track of the merged music type can be found in the merged music type.
+# Set to '0' to merge to the first track with the same instrument, set to '1' to merge to the current track with the same serial number.
+# If the track number already exceeds the track length of the type of music being merged to, create a new track in the merged music to be merged.
+# include_last_interval: if or not to include the last interval of the track when calculating the length of the track.
+# ignore_last_duration: if or not to ignore the last note of the song when calculating the length of the song.
+# extra_interval: the extra interval after splicing when mode is 'after'.
+
+# Function to repeat a piece type n times
+repeat(n,
+       start_time=0,
+       include_last_interval=False,
+       ignore_last_duration=False,
+       ind_mode=1,
+       mode='after')
+# n: number of repetitions
+# start_time: the start bar of the piece overlay when mode is 'head', and the extra interval after the piece is spliced when mode is 'after'
+# include_last_interval: the same as merge_track
+# ignore_last_duration: Same as merge_track's parameter usage.
+# ind_mode: same as merge_track
+# mode: same as merge_track
+
 # You can use the index value to see the information of a channel of a piece type, 0 as the first channel
 # Using the syntax of a[n] you can get the nth track type
 >>> a[0]

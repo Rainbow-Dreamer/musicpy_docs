@@ -165,7 +165,7 @@ chord(notes,
 This class can represent a specific scale. Using this class you can quickly build a scale according to the interval of the notes, for example, the arrangement of the major notes is whole whole half whole whole whole half (whole for whole step, half for half step), so if you want to build a C major scale, you can write
 
 ```python
-scale('C5', interval=[2, 2, 1, 2, 2, 2, 2, 1], name='major')
+scale('C5', interval=[2, 2, 1, 2, 2, 2, 1], mode='major')
 ```
 
 This gives us the C major scale with C5 as the root note, expressed as follows
@@ -188,7 +188,7 @@ and you get the C major scale with C5 as the root note.
 ```python
 [scale]
 scale name: C5 major scale
-scale intervals: [2, 2, 1, 2, 2, 2, 2, 1]
+scale intervals: [M2, M2, m2, M2, M2, M2, m2]
 scale notes: [C5, D5, E5, F5, G5, A5, B5, C6]
 ```
 
@@ -203,8 +203,8 @@ Get the C minor scale with C5 as the root note.
 ```python
 [scale]
 scale name: C5 minor scale
-scale intervals: [2, 1, 2, 2, 2, 1, 2, 2]
-scale notes: [C5, D5, D#5, F5, G5, G#5, A#5, C6]
+scale intervals: [M2, m2, M2, M2, m2, M2, M2]
+scale notes: [C5, D5, Eb5, F5, G5, Ab5, Bb5, C6]
 ```
 
 etc.

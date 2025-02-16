@@ -261,6 +261,7 @@ Sometimes relative pitch can be more convenient when constructing chords without
 * Use `+no` to indicate that the previous note is raised by n octaves, and `+nom` to indicate that the previous note is raised by m semitones and then being raised by n octaves, which also supports the `++` syntax
 * Change the above syntax to `-` to lower pitch
 * Syntax using relative pitch must be preceded by at least one absolute pitch
+* The syntax `C4(+n)` can be used to indicate that the current note is n semitones higher with `C4` as the base note, and change to `-` to indicate n semitones lower, and the syntaxes `+no` and `+nom` are also supported
 
 Here are some examples:
 
@@ -272,6 +273,10 @@ chord(notes=[A#4, F5, G#5, C6, C#6, D#6, C#6, C6], interval=[1/8, 1/8, 1/8, 1/8,
 example2 = chord('C5, ++2, ++2, ++1, ++2', default_interval=1/8, default_duration=1/8)
 >> example2
 chord(notes=[C5, D5, E5, F5, G5], interval=[1/8, 1/8, 1/8, 1/8, 1/8], start_time=0)
+
+example3 = chord('C5(+1)[.8;.], E5, G5', default_interval=1/8, default_duration=1/8)
+>>> example3
+chord(notes=[C#5, E5, G5], interval=[1/8, 1/8, 1/8], start_time=0)
 ```
 
 
@@ -1203,7 +1208,7 @@ When False, if no chord type is passed in, then the negative harmonic scale type
 >>> alg.negative_harmony(scale('C', 'major'))
 [scale]
 scale name: C4 minor scale
-scale intervals: [2, 1, 2, 2, 1, 2, 2]
+scale intervals: [M2, A1, d3, M2, A1, M2, d3]
 scale notes: [C4, D4, D#4, F4, G4, G#4, A#4, C5]
 ```
 
@@ -1331,7 +1336,7 @@ guitar_chord(frets,
              duration=0.25,
              interval=0,
              **detect_args)
-# frets: A list of the number of frets from the lowest to the highest note of the 6 strings of your guitar, the number of frets is an integer, if it is an empty string write 0, if it is a non-playing string write None
+# frets: A list of the number of frets from the lowest to the highest note of the 6 strings of guitar, the number of frets is an integer, if it is an empty string write 0, if it is a non-playing string write None
 # return_chord: Whether or not to return the chord type, if False it will determine what chord is played by the number of frets you pressed and return the specific chord name, default is True.
 # tuning: the tuning of the guitar, the default value is the standard tuning of a 6-string guitar, you can also customize the tuning of your guitar
 # duration: a list of note durations for the type of chord returned
@@ -1343,6 +1348,37 @@ guitar_chord(frets,
 chord(notes=[C3, E3, G3, C4, E4], interval=[0, 0, 0, 0, 0], start_time=0)
 >>> alg.guitar_chord([None, 3, 2, 0, 1, 0], return_chord=True)
 'Cmajor'
+```
+
+
+
+You can use the `guitar_pattern` function of the Algorithm Library to get the guitar melody by the number of guitar frets, and the chord type by the number of frets of the 6 strings of the guitar and the guitar tuning standard (which can be left unset, defaulting to the standard 6-string guitar tuning), here is the syntax:
+
+The first parameter of the function is a string, separated by `,`, using `sn` to switch the current string to the `nth` string, which corresponds to strings 1-6 of the guitar (more strings are supported as well, just need to be supported by the guitar tuning standard), and using an integer to indicate the number of fret numbers that need to be played at the current time, and the same is also supported for the relative pitch syntax with the syntax for constructing a drum beat. Note that fret 0 will conflict with the default rest symbol `0` in the drum build syntax, which is currently interpreted as fret 0, so if you need to use a rest, use the `i:n` syntax, or change the drum mapping dictionary.
+
+```python
+guitar_pattern(frets,
+               tuning=database.guitar_standard_tuning,
+               default_duration=1 / 8,
+               default_interval=1 / 8,
+               default_volume=100,
+               mapping=database.drum_mapping)
+# frets: a string written according to the number of frets of the guitar
+# tuning: the tuning of the guitar, defaults to the standard tuning of a 6-string guitar, but you can customize the tuning to suit your needs
+# default_duration: The default note length for the returned chord type
+# default_interval: The default note interval for the returned chord type
+# default_volume: The default note volume for the returned chord type
+# mapping: a dictionary of drum mappings, customizable, default value is drum_mapping
+
+# For example, a standard C major triad chord in the first three frets of a guitar is 5-string 3rd fret, 4-string 2nd fret, 3-string null, 2-string 1st fret, and 1-string null, then you can write
+>>> alg.guitar_pattern('s3,0,11,s1,12,0,12,s3,11,0,9,s3,0,11,s1,14,0,14,s3,11,0,9', tuning=[N(i)-2 for i in database.guitar_standard_tuning])
+chord(notes=[F3, E4, D5, D4, D5, E4, F3, D4, F3, E4, ...], interval=[1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, ...], start_time=0)
+
+# The drum mapping dictionary can be replaced to use the rest syntax
+drum_mapping_new = copy(database.drum_mapping)
+drum_mapping_new['x'] = drum_mapping_new.pop('0')
+>>> alg.guitar_pattern('i:1,s3,0,11,s1,12,0,12,s3,11,0,9,x,x,x,x,s3,0,11,s1,14,0,14,s3,11,0,9,-,-,-,-', tuning=[N(i)-2 for i in database.guitar_standard_tuning], mapping=drum_mapping_new)
+chord(notes=[F3, E4, D5, D4, D5, E4, F3, D4, F3, E4, ...], interval=[1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 5/8, 1/8, 1/8, ...], start_time=1)
 ```
 
 
@@ -1737,18 +1773,16 @@ interval_note(self, interval, mode=0)
 # mode: When it is 0, if the note of the specified degree cannot be found, None will be returned. When it is 1, the starting note of the chord type plus the note type of the specified degree will be returned.
 
 >>> C('Cm11') # C minor eleven chord
-chord(notes=[C4, D#4, G4, A#4, D5, F5], interval=[0, 0, 0, 0, 0, 0], start_time=0)
+chord(notes=[C4, Eb4, G4, Bb4, D5, F5], interval=[0, 0, 0, 0, 0, 0], start_time=0)
 
 >>> C('Cm11').interval_note(3) # Find the 3rd note of the C minor eleventh chord
-D#4 # Return to the 3rd of the C minor eleventh chord. If it is more musically rigorous, it should be Eb4.
-# The reason why this is D#4 is because musicpy’s default note representation is to give priority to the # number
+Eb4 # Return to the 3rd of the C minor eleventh chord
 
 >>> C('Cm11').interval_note(9) # Find the 9th note of the C minor eleventh chord
 D5 # Returns the 9th degree of the C minor eleventh chord
 
->>> C('Cm11').interval_note(d5, mode=1) # Returns the first 5th of the C minor eleventh chord,
-# Note that the degree here cannot be a string, because the note type plus the string will be interpreted as forming a chord type
-F#4 # Return to the first note of the C minor eleventh chord with a 5th falling pitch (here, strictly speaking, it should be Gb4, for the same reason as before)
+>>> C('Cm11').interval_note('b5', mode=1) # Returns the first 5th of the C minor eleventh chord
+Gb4
 ```
 
 
