@@ -1,38 +1,4 @@
 version: 2
-nav:
-    - Introduction:
-      - Introduction: Introduction.md
-    - Quickstart and Cheat Sheet:
-      - Musicpy Quickstart and Cheat Sheet: Musicpy Quickstart and Cheat Sheet.md
-    - Data Structures:
-      - Data structures of musicpy: Data Structures of musicpy.md
-    - Basic Syntax:
-      - Basic syntax of note type: Basic syntax of note type.md
-      - Basic syntax of chord type: Basic syntax of chord type.md
-      - Basic syntax of scale type: Basic syntax of scale type.md
-      - Basic syntax of piece type: Basic syntax of piece type.md
-      - Basic syntax of track type: Basic syntax of track type.md
-      - Basic syntax of tempo type: Basic syntax of tempo type.md
-      - Basic syntax of pitch_bend type: Basic syntax of pitch_bend type.md
-      - Basic syntax of pan type: Basic syntax of pan type.md
-      - Basic syntax of volume type: Basic syntax of volume type.md
-      - Basic syntax of drum type: Basic syntax of drum type.md
-      - Basic syntax of rhythm type: Basic syntax of rhythm type.md
-    - Useful functionality:
-      - Useful functionality: Useful functionality.md
-    - Composition Examples:
-      - Composition code examples Part 1: Musicpy composition code examples part 1.md
-      - Composition code examples Part 2: Musicpy composition code examples part 2.md
-      - Composition code examples Part 3: Musicpy composition code examples part 3.md
-    - Musicpy daw Module:
-      - Musicpy daw module: Musicpy daw module.md
-      - Musicpy daw module composition code examples: Musicpy daw module composition code examples.md
-    - Algorithms:
-      - Introduction of musicpy algorithms module: Introduction of musicpy algorithms module.md
-      - The algorithm to split the main melody and chords from a piece of music: The algorithm to split the main melody and chords from a piece of music.md
-      - The algorithm to determine the chord type of any group of notes according to the logic of music theory: The algorithm to determine the chord type of any group of notes according to the logic of music theory.md
-    - Frequently Asked Questions:
-      - Frequently Asked Questions: Frequently Asked Questions.md
 theme:
   name: mkdocs
 build:
