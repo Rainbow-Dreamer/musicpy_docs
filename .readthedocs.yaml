@@ -37,6 +37,6 @@ nav:
 theme:
   name: mkdocs
 build:
-  os: "windows 10"
+  os: ubuntu-22.04
   tools:
     python: "3.7"
