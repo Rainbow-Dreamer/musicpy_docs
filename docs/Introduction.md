@@ -7,7 +7,7 @@ split main melody and chords for any music and so on.
 
 In this documentation, I am going to talk about the data structures and basic syntax of musicpy, and how to use it. 
 
-The initial purpose of why I design this language is to write music in codes with handy syntax, and the most important thing is, this language is completely designed for music theory, which means you can do anything you want in music theory when using this language.
+The initial purpose of why I designed this language is to write music in codes with handy syntax, and the most important thing is, this language is completely designed for music theory, which means you can do anything you want in music theory when using this language.
 
 I am trying my best to completely transform the entire music theory system into pure mathematical models (and structures) and computerized system in this project, to build a whole system of music theory that the computers could understand easily, which makes everybody can do researches in designing and developing algorithms about music theory and music itself, intellectualized analysis of music, making experimental music and so on in the world of musicpy. (and of course you can use musicpy to compose any genres of music you like, classical music, jazz, rock, pop, edm and so on)
 
