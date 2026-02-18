@@ -32,6 +32,8 @@ nav:
       - Introduction of musicpy algorithms module: Introduction of musicpy algorithms module.md
       - The algorithm to split the main melody and chords from a piece of music: The algorithm to split the main melody and chords from a piece of music.md
       - The algorithm to determine the chord type of any group of notes according to the logic of music theory: The algorithm to determine the chord type of any group of notes according to the logic of music theory.md
+      - The algorithm to analyze the chord progressions of a piece of music: The algorithm to analyze the chord progressions of a piece of music.md
+      - The algorithm to analyze tonality and modulations in a piece of music: The algorithm to analyze tonality and modulations in a piece of music.md
     - Frequently Asked Questions:
       - Frequently Asked Questions: Frequently Asked Questions.md
 theme:
