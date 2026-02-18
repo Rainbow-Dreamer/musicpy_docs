@@ -105,8 +105,8 @@ If you think this is too simple, musicpy could also produce music like [this](ht
 * [Introduction of musicpy algorithms module](https://musicpy.readthedocs.io/en/latest/Introduction%20of%20musicpy%20algorithms%20module/)
 * [The algorithm to split the main melody and chords from a piece of music](https://musicpy.readthedocs.io/en/latest/The%20algorithm%20to%20split%20the%20main%20melody%20and%20chords%20from%20a%20piece%20of%20music/)
 * [The algorithm to determine the chord type of any group of notes according to the logic of music theory](https://musicpy.readthedocs.io/en/latest/The%20algorithm%20to%20determine%20the%20chord%20type%20of%20any%20group%20of%20notes%20according%20to%20the%20logic%20of%20music%20theory/)
-* [The algorithm to analyze the chord progressions of a piece of music](https://github.com/Rainbow-Dreamer/musicpy/wiki/The-algorithm-to-analyze-the-chord-progressions-of-a-piece-of-music)
-* [The algorithm to analyze tonality and modulations in a piece of music](https://github.com/Rainbow-Dreamer/musicpy/wiki/The-algorithm-to-analyze-tonality-and-modulations-in-a-piece-of-music)
+* [The algorithm to analyze the chord progressions of a piece of music](https://musicpy.readthedocs.io/en/latest/The%20algorithm%20to%20analyze%20the%20chord%20progressions%20of%20a%20piece%20of%20music/)
+* [The algorithm to analyze tonality and modulations in a piece of music](https://musicpy.readthedocs.io/en/latest/The%20algorithm%20to%20analyze%20tonality%20and%20modulations%20in%20a%20piece%20of%20music/)
 
 
 
