@@ -971,11 +971,11 @@ unzip_mdi('drum.mdi', 'drum from mdi')
 4. If you hear some crackles sounds when notes start or end when playing or in the exported audio files, 
    you can add some little fade effects to each note in the chord types or piece types to remove the crackles sounds, usually 20 milliseconds is enough to remove the crackles sounds entirely, and it is very effective, since the fade in and fade out time are very short that you won't be able to notice that while the crackles sounds are removed entirely. You can do list comprehensions or for loops to add little fade effects to each note in the chord types or piece types. For example:
 
-   ```python
-   # add little fade effects to all of the notes in chord types
-   piano.notes = [set_effect(i, fade(20, 20)) for i in piano.notes]
-   
-   # add little fade effects to all of the notes in all of the tracks in piece types
-   for each in current_song.tracks:
-       each.notes = [set_effect(i, fade(20, 20)) for i in each.notes]
-   ```
+```python
+# add little fade effects to all of the notes in chord types
+piano.notes = [set_effect(i, fade(20, 20)) for i in piano.notes]
+
+# add little fade effects to all of the notes in all of the tracks in piece types
+for each in current_song.tracks:
+    each.notes = [set_effect(i, fade(20, 20)) for i in each.notes]
+```
